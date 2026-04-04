@@ -1,0 +1,119 @@
+{
+  "episode_id": "pilot_v2",
+  "description": "Paper-aligned pilot: 6 artifacts interleaved with 4 short work tasks before d0, then filler to d40k, then compaction at 50k.",
+  "model": "shubiaobiao/gpt-5",
+
+  "artifacts": {
+    "cqa_9f9df328": {
+      "plant_type": "chart_image",
+      "image_path": "data/generated_images/chart/cqa_9f9df328.png",
+      "ocr_keywords": ["gdp", "new", "jersey", "556", "dollars"]
+    },
+    "cqa_536c64e4": {
+      "plant_type": "chart_image",
+      "image_path": "data/generated_images/chart/cqa_536c64e4.png",
+      "ocr_keywords": ["internet", "users", "canada", "35.63"]
+    },
+    "cqa_3dd0635a": {
+      "plant_type": "chart_image",
+      "image_path": "data/generated_images/chart/cqa_3dd0635a.png",
+      "ocr_keywords": ["poker", "tables", "casinos", "nevada", "313"]
+    },
+    "cqa_92d6ef9a": {
+      "plant_type": "chart_image",
+      "image_path": "data/generated_images/chart/cqa_92d6ef9a.png",
+      "ocr_keywords": ["fan", "cost", "index", "boston", "celtics", "419"]
+    },
+    "ss_324e28cd": {
+      "plant_type": "screenshot",
+      "image_path": "data/generated_images/screenshot/ss_324e28cd.png",
+      "ocr_keywords": ["week", "summary"]
+    },
+    "ss_102dfb65": {
+      "plant_type": "screenshot",
+      "image_path": "data/generated_images/screenshot/ss_102dfb65.png",
+      "ocr_keywords": ["google", "maps", "notifications"]
+    }
+  },
+
+  "trunk": [
+    {
+      "type": "artifact",
+      "artifact_id": "cqa_9f9df328",
+      "prompt": "I pulled this chart from a state economics report. Take a look — I'll probably need to reference these GDP numbers later.",
+      "image": true
+    },
+    {
+      "type": "work_task",
+      "prompt": "Quick one — polish this message for my team: 'Quarterly review next Weds, need slides by Monday EOD, focus on retention and churn. Thx.' Keep it short."
+    },
+    {
+      "type": "artifact",
+      "artifact_id": "cqa_536c64e4",
+      "prompt": "Here's another chart — internet and social media stats for Canada. Keep the key figures in mind, I may ask about them.",
+      "image": true
+    },
+    {
+      "type": "artifact",
+      "artifact_id": "ss_324e28cd",
+      "prompt": "I grabbed this screenshot from my phone. Note what's on the screen — I'll probably want to come back to this later.",
+      "image": true
+    },
+    {
+      "type": "work_task",
+      "prompt": "Draft a two-sentence vendor follow-up — we're still waiting on their analytics platform pricing proposal after a week of silence."
+    },
+    {
+      "type": "artifact",
+      "artifact_id": "cqa_3dd0635a",
+      "prompt": "One more chart for the research pile — gaming industry trends in Nevada. Note the important numbers.",
+      "image": true
+    },
+    {
+      "type": "work_task",
+      "prompt": "Extract the key dates from this: 'Board meeting April 15. Budget freeze April 1. Headcount deadline March 31. Reviews due April 10.'"
+    },
+    {
+      "type": "artifact",
+      "artifact_id": "cqa_92d6ef9a",
+      "prompt": "Here's a chart about sports event costs across NBA teams. Keep track of these figures — I might need them later.",
+      "image": true
+    },
+    {
+      "type": "artifact",
+      "artifact_id": "ss_102dfb65",
+      "prompt": "Last thing — a screenshot from my phone settings. I'll want to refer back to this screen, so keep it in mind.",
+      "image": true
+    },
+    {
+      "type": "work_task",
+      "prompt": "Which should I prioritize: a 90-min Q1 revenue deep-dive at 2pm, or a 30-min new-hire check-in at 2:30? They overlap."
+    },
+    {
+      "type": "checkpoint",
+      "checkpoint_kind": "s1_prequery",
+      "depth_label": 0
+    },
+    {
+      "type": "filler",
+      "target_eit": 40000,
+      "seed": 100
+    },
+    {
+      "type": "checkpoint",
+      "checkpoint_kind": "s1_prequery",
+      "depth_label": 40000
+    },
+    {
+      "type": "compaction_wait",
+      "compaction_threshold": 50000,
+      "max_filler_turns": 40,
+      "seed": 300
+    },
+    {
+      "type": "checkpoint",
+      "checkpoint_kind": "postcomp",
+      "compaction_threshold": 50000
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "description": "Paper depth subset -- 10 screenshot + 10 chart_image (first 10 from main)",
+  "created_at": "2026-03-22",
+  "selection_rule": "first 10 from paper_main_50_50 per category",
+  "primary_reference_style": "definite",
+  "screenshot": [
+    "ss_02481947",
+    "ss_059f92d6",
+    "ss_086ba1fd",
+    "ss_0a1a85ae",
+    "ss_102dfb65",
+    "ss_136561c2",
+    "ss_1bbf799b",
+    "ss_1bd4530e",
+    "ss_2592fc68",
+    "ss_324e28cd"
+  ],
+  "chart_image": [
+    "cqa_00389f10",
+    "cqa_07af044c",
+    "cqa_0bd6d983",
+    "cqa_10495698",
+    "cqa_2a765b55",
+    "cqa_2b1a6285",
+    "cqa_2e2990c3",
+    "cqa_3398368f",
+    "cqa_38385c6d",
+    "cqa_3dd0635a"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "description": "Paper S3 subset -- 10 screenshot + 10 chart_image (last 10 from main)",
+  "created_at": "2026-03-22",
+  "selection_rule": "last 10 from paper_main_50_50 per category",
+  "primary_reference_style": "definite",
+  "screenshot": [
+    "ss_da7c52c0",
+    "ss_dc9dba6e",
+    "ss_dd2168ec",
+    "ss_e26a2390",
+    "ss_ead3add4",
+    "ss_ed5f209a",
+    "ss_f2e5693c",
+    "ss_f57bc5e3",
+    "ss_f5a76bf0",
+    "ss_ffe1dae4"
+  ],
+  "chart_image": [
+    "cqa_d44f98b3",
+    "cqa_d519231e",
+    "cqa_d65119a1",
+    "cqa_de346e80",
+    "cqa_e6d9d582",
+    "cqa_ef1f684a",
+    "cqa_f2b6f157",
+    "cqa_f4d875f5",
+    "cqa_f9373912",
+    "cqa_fcbbc7b0"
+  ]
+}

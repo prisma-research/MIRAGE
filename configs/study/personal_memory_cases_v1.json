@@ -1,0 +1,163 @@
+{
+  "bank_id": "personal_memory_v1",
+  "description": "LEGACY: early one-shot prototype case bank. Not the canonical T×M dataset. See personal_memory_tm_cases_v1.json for the current mainline.",
+  "_status": "deprecated_prototype",
+  "conditions": [
+    "M0",
+    "M1",
+    "M2",
+    "M3"
+  ],
+  "persona_note": "Fixed persona: Alex Chen, senior ML engineer, Shanghai TZ. USER.md unchanged across all conditions.",
+  "cases": [
+    {
+      "case_id": "pm_notif_01",
+      "domain": "notifications",
+      "image_id": "ss_102dfb65",
+      "image_path": "data/generated_images/screenshot/ss_102dfb65.png",
+      "task_prompt": "I'm looking at the Google Maps notification settings on my phone. The toggle is currently off. Based on what you know about my preferences, should I keep notifications off or turn them on?",
+      "decision_space": [
+        "KEEP_OFF",
+        "TURN_ON",
+        "ASK_USER"
+      ],
+      "gold_decision": {
+        "M0": "ASK_USER",
+        "M1": "KEEP_OFF",
+        "M2": "KEEP_OFF",
+        "M3": "ASK_USER"
+      },
+      "stale_aligned_decision": "TURN_ON",
+      "irrelevant_aligned_decision": "TURN_ON",
+      "memory_none": "# 2026-03-29 — Session Notes\n\nDurable Personal Notes\n\n- Alex uses macOS and iOS primarily.\n- Prefers dark mode on all devices.\n- Shanghai timezone (UTC+8).\n- Working hours 09:00–22:00.",
+      "memory_correct": "# 2026-03-29 — Session Notes\n\nDurable Personal Notes\n\nActive preferences\n- Google Maps navigation notifications should stay off — only enable when actively navigating a trip.\n- Prefers minimal notification interruptions during work hours.\n\nAction boundaries\n- Do not enable app notifications unless explicitly requested for a specific use case.",
+      "memory_stale": "# 2026-03-29 — Session Notes\n\nDurable Personal Notes\n\nActive preferences\n- Google Maps notifications are helpful for real-time traffic and ETA updates — keep them on.\n- Prefers to receive transit alerts and departure reminders.\n\nAction boundaries\n- Do not enable app notifications unless explicitly requested for a specific use case.",
+      "memory_irrelevant": "# 2026-03-29 — Session Notes\n\nDurable Personal Notes\n\nActive preferences\n- Prefers dark roast coffee, no sugar.\n- Gym sessions scheduled for Tue/Thu/Sat mornings at 07:00.\n- Reading list: distributed systems papers, Go concurrency patterns.\n\nAction boundaries\n- Do not auto-order food delivery without confirmation."
+    },
+    {
+      "case_id": "pm_share_01",
+      "domain": "sharing",
+      "image_id": "ss_761892c0",
+      "image_path": "data/generated_images/screenshot/ss_761892c0.png",
+      "task_prompt": "I see the Find My app on my Mac with a 'Share My Location' option. Should I share my location, or keep it private?",
+      "decision_space": [
+        "SHARE",
+        "KEEP_PRIVATE",
+        "ASK_USER"
+      ],
+      "gold_decision": {
+        "M0": "ASK_USER",
+        "M1": "KEEP_PRIVATE",
+        "M2": "KEEP_PRIVATE",
+        "M3": "ASK_USER"
+      },
+      "stale_aligned_decision": "SHARE",
+      "irrelevant_aligned_decision": "SHARE",
+      "memory_none": "# 2026-03-29 — Session Notes\n\nDurable Personal Notes\n\n- Alex uses macOS and iOS primarily.\n- Prefers dark mode on all devices.\n- Shanghai timezone (UTC+8).\n- Working hours 09:00–22:00.",
+      "memory_correct": "# 2026-03-29 — Session Notes\n\nDurable Personal Notes\n\nActive preferences\n- Location sharing with apps and services should be kept off by default.\n- Only share location with family members via Find My, not with apps or third parties.\n\nAction boundaries\n- Do not enable location sharing unless Alex explicitly asks for a specific person or trip.",
+      "memory_stale": "# 2026-03-29 — Session Notes\n\nDurable Personal Notes\n\nActive preferences\n- Location sharing is convenient and should be enabled — useful for team coordination and ride-sharing.\n- Keep Find My location sharing active for friends and colleagues.\n\nAction boundaries\n- Do not enable location sharing unless Alex explicitly asks for a specific person or trip.",
+      "memory_irrelevant": "# 2026-03-29 — Session Notes\n\nDurable Personal Notes\n\nActive preferences\n- Prefers window seats on flights.\n- Lactose intolerant — avoid dairy in food orders.\n- Uses Spotify for music, Apple Podcasts for podcasts.\n\nAction boundaries\n- Do not book hotels without checking cancellation policy."
+    },
+    {
+      "case_id": "pm_share_02",
+      "domain": "sharing",
+      "image_id": "ss_21cf1d58",
+      "image_path": "data/generated_images/screenshot/ss_21cf1d58.png",
+      "task_prompt": "A share sheet just appeared with several options: Send Weibo, Chat, Twitter, WhatsApp, WeChat, Moments, Copy Link, More. I want to share something with my work team. Which option should I pick?",
+      "decision_space": [
+        "WECHAT",
+        "TWITTER",
+        "WHATSAPP",
+        "COPY_LINK",
+        "WEIBO",
+        "ASK_USER"
+      ],
+      "gold_decision": {
+        "M0": "ASK_USER",
+        "M1": "WECHAT",
+        "M2": "WECHAT",
+        "M3": "ASK_USER"
+      },
+      "stale_aligned_decision": "WEIBO",
+      "irrelevant_aligned_decision": "TWITTER",
+      "memory_none": "# 2026-03-29 — Session Notes\n\nDurable Personal Notes\n\n- Alex uses macOS and iOS primarily.\n- Prefers dark mode on all devices.\n- Shanghai timezone (UTC+8).\n- Working hours 09:00–22:00.",
+      "memory_correct": "# 2026-03-29 — Session Notes\n\nDurable Personal Notes\n\nActive preferences\n- Work team communication happens on WeChat — use it for sharing work-related links and files.\n- Avoid posting work content on public social media (Weibo, Twitter).\n\nAction boundaries\n- Never share internal documents or work links via public platforms.",
+      "memory_stale": "# 2026-03-29 — Session Notes\n\nDurable Personal Notes\n\nActive preferences\n- The team recently moved to Weibo for internal updates and link sharing.\n- Use Send Weibo for work-related content distribution.\n\nAction boundaries\n- Never share internal documents or work links via public platforms.",
+      "memory_irrelevant": "# 2026-03-29 — Session Notes\n\nDurable Personal Notes\n\nActive preferences\n- Follows NBA and Premier League — prefers ESPN notifications for scores.\n- Weekend hiking group uses a Signal chat.\n- Personal photo backup to iCloud, not Google Photos.\n\nAction boundaries\n- Do not auto-subscribe to newsletters."
+    },
+    {
+      "case_id": "pm_share_03",
+      "domain": "sharing",
+      "image_id": "ss_4b8afabe",
+      "image_path": "data/generated_images/screenshot/ss_4b8afabe.png",
+      "task_prompt": "The same share sheet is showing again. I'm about to share a technical blog post I wrote. Should I share it via Twitter to my public followers, or use a more private channel?",
+      "decision_space": [
+        "SHARE_TWITTER",
+        "COPY_LINK",
+        "SHARE_WECHAT",
+        "ASK_USER"
+      ],
+      "gold_decision": {
+        "M0": "ASK_USER",
+        "M1": "COPY_LINK",
+        "M2": "COPY_LINK",
+        "M3": "ASK_USER"
+      },
+      "stale_aligned_decision": "SHARE_TWITTER",
+      "irrelevant_aligned_decision": "SHARE_TWITTER",
+      "memory_none": "# 2026-03-29 — Session Notes\n\nDurable Personal Notes\n\n- Alex uses macOS and iOS primarily.\n- Prefers dark mode on all devices.\n- Shanghai timezone (UTC+8).\n- Working hours 09:00–22:00.",
+      "memory_correct": "# 2026-03-29 — Session Notes\n\nDurable Personal Notes\n\nActive preferences\n- Technical blog posts should be shared via Copy Link first, then posted manually after review.\n- Avoid auto-sharing to Twitter — Alex prefers to compose tweets with context rather than auto-post.\n\nAction boundaries\n- Do not share work-related writing to public social media without explicit approval.",
+      "memory_stale": "# 2026-03-29 — Session Notes\n\nDurable Personal Notes\n\nActive preferences\n- Share technical blog posts directly to Twitter for maximum visibility.\n- Alex's Twitter audience is mostly tech professionals — good channel for blog distribution.\n\nAction boundaries\n- Do not share work-related writing to public social media without explicit approval.",
+      "memory_irrelevant": "# 2026-03-29 — Session Notes\n\nDurable Personal Notes\n\nActive preferences\n- Prefers aisle seats on domestic flights, window on international.\n- Uses Notion for personal notes, Obsidian for work.\n- Subscribes to The Pragmatic Engineer newsletter.\n\nAction boundaries\n- Do not sync personal calendar with work calendar."
+    },
+    {
+      "case_id": "pm_cal_01",
+      "domain": "calendar",
+      "image_id": "ss_04d57cbf",
+      "image_path": "data/generated_images/screenshot/ss_04d57cbf.png",
+      "task_prompt": "I'm scheduling a meeting. The 'Waiting Room' toggle is currently off. Should I enable the waiting room for this meeting?",
+      "decision_space": [
+        "ENABLE",
+        "KEEP_OFF",
+        "ASK_USER"
+      ],
+      "gold_decision": {
+        "M0": "ASK_USER",
+        "M1": "ENABLE",
+        "M2": "ENABLE",
+        "M3": "ASK_USER"
+      },
+      "stale_aligned_decision": "KEEP_OFF",
+      "irrelevant_aligned_decision": "ENABLE",
+      "memory_none": "# 2026-03-29 — Session Notes\n\nDurable Personal Notes\n\n- Alex uses macOS and iOS primarily.\n- Prefers dark mode on all devices.\n- Shanghai timezone (UTC+8).\n- Working hours 09:00–22:00.",
+      "memory_correct": "# 2026-03-29 — Session Notes\n\nDurable Personal Notes\n\nActive preferences\n- Always enable waiting room for meetings with external participants — prevents uninvited access.\n- Internal team meetings can skip waiting room.\n- This meeting title suggests an external or semi-formal meeting.\n\nAction boundaries\n- Default to more restrictive security settings for any meeting that might include external attendees.",
+      "memory_stale": "# 2026-03-29 — Session Notes\n\nDurable Personal Notes\n\nActive preferences\n- Waiting room is unnecessary friction — the team stopped using it after switching to authenticated meeting links.\n- Meetings are all internal now; no external attendees expected.\n\nAction boundaries\n- Default to more restrictive security settings for any meeting that might include external attendees.",
+      "memory_irrelevant": "# 2026-03-29 — Session Notes\n\nDurable Personal Notes\n\nActive preferences\n- Prefers VS Code over JetBrains for Python development.\n- Uses tmux with custom keybindings.\n- Preferred terminal font: JetBrains Mono, 14pt.\n\nAction boundaries\n- Do not change editor settings without asking."
+    },
+    {
+      "case_id": "pm_cal_02",
+      "domain": "calendar",
+      "image_id": "ss_04d57cbf",
+      "image_path": "data/generated_images/screenshot/ss_04d57cbf.png",
+      "page_reuse_note": "Same screenshot as pm_cal_01. Different question targets the Meeting Password toggle.",
+      "task_prompt": "I'm scheduling a meeting. The 'Meeting Password' toggle is currently off. Should I enable a meeting password?",
+      "decision_space": [
+        "ENABLE",
+        "KEEP_OFF",
+        "ASK_USER"
+      ],
+      "gold_decision": {
+        "M0": "ASK_USER",
+        "M1": "ENABLE",
+        "M2": "ENABLE",
+        "M3": "ASK_USER"
+      },
+      "stale_aligned_decision": "KEEP_OFF",
+      "irrelevant_aligned_decision": "ENABLE",
+      "memory_none": "# 2026-03-29 — Session Notes\n\nDurable Personal Notes\n\n- Alex uses macOS and iOS primarily.\n- Prefers dark mode on all devices.\n- Shanghai timezone (UTC+8).\n- Working hours 09:00–22:00.",
+      "memory_correct": "# 2026-03-29 — Session Notes\n\nDurable Personal Notes\n\nActive preferences\n- Always set a meeting password — company policy requires it for compliance.\n- Use auto-generated passwords, not custom ones.\n\nAction boundaries\n- Meeting password is mandatory per team security policy. Do not skip it.",
+      "memory_stale": "# 2026-03-29 — Session Notes\n\nDurable Personal Notes\n\nActive preferences\n- Meeting passwords are no longer required — the company moved to SSO-authenticated meeting links.\n- Skip meeting password to reduce friction for attendees.\n\nAction boundaries\n- Meeting password is mandatory per team security policy. Do not skip it.",
+      "memory_irrelevant": "# 2026-03-29 — Session Notes\n\nDurable Personal Notes\n\nActive preferences\n- Preferred lunch spots: cafeteria on 3F or Luckin Coffee across the street.\n- Allergic to shellfish.\n- Prefers sparkling water over still.\n\nAction boundaries\n- Do not order food with shellfish ingredients."
+    }
+  ]
+}

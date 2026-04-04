@@ -1,0 +1,25 @@
+{
+  "description": "Main backbone comparison — 8 screenshot + 8 chart_image",
+  "created_at": "2026-03-21",
+  "selection_rule": "manual stratified subset (manifest indices 0-7 per type)",
+  "screenshot": [
+    "ss_940203e4",
+    "ss_4c0fc509",
+    "ss_f416287a",
+    "ss_5d28f611",
+    "ss_ff28550d",
+    "ss_3d387d14",
+    "ss_d601a4ca",
+    "ss_73ad86f2"
+  ],
+  "chart_image": [
+    "cqa_316245a0",
+    "cqa_9d7454bf",
+    "cqa_1823183c",
+    "cqa_e20326c9",
+    "cqa_2696b575",
+    "cqa_11a10abd",
+    "cqa_5e5147e0",
+    "cqa_d2be52d8"
+  ]
+}
