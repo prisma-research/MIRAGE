@@ -2,19 +2,35 @@
 
 **Multimodal Interaction Retrieval, Attribution, and Grounding Evaluation**
 
-MIRAGE is a controlled empirical evaluation framework for studying how AI agents retrieve, attribute, and ground responses in multimodal artifacts across conversation sessions. It measures whether an agent can correctly retrieve artifacts (e.g., screenshots, charts) encountered in a previous session and produce responses that are faithfully grounded in those artifacts — even after context compaction.
+MIRAGE is a controlled empirical study of historical evidence use across conversation states in multimodal personal agents. It measures whether an agent can determine answerability, recover the correct source, and answer from that source rather than from a plausible guess — even after context compaction.
 
 ---
 
 ## Overview
 
-Long-context AI agents often lose access to earlier artifacts when conversation history is compacted or summarized. MIRAGE provides a systematic protocol to evaluate:
+Long-context AI agents often lose access to earlier artifacts when conversation history is compacted or summarized. MIRAGE keeps evidence objects, questions, and scoring fixed while varying only conversation state, isolating state as the sole experimental variable. The study follows a *what–why–how* progression:
 
-1. **Retrieval path** — How does the agent retrieve the artifact? (bootstrap memory, tool call, or not at all)
-2. **Identification accuracy** — Did it find the correct artifact?
-3. **Answer grounding** — Is the response actually supported by the artifact content?
+- **RQ1:** What failure patterns emerge as conversation state changes?
+- **RQ2:** What retrieval mechanisms produce these patterns?
+- **RQ3:** When can retrieval pressure mitigate provenance failure across different states?
 
-The framework supports multiple memory states (pre-compaction, post-compaction, with/without prewritten memory), multiple VLM backends, and configurable mitigation strategies (CitationForce).
+### Conversation States
+
+MIRAGE evaluates across four named states spanning three qualitatively distinct regions of the context lifecycle:
+
+| State | Description |
+|---|---|
+| `S1-d0` | Shallow pre-compaction (near planted evidence) |
+| `S1-d50k` | Mid-range same-session depth (~50k effective input tokens) |
+| `S1-d80k` | Near context-window boundary (~80k EIT) |
+| `S2` | Post-compaction same-session continuation (~100k EIT, 1 compaction) |
+
+### Query Conditions
+
+| Condition | Description |
+|---|---|
+| `C0` | Natural query — model answers with whatever evidence-access behaviour it adopts by default |
+| `Cm` | Retrieval pressure — model is required to invoke the `artifact_recall` tool before answering |
 
 ---
 
@@ -27,31 +43,27 @@ MIRAGE/
 │   ├── planters/
 │   │   ├── base_planter.py         # BasePlanter + PlantSpec dataclass
 │   │   ├── datasets/               # Real-dataset planters
-│   │   │   ├── screenspot_planter.py   # ScreenSpot -> screenshot (500 samples)
-│   │   │   ├── chartqa_planter.py      # ChartQA -> chart_image (500 samples)
+│   │   │   ├── screenspot_planter.py   # ScreenSpot -> screenshot
+│   │   │   ├── chartqa_planter.py      # ChartQA -> chart_image
 │   │   │   └── _hf_loader.py           # HuggingFace streaming + image save
 │   │   └── archive/                # Legacy synthetic planters
 │   └── queries/
 │       └── reference_templates.py  # make_reference_query / make_grounded_query
 ├── harness/
-│   ├── trial_runner.py             # Session A/B orchestration
+│   ├── trial_runner.py             # Session orchestration
 │   ├── trial_log.py                # GroundingTrial Pydantic model + save/load
-│   ├── scorer_pipeline.py          # Applies all 3 scoring axes to a trial
+│   ├── scorer_pipeline.py          # Deterministic scoring pipeline
 │   ├── experiment_runner.py        # Full batch runner
-│   ├── pilot_runner.py             # Smoke test (3 trials)
+│   ├── pilot_runner.py             # Smoke test
 │   ├── branch_probe_runner.py      # State-conditioned probe execution
 │   ├── checkpoint.py               # Checkpoint save/restore for episodes
 │   └── run_unified_pilot.py        # Unified pilot with state-conditioned probes
 ├── scorers/
-│   ├── axis1_rpath.py              # R-path classifier (R_context / R_tool / R_none)
-│   ├── axis2_identification.py     # Artifact identification (1 / 0 / empty)
-│   └── axis3/
-│       ├── claim_extractor.py      # LLM claim extraction
-│       ├── claim_verifier.py       # LLM claim verification
-│       ├── aggregator.py           # Gamma score + decision rule -> S_hat
-│       └── ensemble.py             # 3-judge majority vote
+│   ├── axis1_rpath.py              # Retrieval-path classifier (R_context / R_tool)
+│   ├── axis2_identification.py     # Source correctness (SC)
+│   └── axis3/                      # Value correctness (VC) components
 ├── mitigations/citation_force/
-│   ├── bootstrap_hook.py           # Inject constraint into BOOTSTRAP.md
+│   ├── bootstrap_hook.py           # Inject Cm constraint into BOOTSTRAP.md
 │   └── openclaw_artifact_recall_plugin.ts  # artifact_recall tool plugin
 ├── client/
 │   ├── openclaw_client.py          # WebSocket client for OpenClaw gateway
@@ -66,8 +78,8 @@ MIRAGE/
 ├── data/
 │   └── generated_images/
 │       ├── manifest.json           # ~1,000 artifact entries
-│       ├── screenshot/             # 500 GUI screenshots (gitignored, regenerate)
-│       └── chart/                  # 500 chart images (gitignored, regenerate)
+│       ├── screenshot/             # GUI screenshots (gitignored, regenerate)
+│       └── chart/                  # Chart images (gitignored, regenerate)
 ├── pyproject.toml
 ├── environment.yml
 ├── requirements.txt
@@ -85,7 +97,7 @@ conda activate mirage
 
 # Configure environment variables
 cp .env.example .env
-# Edit .env — add your API keys (ANTHROPIC_API_KEY required for Axis 3 scoring)
+# Edit .env — add your API keys (ANTHROPIC_API_KEY required for LLM-based scoring)
 
 # Install dependencies
 pip install -r requirements.txt
@@ -108,11 +120,9 @@ python -m pipeline.generate_dataset
 ```
 
 **Output:**
-- `data/generated_images/screenshot/` — 500 GUI/web/mobile screenshots (ScreenSpot)
-- `data/generated_images/chart/` — 500 real charts (ChartQA)
-- `data/generated_images/manifest.json` — 1,000 artifact entries with metadata
-
-Each manifest entry contains the `artifact_id`, `image_path`, `plant_prompt`, `artifact_repr`, OCR keywords, and a `content_query` drawn directly from dataset annotations.
+- `data/generated_images/screenshot/` — GUI/web/mobile screenshots (ScreenSpot)
+- `data/generated_images/chart/` — chart images (ChartQA)
+- `data/generated_images/manifest.json` — artifact entries with metadata
 
 | Plant Type | Dataset | HuggingFace ID | Query Source |
 |---|---|---|---|
@@ -137,35 +147,58 @@ python -m harness.run_unified_pilot --model shubiaobiao/gpt-5 --tag smoke
 ```bash
 python -m harness.experiment_runner              # full run
 python -m harness.experiment_runner --dry-run    # print parameter matrix only
-python -m harness.experiment_runner --plant-type screenshot
 ```
 
 ---
 
-## Scoring
+## Probe Protocol
 
-### Axis 1 — Retrieval Path
-How did the agent retrieve the artifact?
-- `R_context` — found in context window (bootstrap memory reads)
-- `R_tool` — agent called `memory_search` / `artifact_recall` after query
-- `R_none` — artifact not retrieved
+Each probe is issued on a freshly restored copy of a checkpoint, guaranteeing per-probe independence. The model returns a single structured response capturing the full grounding chain:
 
-### Axis 2 — Identification
-Did the agent find the correct artifact?
-- `1` — correct artifact_id in tool result
-- `0` — retrieved wrong artifact
-- `empty` — retrieval returned empty (hallucinated path)
-
-### Axis 3 — Answer Support
-Is the response grounded in the artifact content?
-- `S_hat in {0, 0.5, 1, "indeterminate"}` via 3-judge LLM ensemble
-- Requires `ANTHROPIC_API_KEY` in `.env`
-
-### Composite Score
 ```
-F = R_binary x I_strict x S_hat
+ANSWERABLE=YES | NO
+SOURCE=<artifact_id or NONE>
+ANSWER=<short value or NONE>
 ```
-Full grounding success requires all three axes to pass.
+
+This reveals whether the model judges the question answerable, identifies the correct source, and extracts the right content — without requiring separate probing stages.
+
+---
+
+## Evaluation
+
+### Deterministic Scoring
+
+All scoring is deterministic — no LLM judge required for the core metrics. For each probe, the model returns a structured response `(z_hat, src_hat, y_hat)` compared against gold annotations:
+
+| Metric | Name | Definition | Computed Over |
+|---|---|---|---|
+| **AC** | Answerability Correctness | Predicted answerability matches gold | All probes |
+| **SC** | Source Correctness | Canonicalized source matches gold artifact | Answerable probes |
+| **VC** | Value Correctness | Normalized answer matches gold value | Answerable probes |
+| **GC** | Grounded Correctness | SC = 1 AND VC = 1 | Answerable probes |
+| **HR** | Hallucination Rate | Claims answerable or provides answer on unanswerable probes | Unanswerable probes |
+| **WS** | Wrong Source | Cites a non-NONE artifact that is not the gold source | Answerable probes |
+| **PF** | Parse Failure | Output does not satisfy the structured protocol | All probes |
+
+Source identifiers are canonicalized to collapse artifact paths, derived files, and memory notes onto the underlying evidence identifier. Numeric and short string answers are normalized with fixed rules.
+
+### Retrieval-Path Diagnostics
+
+Beyond outcome scores, MIRAGE records the retrieval path for each probe:
+- **R_context** — evidence accessed through same-session context continuity
+- **R_tool** — evidence accessed through explicit tool-mediated retrieval (e.g., `artifact_recall`)
+
+### Cross-State Diagnostic Indicators
+
+| Indicator | Description |
+|---|---|
+| **DS** | Depth Sensitivity — GC drop from `S1-d0` to `S1-d80k` |
+| **CI** | Compaction Impact — net GC change from `S1-d80k` to `S2` |
+| **Ret** | Retention — fraction of `S1-d0`-correct probes still correct at `S1-d80k` |
+| **FGR** | False Grounding Rate at `S1-d80k` |
+| **OG** | Overestimation Gap — VC minus GC per state |
+| **MI** | Mirage Index — gap between claimed answerability and actual grounded correctness |
 
 ---
 
