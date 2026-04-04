@@ -1,0 +1,30 @@
+{
+  "description": "GPT-5 compaction sensitivity supplement v1 -- 10 screenshot + 10 chart_image, matched to paper_main_gpt5_native 50k results",
+  "created_at": "2026-03-25",
+  "selection_rule": "artifacts with complete S1/S2/S3 in paper_main_gpt5_native (50k, no errors), excluding all 40 artifacts already in paper_compaction_40.json; first 10 sorted alphabetically of each type",
+  "primary_reference_style": "definite",
+  "screenshot": [
+    "ss_1bd4530e",
+    "ss_2592fc68",
+    "ss_324e28cd",
+    "ss_36316571",
+    "ss_5148ae23",
+    "ss_52c97707",
+    "ss_55a5df96",
+    "ss_6ed922bf",
+    "ss_6fb5ef19",
+    "ss_750d306a"
+  ],
+  "chart_image": [
+    "cqa_07af044c",
+    "cqa_10495698",
+    "cqa_2b1a6285",
+    "cqa_3dd0635a",
+    "cqa_47f10126",
+    "cqa_6651a631",
+    "cqa_718579c7",
+    "cqa_75e9b570",
+    "cqa_94570a73",
+    "cqa_9617f5a4"
+  ]
+}
