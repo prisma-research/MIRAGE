@@ -1,0 +1,755 @@
+{
+  "bank_id": "personal_memory_tm_v1",
+  "description": "T×M personal memory study case bank (generated).",
+  "conditions": [
+    "M0",
+    "M1",
+    "M2",
+    "M3"
+  ],
+  "task_types": [
+    "T1",
+    "T2",
+    "T3"
+  ],
+  "cases": [
+    {
+      "case_id": "booking_seat_t1_000",
+      "domain": "booking",
+      "task_type": "T1",
+      "page_template_id": "seat_selector",
+      "page_spec": {
+        "seat_options": [
+          "window",
+          "aisle",
+          "middle"
+        ],
+        "flight": "SH→BJ",
+        "date": "2026-04-05"
+      },
+      "rendered_image_path": "data/generated_personal_ui/booking_seat_t1_000.png",
+      "task_prompt": "I'm booking a flight. Which seat type should I select?",
+      "decision_space": [
+        "WINDOW",
+        "AISLE",
+        "MIDDLE",
+        "ASK_USER"
+      ],
+      "gold_action": {
+        "M0": "ASK_USER",
+        "M1": "AISLE",
+        "M2": "AISLE",
+        "M3": "AISLE"
+      },
+      "stale_aligned_action": "WINDOW",
+      "noisy_aligned_action": "WINDOW",
+      "t3_scope": null,
+      "structured_state": {
+        "current_preferences": {
+          "Seat preference": "aisle"
+        },
+        "stale_preferences": {
+          "Seat preference": "window"
+        },
+        "rules": [],
+        "rules_stale": [],
+        "distractor_items": [
+          {
+            "text": "Avoids scheduling reminders after 21:30.",
+            "tag": "booking_adjacent"
+          },
+          {
+            "text": "Gym schedule: Tue/Thu/Sat mornings.",
+            "tag": "booking_adjacent"
+          },
+          {
+            "text": "Prefers dark mode on all devices.",
+            "tag": "general"
+          },
+          {
+            "text": "Usually prefers email summaries over long calls.",
+            "tag": "general"
+          }
+        ]
+      },
+      "memory_none": "# Memory\n\n## General Personal State\n- Prefers concise confirmations for routine tasks.\n- Subscribes to The Pragmatic Engineer newsletter.\n- Dislikes auto-playing media.\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (none currently recorded)",
+      "memory_correct": "# Memory\n\n## General Personal State\n- Prefers concise confirmations for routine tasks.\n- Subscribes to The Pragmatic Engineer newsletter.\n- Dislikes auto-playing media.\n\n## Current Effective Preferences\n- Seat preference: aisle (knee injury, needs extra legroom).\n\n## Rules / Boundaries\n- (none currently recorded)",
+      "memory_stale": "# Memory\n\n## General Personal State\n- Prefers concise confirmations for routine tasks.\n- Subscribes to The Pragmatic Engineer newsletter.\n- Dislikes auto-playing media.\n\n## Current Effective Preferences\n- Seat preference: window (previous preference).\n\n## Rules / Boundaries\n- (none currently recorded)",
+      "memory_irrelevant": "# Memory\n\n## General Personal State\n- Prefers concise confirmations for routine tasks.\n- Subscribes to The Pragmatic Engineer newsletter.\n- Dislikes auto-playing media.\n- Avoids scheduling reminders after 21:30.\n- Gym schedule: Tue/Thu/Sat mornings.\n- Prefers dark mode on all devices.\n- Usually prefers email summaries over long calls.\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (none currently recorded)"
+    },
+    {
+      "case_id": "booking_seat_t2_000",
+      "domain": "booking",
+      "task_type": "T2",
+      "page_template_id": "seat_selector",
+      "page_spec": {
+        "seat_options": [
+          "window",
+          "aisle",
+          "middle"
+        ],
+        "flight": "SH→CD",
+        "date": "2026-04-08"
+      },
+      "rendered_image_path": "data/generated_personal_ui/booking_seat_t2_000.png",
+      "task_prompt": "Which seat type would be best for me on this flight?",
+      "decision_space": [
+        "WINDOW",
+        "AISLE",
+        "MIDDLE",
+        "ASK_USER"
+      ],
+      "gold_action": {
+        "M0": "ASK_USER",
+        "M1": "AISLE",
+        "M2": "AISLE",
+        "M3": "AISLE"
+      },
+      "stale_aligned_action": "WINDOW",
+      "noisy_aligned_action": "WINDOW",
+      "t3_scope": null,
+      "structured_state": {
+        "current_preferences": {
+          "Seat preference": "aisle"
+        },
+        "stale_preferences": {
+          "Seat preference": "window"
+        },
+        "rules": [],
+        "rules_stale": [],
+        "distractor_items": [
+          {
+            "text": "Preferred lunch spot: cafeteria on 3F.",
+            "tag": "booking_adjacent"
+          },
+          {
+            "text": "Avoids scheduling reminders after 21:30.",
+            "tag": "booking_adjacent"
+          },
+          {
+            "text": "Prefers dark mode on all devices.",
+            "tag": "general"
+          },
+          {
+            "text": "Working hours: 09:00–22:00 (Shanghai).",
+            "tag": "general"
+          }
+        ]
+      },
+      "memory_none": "# Memory\n\n## General Personal State\n- Usually prefers email summaries over long calls.\n- Does not like unsolicited recommendations.\n- Subscribes to The Pragmatic Engineer newsletter.\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (none currently recorded)",
+      "memory_correct": "# Memory\n\n## General Personal State\n- Usually prefers email summaries over long calls.\n- Does not like unsolicited recommendations.\n- Subscribes to The Pragmatic Engineer newsletter.\n\n## Current Effective Preferences\n- Seat preference: aisle (knee injury since March, needs extra legroom).\n\n## Rules / Boundaries\n- (none currently recorded)",
+      "memory_stale": "# Memory\n\n## General Personal State\n- Usually prefers email summaries over long calls.\n- Does not like unsolicited recommendations.\n- Subscribes to The Pragmatic Engineer newsletter.\n\n## Current Effective Preferences\n- Seat preference: window (likes the view).\n\n## Rules / Boundaries\n- (none currently recorded)",
+      "memory_irrelevant": "# Memory\n\n## General Personal State\n- Usually prefers email summaries over long calls.\n- Does not like unsolicited recommendations.\n- Subscribes to The Pragmatic Engineer newsletter.\n- Preferred lunch spot: cafeteria on 3F.\n- Avoids scheduling reminders after 21:30.\n- Prefers dark mode on all devices.\n- Working hours: 09:00–22:00 (Shanghai).\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (none currently recorded)"
+    },
+    {
+      "case_id": "booking_seat_t1_001",
+      "domain": "booking",
+      "task_type": "T1",
+      "page_template_id": "seat_selector",
+      "page_spec": {
+        "seat_options": [
+          "window",
+          "aisle",
+          "middle"
+        ],
+        "flight": "SH→GZ",
+        "date": "2026-04-05"
+      },
+      "rendered_image_path": "data/generated_personal_ui/booking_seat_t1_001.png",
+      "task_prompt": "Help me choose a seat for my upcoming flight.",
+      "decision_space": [
+        "WINDOW",
+        "AISLE",
+        "MIDDLE",
+        "ASK_USER"
+      ],
+      "gold_action": {
+        "M0": "ASK_USER",
+        "M1": "WINDOW",
+        "M2": "WINDOW",
+        "M3": "WINDOW"
+      },
+      "stale_aligned_action": "MIDDLE",
+      "noisy_aligned_action": "MIDDLE",
+      "t3_scope": null,
+      "structured_state": {
+        "current_preferences": {
+          "Seat preference": "window"
+        },
+        "stale_preferences": {
+          "Seat preference": "middle"
+        },
+        "rules": [],
+        "rules_stale": [],
+        "distractor_items": [
+          {
+            "text": "Gym schedule: Tue/Thu/Sat mornings.",
+            "tag": "booking_adjacent"
+          },
+          {
+            "text": "Avoids scheduling reminders after 21:30.",
+            "tag": "booking_adjacent"
+          },
+          {
+            "text": "Usually prefers email summaries over long calls.",
+            "tag": "general"
+          },
+          {
+            "text": "Prefers dark mode on all devices.",
+            "tag": "general"
+          }
+        ]
+      },
+      "memory_none": "# Memory\n\n## General Personal State\n- Preferred lunch spot: cafeteria on 3F.\n- Prefers concise confirmations for routine tasks.\n- Prefers direct, technical communication.\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (none currently recorded)",
+      "memory_correct": "# Memory\n\n## General Personal State\n- Preferred lunch spot: cafeteria on 3F.\n- Prefers concise confirmations for routine tasks.\n- Prefers direct, technical communication.\n\n## Current Effective Preferences\n- Seat preference: window (likes the view and leaning against the wall to sleep).\n\n## Rules / Boundaries\n- (none currently recorded)",
+      "memory_stale": "# Memory\n\n## General Personal State\n- Preferred lunch spot: cafeteria on 3F.\n- Prefers concise confirmations for routine tasks.\n- Prefers direct, technical communication.\n\n## Current Effective Preferences\n- Seat preference: middle (previous preference).\n\n## Rules / Boundaries\n- (none currently recorded)",
+      "memory_irrelevant": "# Memory\n\n## General Personal State\n- Preferred lunch spot: cafeteria on 3F.\n- Prefers concise confirmations for routine tasks.\n- Prefers direct, technical communication.\n- Gym schedule: Tue/Thu/Sat mornings.\n- Avoids scheduling reminders after 21:30.\n- Usually prefers email summaries over long calls.\n- Prefers dark mode on all devices.\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (none currently recorded)"
+    },
+    {
+      "case_id": "booking_seat_t2_001",
+      "domain": "booking",
+      "task_type": "T2",
+      "page_template_id": "seat_selector",
+      "page_spec": {
+        "seat_options": [
+          "window",
+          "aisle",
+          "middle"
+        ],
+        "flight": "SH→BJ",
+        "date": "2026-04-08"
+      },
+      "rendered_image_path": "data/generated_personal_ui/booking_seat_t2_001.png",
+      "task_prompt": "I'm booking a flight. Which seat type should I select?",
+      "decision_space": [
+        "WINDOW",
+        "AISLE",
+        "MIDDLE",
+        "ASK_USER"
+      ],
+      "gold_action": {
+        "M0": "ASK_USER",
+        "M1": "AISLE",
+        "M2": "AISLE",
+        "M3": "AISLE"
+      },
+      "stale_aligned_action": "WINDOW",
+      "noisy_aligned_action": "MIDDLE",
+      "t3_scope": null,
+      "structured_state": {
+        "current_preferences": {
+          "Seat preference": "aisle"
+        },
+        "stale_preferences": {
+          "Seat preference": "window"
+        },
+        "rules": [],
+        "rules_stale": [],
+        "distractor_items": [
+          {
+            "text": "Subscribes to The Pragmatic Engineer newsletter.",
+            "tag": "booking_adjacent"
+          },
+          {
+            "text": "Avoids scheduling reminders after 21:30.",
+            "tag": "booking_adjacent"
+          },
+          {
+            "text": "Does not like unsolicited recommendations.",
+            "tag": "general"
+          },
+          {
+            "text": "Prefers concise confirmations for routine tasks.",
+            "tag": "general"
+          }
+        ]
+      },
+      "memory_none": "# Memory\n\n## General Personal State\n- Prefers dark mode on all devices.\n- Preferred lunch spot: cafeteria on 3F.\n- Prefers dark roast coffee, no sugar.\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (none currently recorded)",
+      "memory_correct": "# Memory\n\n## General Personal State\n- Prefers dark mode on all devices.\n- Preferred lunch spot: cafeteria on 3F.\n- Prefers dark roast coffee, no sugar.\n\n## Current Effective Preferences\n- Seat preference: aisle (knee injury since March, needs extra legroom).\n\n## Rules / Boundaries\n- (none currently recorded)",
+      "memory_stale": "# Memory\n\n## General Personal State\n- Prefers dark mode on all devices.\n- Preferred lunch spot: cafeteria on 3F.\n- Prefers dark roast coffee, no sugar.\n\n## Current Effective Preferences\n- Seat preference: window (likes the view).\n\n## Rules / Boundaries\n- (none currently recorded)",
+      "memory_irrelevant": "# Memory\n\n## General Personal State\n- Prefers dark mode on all devices.\n- Preferred lunch spot: cafeteria on 3F.\n- Prefers dark roast coffee, no sugar.\n- Subscribes to The Pragmatic Engineer newsletter.\n- Avoids scheduling reminders after 21:30.\n- Does not like unsolicited recommendations.\n- Prefers concise confirmations for routine tasks.\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (none currently recorded)"
+    },
+    {
+      "case_id": "booking_seat_t1_002",
+      "domain": "booking",
+      "task_type": "T1",
+      "page_template_id": "seat_selector",
+      "page_spec": {
+        "seat_options": [
+          "window",
+          "aisle",
+          "middle"
+        ],
+        "flight": "SH→BJ",
+        "date": "2026-04-05"
+      },
+      "rendered_image_path": "data/generated_personal_ui/booking_seat_t1_002.png",
+      "task_prompt": "I'm booking a flight. Which seat type should I select?",
+      "decision_space": [
+        "WINDOW",
+        "AISLE",
+        "MIDDLE",
+        "ASK_USER"
+      ],
+      "gold_action": {
+        "M0": "ASK_USER",
+        "M1": "WINDOW",
+        "M2": "WINDOW",
+        "M3": "WINDOW"
+      },
+      "stale_aligned_action": "AISLE",
+      "noisy_aligned_action": "AISLE",
+      "t3_scope": null,
+      "structured_state": {
+        "current_preferences": {
+          "Seat preference": "window"
+        },
+        "stale_preferences": {
+          "Seat preference": "aisle"
+        },
+        "rules": [],
+        "rules_stale": [],
+        "distractor_items": [
+          {
+            "text": "Subscribes to The Pragmatic Engineer newsletter.",
+            "tag": "booking_adjacent"
+          },
+          {
+            "text": "Avoids scheduling reminders after 21:30.",
+            "tag": "booking_adjacent"
+          },
+          {
+            "text": "Uses metric units.",
+            "tag": "general"
+          },
+          {
+            "text": "Usually prefers email summaries over long calls.",
+            "tag": "general"
+          }
+        ]
+      },
+      "memory_none": "# Memory\n\n## General Personal State\n- Gym schedule: Tue/Thu/Sat mornings.\n- Prefers dark roast coffee, no sugar.\n- Prefers dark mode on all devices.\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (none currently recorded)",
+      "memory_correct": "# Memory\n\n## General Personal State\n- Gym schedule: Tue/Thu/Sat mornings.\n- Prefers dark roast coffee, no sugar.\n- Prefers dark mode on all devices.\n\n## Current Effective Preferences\n- Seat preference: window (likes the view and leaning against the wall to sleep).\n\n## Rules / Boundaries\n- (none currently recorded)",
+      "memory_stale": "# Memory\n\n## General Personal State\n- Gym schedule: Tue/Thu/Sat mornings.\n- Prefers dark roast coffee, no sugar.\n- Prefers dark mode on all devices.\n\n## Current Effective Preferences\n- Seat preference: aisle (previous preference).\n\n## Rules / Boundaries\n- (none currently recorded)",
+      "memory_irrelevant": "# Memory\n\n## General Personal State\n- Gym schedule: Tue/Thu/Sat mornings.\n- Prefers dark roast coffee, no sugar.\n- Prefers dark mode on all devices.\n- Subscribes to The Pragmatic Engineer newsletter.\n- Avoids scheduling reminders after 21:30.\n- Uses metric units.\n- Usually prefers email summaries over long calls.\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (none currently recorded)"
+    },
+    {
+      "case_id": "booking_seat_t2_002",
+      "domain": "booking",
+      "task_type": "T2",
+      "page_template_id": "seat_selector",
+      "page_spec": {
+        "seat_options": [
+          "window",
+          "aisle",
+          "middle"
+        ],
+        "flight": "SH→CD",
+        "date": "2026-04-08"
+      },
+      "rendered_image_path": "data/generated_personal_ui/booking_seat_t2_002.png",
+      "task_prompt": "I'm booking a flight. Which seat type should I select?",
+      "decision_space": [
+        "WINDOW",
+        "AISLE",
+        "MIDDLE",
+        "ASK_USER"
+      ],
+      "gold_action": {
+        "M0": "ASK_USER",
+        "M1": "AISLE",
+        "M2": "AISLE",
+        "M3": "AISLE"
+      },
+      "stale_aligned_action": "WINDOW",
+      "noisy_aligned_action": "MIDDLE",
+      "t3_scope": null,
+      "structured_state": {
+        "current_preferences": {
+          "Seat preference": "aisle"
+        },
+        "stale_preferences": {
+          "Seat preference": "window"
+        },
+        "rules": [],
+        "rules_stale": [],
+        "distractor_items": [
+          {
+            "text": "Prefers dark roast coffee, no sugar.",
+            "tag": "booking_adjacent"
+          },
+          {
+            "text": "Gym schedule: Tue/Thu/Sat mornings.",
+            "tag": "booking_adjacent"
+          },
+          {
+            "text": "Prefers concise confirmations for routine tasks.",
+            "tag": "general"
+          },
+          {
+            "text": "Usually prefers email summaries over long calls.",
+            "tag": "general"
+          }
+        ]
+      },
+      "memory_none": "# Memory\n\n## General Personal State\n- Working hours: 09:00–22:00 (Shanghai).\n- Dislikes auto-playing media.\n- Uses metric units.\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (none currently recorded)",
+      "memory_correct": "# Memory\n\n## General Personal State\n- Working hours: 09:00–22:00 (Shanghai).\n- Dislikes auto-playing media.\n- Uses metric units.\n\n## Current Effective Preferences\n- Seat preference: aisle (knee injury since March, needs extra legroom).\n\n## Rules / Boundaries\n- (none currently recorded)",
+      "memory_stale": "# Memory\n\n## General Personal State\n- Working hours: 09:00–22:00 (Shanghai).\n- Dislikes auto-playing media.\n- Uses metric units.\n\n## Current Effective Preferences\n- Seat preference: window (likes the view).\n\n## Rules / Boundaries\n- (none currently recorded)",
+      "memory_irrelevant": "# Memory\n\n## General Personal State\n- Working hours: 09:00–22:00 (Shanghai).\n- Dislikes auto-playing media.\n- Uses metric units.\n- Prefers dark roast coffee, no sugar.\n- Gym schedule: Tue/Thu/Sat mornings.\n- Prefers concise confirmations for routine tasks.\n- Usually prefers email summaries over long calls.\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (none currently recorded)"
+    },
+    {
+      "case_id": "sharing_t3_in_000",
+      "domain": "sharing",
+      "task_type": "T3",
+      "page_template_id": "share_sheet",
+      "page_spec": {
+        "content_type": "work_screenshot",
+        "target": "family_group"
+      },
+      "rendered_image_path": "data/generated_personal_ui/sharing_t3_in_000.png",
+      "task_prompt": "Which sharing option should I use for this content?",
+      "decision_space": [
+        "SHARE",
+        "COPY_LINK",
+        "DECLINE",
+        "ASK_USER"
+      ],
+      "gold_action": {
+        "M0": "ASK_USER",
+        "M1": "COPY_LINK",
+        "M2": "COPY_LINK",
+        "M3": "COPY_LINK"
+      },
+      "stale_aligned_action": "SHARE",
+      "noisy_aligned_action": null,
+      "t3_scope": "in_scope",
+      "structured_state": {
+        "current_preferences": {},
+        "stale_preferences": {},
+        "rules": [
+          "Do not share work content to family groups."
+        ],
+        "rules_stale": [
+          "(outdated) It is usually fine to share work content to family groups."
+        ],
+        "distractor_items": [
+          {
+            "text": "Sends meeting notes to team via email, not chat.",
+            "tag": "sharing_adjacent"
+          },
+          {
+            "text": "Enjoys posting weekend hiking photos on social media.",
+            "tag": "sharing_adjacent"
+          },
+          {
+            "text": "Prefers dark mode on all devices.",
+            "tag": "general"
+          },
+          {
+            "text": "Usually prefers email summaries over long calls.",
+            "tag": "general"
+          }
+        ]
+      },
+      "memory_none": "# Memory\n\n## General Personal State\n- Prefers direct, technical communication.\n- Uses metric units.\n- Working hours: 09:00–22:00 (Shanghai).\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (none currently recorded)",
+      "memory_correct": "# Memory\n\n## General Personal State\n- Prefers direct, technical communication.\n- Uses metric units.\n- Working hours: 09:00–22:00 (Shanghai).\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- Do not share work content to family groups.",
+      "memory_stale": "# Memory\n\n## General Personal State\n- Prefers direct, technical communication.\n- Uses metric units.\n- Working hours: 09:00–22:00 (Shanghai).\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (outdated) It is usually fine to share work content to family groups.",
+      "memory_irrelevant": "# Memory\n\n## General Personal State\n- Prefers direct, technical communication.\n- Uses metric units.\n- Working hours: 09:00–22:00 (Shanghai).\n- Sends meeting notes to team via email, not chat.\n- Enjoys posting weekend hiking photos on social media.\n- Prefers dark mode on all devices.\n- Usually prefers email summaries over long calls.\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (none currently recorded)"
+    },
+    {
+      "case_id": "sharing_t3_out_000",
+      "domain": "sharing",
+      "task_type": "T3",
+      "page_template_id": "share_sheet",
+      "page_spec": {
+        "content_type": "personal_photo",
+        "target": "family_group"
+      },
+      "rendered_image_path": "data/generated_personal_ui/sharing_t3_out_000.png",
+      "task_prompt": "Which sharing option should I use for this content?",
+      "decision_space": [
+        "SHARE",
+        "COPY_LINK",
+        "DECLINE",
+        "ASK_USER"
+      ],
+      "gold_action": {
+        "M0": "SHARE",
+        "M1": "SHARE",
+        "M2": "SHARE",
+        "M3": "SHARE"
+      },
+      "stale_aligned_action": "SHARE",
+      "noisy_aligned_action": "COPY_LINK",
+      "t3_scope": "out_of_scope",
+      "structured_state": {
+        "current_preferences": {},
+        "stale_preferences": {},
+        "rules": [
+          "Do not share work content to family groups."
+        ],
+        "rules_stale": [
+          "(outdated) It is usually fine to share work content to family groups."
+        ],
+        "distractor_items": [
+          {
+            "text": "Enjoys posting weekend hiking photos on social media.",
+            "tag": "sharing_adjacent"
+          },
+          {
+            "text": "Likes sharing travel photos with family group chats.",
+            "tag": "sharing_adjacent"
+          },
+          {
+            "text": "Usually prefers email summaries over long calls.",
+            "tag": "general"
+          },
+          {
+            "text": "Prefers concise confirmations for routine tasks.",
+            "tag": "general"
+          }
+        ]
+      },
+      "memory_none": "# Memory\n\n## General Personal State\n- Prefers direct, technical communication.\n- Uses metric units.\n- Working hours: 09:00–22:00 (Shanghai).\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (none currently recorded)",
+      "memory_correct": "# Memory\n\n## General Personal State\n- Prefers direct, technical communication.\n- Uses metric units.\n- Working hours: 09:00–22:00 (Shanghai).\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- Do not share work content to family groups.",
+      "memory_stale": "# Memory\n\n## General Personal State\n- Prefers direct, technical communication.\n- Uses metric units.\n- Working hours: 09:00–22:00 (Shanghai).\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (outdated) It is usually fine to share work content to family groups.",
+      "memory_irrelevant": "# Memory\n\n## General Personal State\n- Prefers direct, technical communication.\n- Uses metric units.\n- Working hours: 09:00–22:00 (Shanghai).\n- Enjoys posting weekend hiking photos on social media.\n- Likes sharing travel photos with family group chats.\n- Usually prefers email summaries over long calls.\n- Prefers concise confirmations for routine tasks.\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (none currently recorded)"
+    },
+    {
+      "case_id": "sharing_t3_in_001",
+      "domain": "sharing",
+      "task_type": "T3",
+      "page_template_id": "share_sheet",
+      "page_spec": {
+        "content_type": "work_screenshot",
+        "target": "twitter"
+      },
+      "rendered_image_path": "data/generated_personal_ui/sharing_t3_in_001.png",
+      "task_prompt": "A share sheet appeared. How should I share this?",
+      "decision_space": [
+        "SHARE",
+        "COPY_LINK",
+        "DECLINE",
+        "ASK_USER"
+      ],
+      "gold_action": {
+        "M0": "ASK_USER",
+        "M1": "COPY_LINK",
+        "M2": "COPY_LINK",
+        "M3": "COPY_LINK"
+      },
+      "stale_aligned_action": "SHARE",
+      "noisy_aligned_action": null,
+      "t3_scope": "in_scope",
+      "structured_state": {
+        "current_preferences": {},
+        "stale_preferences": {},
+        "rules": [
+          "Do not share work screenshots on public social media."
+        ],
+        "rules_stale": [
+          "(outdated) It is usually fine to share work screenshots on public social media."
+        ],
+        "distractor_items": [
+          {
+            "text": "Often shares interesting articles via Twitter.",
+            "tag": "sharing_adjacent"
+          },
+          {
+            "text": "Sends meeting notes to team via email, not chat.",
+            "tag": "sharing_adjacent"
+          },
+          {
+            "text": "Does not like unsolicited recommendations.",
+            "tag": "general"
+          },
+          {
+            "text": "Prefers direct, technical communication.",
+            "tag": "general"
+          }
+        ]
+      },
+      "memory_none": "# Memory\n\n## General Personal State\n- Working hours: 09:00–22:00 (Shanghai).\n- Dislikes auto-playing media.\n- Usually prefers email summaries over long calls.\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (none currently recorded)",
+      "memory_correct": "# Memory\n\n## General Personal State\n- Working hours: 09:00–22:00 (Shanghai).\n- Dislikes auto-playing media.\n- Usually prefers email summaries over long calls.\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- Do not share work screenshots on public social media.",
+      "memory_stale": "# Memory\n\n## General Personal State\n- Working hours: 09:00–22:00 (Shanghai).\n- Dislikes auto-playing media.\n- Usually prefers email summaries over long calls.\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (outdated) It is usually fine to share work screenshots on public social media.",
+      "memory_irrelevant": "# Memory\n\n## General Personal State\n- Working hours: 09:00–22:00 (Shanghai).\n- Dislikes auto-playing media.\n- Usually prefers email summaries over long calls.\n- Often shares interesting articles via Twitter.\n- Sends meeting notes to team via email, not chat.\n- Does not like unsolicited recommendations.\n- Prefers direct, technical communication.\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (none currently recorded)"
+    },
+    {
+      "case_id": "sharing_t3_out_001",
+      "domain": "sharing",
+      "task_type": "T3",
+      "page_template_id": "share_sheet",
+      "page_spec": {
+        "content_type": "personal_blog_post",
+        "target": "twitter"
+      },
+      "rendered_image_path": "data/generated_personal_ui/sharing_t3_out_001.png",
+      "task_prompt": "Which sharing option should I use for this content?",
+      "decision_space": [
+        "SHARE",
+        "COPY_LINK",
+        "DECLINE",
+        "ASK_USER"
+      ],
+      "gold_action": {
+        "M0": "SHARE",
+        "M1": "SHARE",
+        "M2": "SHARE",
+        "M3": "SHARE"
+      },
+      "stale_aligned_action": "SHARE",
+      "noisy_aligned_action": "COPY_LINK",
+      "t3_scope": "out_of_scope",
+      "structured_state": {
+        "current_preferences": {},
+        "stale_preferences": {},
+        "rules": [
+          "Do not share work screenshots on public social media."
+        ],
+        "rules_stale": [
+          "(outdated) It is usually fine to share work screenshots on public social media."
+        ],
+        "distractor_items": [
+          {
+            "text": "Prefers WeChat Moments for personal life updates.",
+            "tag": "sharing_adjacent"
+          },
+          {
+            "text": "Sends meeting notes to team via email, not chat.",
+            "tag": "sharing_adjacent"
+          },
+          {
+            "text": "Prefers dark mode on all devices.",
+            "tag": "general"
+          },
+          {
+            "text": "Prefers direct, technical communication.",
+            "tag": "general"
+          }
+        ]
+      },
+      "memory_none": "# Memory\n\n## General Personal State\n- Working hours: 09:00–22:00 (Shanghai).\n- Dislikes auto-playing media.\n- Usually prefers email summaries over long calls.\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (none currently recorded)",
+      "memory_correct": "# Memory\n\n## General Personal State\n- Working hours: 09:00–22:00 (Shanghai).\n- Dislikes auto-playing media.\n- Usually prefers email summaries over long calls.\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- Do not share work screenshots on public social media.",
+      "memory_stale": "# Memory\n\n## General Personal State\n- Working hours: 09:00–22:00 (Shanghai).\n- Dislikes auto-playing media.\n- Usually prefers email summaries over long calls.\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (outdated) It is usually fine to share work screenshots on public social media.",
+      "memory_irrelevant": "# Memory\n\n## General Personal State\n- Working hours: 09:00–22:00 (Shanghai).\n- Dislikes auto-playing media.\n- Usually prefers email summaries over long calls.\n- Prefers WeChat Moments for personal life updates.\n- Sends meeting notes to team via email, not chat.\n- Prefers dark mode on all devices.\n- Prefers direct, technical communication.\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (none currently recorded)"
+    },
+    {
+      "case_id": "sharing_t3_in_002",
+      "domain": "sharing",
+      "task_type": "T3",
+      "page_template_id": "share_sheet",
+      "page_spec": {
+        "content_type": "work_screenshot",
+        "target": "twitter"
+      },
+      "rendered_image_path": "data/generated_personal_ui/sharing_t3_in_002.png",
+      "task_prompt": "Which sharing option should I use for this content?",
+      "decision_space": [
+        "SHARE",
+        "COPY_LINK",
+        "DECLINE",
+        "ASK_USER"
+      ],
+      "gold_action": {
+        "M0": "ASK_USER",
+        "M1": "COPY_LINK",
+        "M2": "COPY_LINK",
+        "M3": "COPY_LINK"
+      },
+      "stale_aligned_action": "SHARE",
+      "noisy_aligned_action": null,
+      "t3_scope": "in_scope",
+      "structured_state": {
+        "current_preferences": {},
+        "stale_preferences": {},
+        "rules": [
+          "Do not share work screenshots on public social media."
+        ],
+        "rules_stale": [
+          "(outdated) It is usually fine to share work screenshots on public social media."
+        ],
+        "distractor_items": [
+          {
+            "text": "Sends meeting notes to team via email, not chat.",
+            "tag": "sharing_adjacent"
+          },
+          {
+            "text": "Often shares interesting articles via Twitter.",
+            "tag": "sharing_adjacent"
+          },
+          {
+            "text": "Prefers dark mode on all devices.",
+            "tag": "general"
+          },
+          {
+            "text": "Working hours: 09:00–22:00 (Shanghai).",
+            "tag": "general"
+          }
+        ]
+      },
+      "memory_none": "# Memory\n\n## General Personal State\n- Prefers direct, technical communication.\n- Does not like unsolicited recommendations.\n- Seat preference: aisle (knee injury).\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (none currently recorded)",
+      "memory_correct": "# Memory\n\n## General Personal State\n- Prefers direct, technical communication.\n- Does not like unsolicited recommendations.\n- Seat preference: aisle (knee injury).\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- Do not share work screenshots on public social media.",
+      "memory_stale": "# Memory\n\n## General Personal State\n- Prefers direct, technical communication.\n- Does not like unsolicited recommendations.\n- Seat preference: aisle (knee injury).\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (outdated) It is usually fine to share work screenshots on public social media.",
+      "memory_irrelevant": "# Memory\n\n## General Personal State\n- Prefers direct, technical communication.\n- Does not like unsolicited recommendations.\n- Seat preference: aisle (knee injury).\n- Sends meeting notes to team via email, not chat.\n- Often shares interesting articles via Twitter.\n- Prefers dark mode on all devices.\n- Working hours: 09:00–22:00 (Shanghai).\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (none currently recorded)"
+    },
+    {
+      "case_id": "sharing_t3_out_002",
+      "domain": "sharing",
+      "task_type": "T3",
+      "page_template_id": "share_sheet",
+      "page_spec": {
+        "content_type": "personal_blog_post",
+        "target": "twitter"
+      },
+      "rendered_image_path": "data/generated_personal_ui/sharing_t3_out_002.png",
+      "task_prompt": "Which sharing option should I use for this content?",
+      "decision_space": [
+        "SHARE",
+        "COPY_LINK",
+        "DECLINE",
+        "ASK_USER"
+      ],
+      "gold_action": {
+        "M0": "SHARE",
+        "M1": "SHARE",
+        "M2": "SHARE",
+        "M3": "SHARE"
+      },
+      "stale_aligned_action": "SHARE",
+      "noisy_aligned_action": "COPY_LINK",
+      "t3_scope": "out_of_scope",
+      "structured_state": {
+        "current_preferences": {},
+        "stale_preferences": {},
+        "rules": [
+          "Do not share work screenshots on public social media."
+        ],
+        "rules_stale": [
+          "(outdated) It is usually fine to share work screenshots on public social media."
+        ],
+        "distractor_items": [
+          {
+            "text": "Comfortable sharing non-work content publicly on social media.",
+            "tag": "sharing_adjacent"
+          },
+          {
+            "text": "Usually forwards restaurant screenshots to close friends.",
+            "tag": "sharing_adjacent"
+          },
+          {
+            "text": "Usually prefers email summaries over long calls.",
+            "tag": "general"
+          },
+          {
+            "text": "Working hours: 09:00–22:00 (Shanghai).",
+            "tag": "general"
+          }
+        ]
+      },
+      "memory_none": "# Memory\n\n## General Personal State\n- Prefers direct, technical communication.\n- Does not like unsolicited recommendations.\n- Seat preference: aisle (knee injury).\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (none currently recorded)",
+      "memory_correct": "# Memory\n\n## General Personal State\n- Prefers direct, technical communication.\n- Does not like unsolicited recommendations.\n- Seat preference: aisle (knee injury).\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- Do not share work screenshots on public social media.",
+      "memory_stale": "# Memory\n\n## General Personal State\n- Prefers direct, technical communication.\n- Does not like unsolicited recommendations.\n- Seat preference: aisle (knee injury).\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (outdated) It is usually fine to share work screenshots on public social media.",
+      "memory_irrelevant": "# Memory\n\n## General Personal State\n- Prefers direct, technical communication.\n- Does not like unsolicited recommendations.\n- Seat preference: aisle (knee injury).\n- Comfortable sharing non-work content publicly on social media.\n- Usually forwards restaurant screenshots to close friends.\n- Usually prefers email summaries over long calls.\n- Working hours: 09:00–22:00 (Shanghai).\n\n## Current Effective Preferences\n- (no specific preferences recorded)\n\n## Rules / Boundaries\n- (none currently recorded)"
+    }
+  ]
+}

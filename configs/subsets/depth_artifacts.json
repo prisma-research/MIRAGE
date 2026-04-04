@@ -1,0 +1,21 @@
+{
+  "description": "S1 depth study — 6 screenshot + 6 chart_image",
+  "created_at": "2026-03-21",
+  "selection_rule": "manual stratified subset (manifest indices 8-13 per type)",
+  "screenshot": [
+    "ss_c1206582",
+    "ss_bc69a2c6",
+    "ss_2a60c453",
+    "ss_5b176993",
+    "ss_150fac4f",
+    "ss_dd31dc7e"
+  ],
+  "chart_image": [
+    "cqa_e4d5254b",
+    "cqa_7dcbae8a",
+    "cqa_f2b6f157",
+    "cqa_905a7cb5",
+    "cqa_249ea504",
+    "cqa_c798dfb1"
+  ]
+}

@@ -1,0 +1,211 @@
+{
+  "artifacts": [
+    {
+      "artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "plant_type": "chart_image",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "image_path": "data/generated_images/chart/cqa_9f9df328.png",
+      "content_query": "What was the GDP of New Jersey in dollars in the previous year?",
+      "seed_answer": "556.73",
+      "ocr_keywords": [
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "plant_prompt": "Check out this chart I found.",
+      "plant_prompt_ai": "I'm sharing a chart image. Please examine the chart carefully \u2014 the data values, labels, trends, and key figures \u2014 and save your analysis to memory with identifier 'cqa_9f9df328'.",
+      "artifact_repr": "Chart (ChartQA)\nArtifact ID: cqa_9f9df328\nQ: What was the GDP of New Jersey in dollars in the previous year?\nA: 556.73",
+      "difficulty": "hard",
+      "query_type": "exact",
+      "shortcut_risk": "low",
+      "chart_answer_type": "numeric",
+      "answerability_capability": "numeric_recall",
+      "metadata": {
+        "dataset": "ChartQA",
+        "query": "What was the GDP of New Jersey in dollars in the previous year?",
+        "answer": "556.73"
+      }
+    },
+    {
+      "artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "plant_type": "chart_image",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "image_path": "data/generated_images/chart/cqa_536c64e4.png",
+      "content_query": "How many internet users were in Canada as of January 2021?",
+      "seed_answer": "35.63",
+      "ocr_keywords": [
+        "many",
+        "internet",
+        "users",
+        "canada",
+        "as"
+      ],
+      "plant_prompt": "Check out this chart I found.",
+      "plant_prompt_ai": "I'm sharing a chart image. Please examine the chart carefully \u2014 the data values, labels, trends, and key figures \u2014 and save your analysis to memory with identifier 'cqa_536c64e4'.",
+      "artifact_repr": "Chart (ChartQA)\nArtifact ID: cqa_536c64e4\nQ: How many internet users were in Canada as of January 2021?\nA: 35.63",
+      "difficulty": "hard",
+      "query_type": "exact",
+      "shortcut_risk": "low",
+      "chart_answer_type": "numeric",
+      "answerability_capability": "numeric_recall",
+      "metadata": {
+        "dataset": "ChartQA",
+        "query": "How many internet users were in Canada as of January 2021?",
+        "answer": "35.63"
+      }
+    },
+    {
+      "artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "plant_type": "chart_image",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "image_path": "data/generated_images/chart/cqa_3dd0635a.png",
+      "content_query": "How many poker tables were there in casinos in Nevada in 2020?",
+      "seed_answer": "313",
+      "ocr_keywords": [
+        "many",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "plant_prompt": "Check out this chart I found.",
+      "plant_prompt_ai": "I'm sharing a chart image. Please examine the chart carefully \u2014 the data values, labels, trends, and key figures \u2014 and save your analysis to memory with identifier 'cqa_3dd0635a'.",
+      "artifact_repr": "Chart (ChartQA)\nArtifact ID: cqa_3dd0635a\nQ: How many poker tables were there in casinos in Nevada in 2020?\nA: 313",
+      "difficulty": "medium",
+      "query_type": "exact",
+      "shortcut_risk": "medium",
+      "chart_answer_type": "numeric",
+      "answerability_capability": "numeric_recall",
+      "metadata": {
+        "dataset": "ChartQA",
+        "query": "How many poker tables were there in casinos in Nevada in 2020?",
+        "answer": "313"
+      }
+    },
+    {
+      "artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "plant_type": "chart_image",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "image_path": "data/generated_images/chart/cqa_92d6ef9a.png",
+      "content_query": "What was the Fan Cost Index of the Boston Celtics in 2015?",
+      "seed_answer": "419.96",
+      "ocr_keywords": [
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "plant_prompt": "Check out this chart I found.",
+      "plant_prompt_ai": "I'm sharing a chart image. Please examine the chart carefully \u2014 the data values, labels, trends, and key figures \u2014 and save your analysis to memory with identifier 'cqa_92d6ef9a'.",
+      "artifact_repr": "Chart (ChartQA)\nArtifact ID: cqa_92d6ef9a\nQ: What was the Fan Cost Index of the Boston Celtics in 2015?\nA: 419.96",
+      "difficulty": "hard",
+      "query_type": "exact",
+      "shortcut_risk": "low",
+      "chart_answer_type": "numeric",
+      "answerability_capability": "numeric_recall",
+      "metadata": {
+        "dataset": "ChartQA",
+        "query": "What was the Fan Cost Index of the Boston Celtics in 2015?",
+        "answer": "419.96"
+      }
+    },
+    {
+      "artifact_id": "ss_324e28cd",
+      "source_dataset": "ScreenSpot",
+      "plant_type": "screenshot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "image_path": "data/generated_images/screenshot/ss_324e28cd.png",
+      "content_query": "check week summary",
+      "seed_answer": "",
+      "ocr_keywords": [
+        "check",
+        "week",
+        "summary"
+      ],
+      "plant_prompt": "Here's a screenshot from android \u2014 take a look.",
+      "plant_prompt_ai": "I'm sharing a GUI screenshot. Please examine the interface \u2014 labels, interactive components, layout, and any visible text \u2014 and save your analysis to memory with identifier 'ss_324e28cd'.",
+      "artifact_repr": "GUI Screenshot (ScreenSpot)\nArtifact ID: ss_324e28cd\nInstruction: check week summary\nElement type: text\nBounding box: [0.010185185185185186, 0.5629166666666666, 0.9777777777777777, 0.6308333333333334]...",
+      "difficulty": "medium",
+      "query_type": "gist",
+      "shortcut_risk": "high",
+      "chart_answer_type": "",
+      "answerability_capability": "descriptive_recall",
+      "metadata": {
+        "dataset": "ScreenSpot",
+        "data_type": "text",
+        "instruction": "check week summary",
+        "bbox": [
+          0.010185185185185186,
+          0.5629166666666666,
+          0.9777777777777777,
+          0.6308333333333334
+        ],
+        "platform": "android"
+      }
+    },
+    {
+      "artifact_id": "ss_102dfb65",
+      "source_dataset": "ScreenSpot",
+      "plant_type": "screenshot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "image_path": "data/generated_images/screenshot/ss_102dfb65.png",
+      "content_query": "allow google maps to send notifications",
+      "seed_answer": "",
+      "ocr_keywords": [
+        "allow",
+        "google",
+        "maps",
+        "send",
+        "notifications"
+      ],
+      "plant_prompt": "Here's a screenshot from ios \u2014 take a look.",
+      "plant_prompt_ai": "I'm sharing a GUI screenshot. Please examine the interface \u2014 labels, interactive components, layout, and any visible text \u2014 and save your analysis to memory with identifier 'ss_102dfb65'.",
+      "artifact_repr": "GUI Screenshot (ScreenSpot)\nArtifact ID: ss_102dfb65\nInstruction: allow google maps to send notifications\nElement type: icon\nBounding box: [0.7794871794871795, 0.15402843601895735, 0.9282051282051282,...",
+      "difficulty": "medium",
+      "query_type": "detail",
+      "shortcut_risk": "low",
+      "chart_answer_type": "",
+      "answerability_capability": "descriptive_recall",
+      "metadata": {
+        "dataset": "ScreenSpot",
+        "data_type": "icon",
+        "instruction": "allow google maps to send notifications",
+        "bbox": [
+          0.7794871794871795,
+          0.15402843601895735,
+          0.9282051282051282,
+          0.19549763033175355
+        ],
+        "platform": "ios"
+      }
+    }
+  ],
+  "confusion_groups": {
+    "chart_financial": [
+      "cqa_9f9df328",
+      "cqa_536c64e4",
+      "cqa_3dd0635a",
+      "cqa_92d6ef9a"
+    ],
+    "ui_mobile": [
+      "ss_324e28cd",
+      "ss_102dfb65"
+    ]
+  },
+  "n_charts": 4,
+  "n_screenshots": 2,
+  "rationale": "Selected 4 charts from annotated set with confusion-group coverage (financial/demographic pairs for wrong-source probes) + 2 screenshots from different platforms for visual-type diversity."
+}
