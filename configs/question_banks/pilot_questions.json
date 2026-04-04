@@ -1,0 +1,56 @@
+{
+  "bank_id": "pilot_v1",
+  "description": "Pilot question bank for visual-memory pilot. 2 target-present (chart data recall), 1 target-present (screenshot recall), 1 wrong-source (cross-chart confusion), 1 unanswerable.",
+
+  "questions": [
+    {
+      "question_id": "q_spotify_royalties",
+      "target_artifact_id": "cqa_316245a0",
+      "query_type": "target_present",
+      "prompt": "How much did Spotify pay in royalty fees back in 2015? I shared that chart earlier.",
+      "gold_keywords": ["1633", "spotify", "royalty"],
+      "gold_answer": "1633.29",
+      "expected_answerability": "answerable"
+    },
+    {
+      "question_id": "q_porsche_revenue",
+      "target_artifact_id": "cqa_9d7454bf",
+      "query_type": "target_present",
+      "prompt": "What was Porsche's revenue in 2011 according to that automotive chart I showed you?",
+      "gold_keywords": ["10.93", "porsche"],
+      "gold_answer": "10.93",
+      "expected_answerability": "answerable"
+    },
+    {
+      "question_id": "q_screenshot_content",
+      "target_artifact_id": "ss_940203e4",
+      "query_type": "target_present",
+      "prompt": "What was shown in that screenshot I shared? What page or app was it?",
+      "gold_keywords": ["wikipedia", "champions", "league"],
+      "gold_answer": "Wikipedia page about Champions League",
+      "expected_answerability": "answerable"
+    },
+    {
+      "question_id": "q_wrong_source_spotify_revenue",
+      "target_artifact_id": "cqa_316245a0",
+      "query_type": "wrong_source",
+      "prompt": "What was the revenue figure from that Spotify chart I showed you?",
+      "gold_keywords": ["royalty", "1633"],
+      "gold_answer": "The Spotify chart showed royalty fees (1633.29), not revenue. Answering with Porsche's revenue (10.93) or any other revenue figure would be a wrong-source error.",
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": ["cqa_9d7454bf"],
+      "wrong_source_signals": ["10.93", "porsche"],
+      "note": "The Spotify chart is about royalty fees, not revenue. The model might confuse it with the Porsche revenue chart and report 10.93 as Spotify's revenue. Correct answer: the Spotify chart showed royalty fees of 1633.29, not revenue."
+    },
+    {
+      "question_id": "q_unanswerable_2016",
+      "target_artifact_id": null,
+      "query_type": "unanswerable",
+      "prompt": "What were Spotify's royalty fees in 2016?",
+      "gold_keywords": [],
+      "gold_answer": null,
+      "expected_answerability": "unanswerable",
+      "note": "The chart only shows 2015 data. Any specific 2016 figure is hallucination."
+    }
+  ]
+}

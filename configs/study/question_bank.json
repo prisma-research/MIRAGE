@@ -1,0 +1,5022 @@
+{
+  "bank_id": "study_v1_n100",
+  "generated_from": "/Users/wenxiao/PycharmProjects/AgentDepth/MIRAGE/configs/study/pilot_set.json",
+  "seed": 42,
+  "families": {
+    "target_present": 60,
+    "wrong_source": 90,
+    "unanswerable": 60
+  },
+  "questions": [
+    {
+      "question_id": "tp_cqa_9f9df328_00",
+      "family": "target_present",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Hey, What was the GDP of New Jersey in dollars in the previous year? I showed you that chart earlier.",
+      "gold_answer": "556.73",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_0",
+      "paraphrase_group_id": "tp_cqa_9f9df328"
+    },
+    {
+      "question_id": "tp_cqa_9f9df328_01",
+      "family": "target_present",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Can you check \u2014 What was the GDP of New Jersey in dollars in the previous year? It was in that chart I shared.",
+      "gold_answer": "556.73",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_1",
+      "paraphrase_group_id": "tp_cqa_9f9df328"
+    },
+    {
+      "question_id": "tp_cqa_9f9df328_02",
+      "family": "target_present",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "What was the GDP of New Jersey in dollars in the previous year? I need the figure from the chart I sent you.",
+      "gold_answer": "556.73",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_2",
+      "paraphrase_group_id": "tp_cqa_9f9df328"
+    },
+    {
+      "question_id": "tp_cqa_9f9df328_03",
+      "family": "target_present",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Quick question \u2014 What was the GDP of New Jersey in dollars in the previous year?",
+      "gold_answer": "556.73",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_3",
+      "paraphrase_group_id": "tp_cqa_9f9df328"
+    },
+    {
+      "question_id": "tp_cqa_9f9df328_04",
+      "family": "target_present",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Do you still have the answer to this: What was the GDP of New Jersey in dollars in the previous year?",
+      "gold_answer": "556.73",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_4",
+      "paraphrase_group_id": "tp_cqa_9f9df328"
+    },
+    {
+      "question_id": "tp_cqa_9f9df328_05",
+      "family": "target_present",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I remember showing you a chart about this. What was the GDP of New Jersey in dollars in the previous year?",
+      "gold_answer": "556.73",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_5",
+      "paraphrase_group_id": "tp_cqa_9f9df328"
+    },
+    {
+      "question_id": "tp_cqa_9f9df328_06",
+      "family": "target_present",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I shared a chart with you earlier. What was the GDP of New Jersey in dollars in the previous year?",
+      "gold_answer": "556.73",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_6",
+      "paraphrase_group_id": "tp_cqa_9f9df328"
+    },
+    {
+      "question_id": "tp_cqa_9f9df328_07",
+      "family": "target_present",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "From the chart data you saved \u2014 What was the GDP of New Jersey in dollars in the previous year?",
+      "gold_answer": "556.73",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_7",
+      "paraphrase_group_id": "tp_cqa_9f9df328"
+    },
+    {
+      "question_id": "tp_cqa_9f9df328_08",
+      "family": "target_present",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Going back to that chart I sent \u2014 What was the GDP of New Jersey in dollars in the previous year?",
+      "gold_answer": "556.73",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_8",
+      "paraphrase_group_id": "tp_cqa_9f9df328"
+    },
+    {
+      "question_id": "tp_cqa_9f9df328_09",
+      "family": "target_present",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "One of the charts I showed you had this info. What was the GDP of New Jersey in dollars in the previous year?",
+      "gold_answer": "556.73",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_9",
+      "paraphrase_group_id": "tp_cqa_9f9df328"
+    },
+    {
+      "question_id": "tp_cqa_9f9df328_10",
+      "family": "target_present",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Can you pull up that chart data? What was the GDP of New Jersey in dollars in the previous year?",
+      "gold_answer": "556.73",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_10",
+      "paraphrase_group_id": "tp_cqa_9f9df328"
+    },
+    {
+      "question_id": "tp_cqa_9f9df328_11",
+      "family": "target_present",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "You noted down some chart figures for me. What was the GDP of New Jersey in dollars in the previous year?",
+      "gold_answer": "556.73",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_11",
+      "paraphrase_group_id": "tp_cqa_9f9df328"
+    },
+    {
+      "question_id": "tp_cqa_536c64e4_00",
+      "family": "target_present",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Hey, How many internet users were in Canada as of January 2021? I showed you that chart earlier.",
+      "gold_answer": "35.63",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_0",
+      "paraphrase_group_id": "tp_cqa_536c64e4"
+    },
+    {
+      "question_id": "tp_cqa_536c64e4_01",
+      "family": "target_present",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Can you check \u2014 How many internet users were in Canada as of January 2021? It was in that chart I shared.",
+      "gold_answer": "35.63",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_1",
+      "paraphrase_group_id": "tp_cqa_536c64e4"
+    },
+    {
+      "question_id": "tp_cqa_536c64e4_02",
+      "family": "target_present",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "How many internet users were in Canada as of January 2021? I need the figure from the chart I sent you.",
+      "gold_answer": "35.63",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_2",
+      "paraphrase_group_id": "tp_cqa_536c64e4"
+    },
+    {
+      "question_id": "tp_cqa_536c64e4_03",
+      "family": "target_present",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Quick question \u2014 How many internet users were in Canada as of January 2021?",
+      "gold_answer": "35.63",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_3",
+      "paraphrase_group_id": "tp_cqa_536c64e4"
+    },
+    {
+      "question_id": "tp_cqa_536c64e4_04",
+      "family": "target_present",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Do you still have the answer to this: How many internet users were in Canada as of January 2021?",
+      "gold_answer": "35.63",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_4",
+      "paraphrase_group_id": "tp_cqa_536c64e4"
+    },
+    {
+      "question_id": "tp_cqa_536c64e4_05",
+      "family": "target_present",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I remember showing you a chart about this. How many internet users were in Canada as of January 2021?",
+      "gold_answer": "35.63",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_5",
+      "paraphrase_group_id": "tp_cqa_536c64e4"
+    },
+    {
+      "question_id": "tp_cqa_536c64e4_06",
+      "family": "target_present",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I shared a chart with you earlier. How many internet users were in Canada as of January 2021?",
+      "gold_answer": "35.63",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_6",
+      "paraphrase_group_id": "tp_cqa_536c64e4"
+    },
+    {
+      "question_id": "tp_cqa_536c64e4_07",
+      "family": "target_present",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "From the chart data you saved \u2014 How many internet users were in Canada as of January 2021?",
+      "gold_answer": "35.63",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_7",
+      "paraphrase_group_id": "tp_cqa_536c64e4"
+    },
+    {
+      "question_id": "tp_cqa_536c64e4_08",
+      "family": "target_present",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Going back to that chart I sent \u2014 How many internet users were in Canada as of January 2021?",
+      "gold_answer": "35.63",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_8",
+      "paraphrase_group_id": "tp_cqa_536c64e4"
+    },
+    {
+      "question_id": "tp_cqa_536c64e4_09",
+      "family": "target_present",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "One of the charts I showed you had this info. How many internet users were in Canada as of January 2021?",
+      "gold_answer": "35.63",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_9",
+      "paraphrase_group_id": "tp_cqa_536c64e4"
+    },
+    {
+      "question_id": "tp_cqa_536c64e4_10",
+      "family": "target_present",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Can you pull up that chart data? How many internet users were in Canada as of January 2021?",
+      "gold_answer": "35.63",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_10",
+      "paraphrase_group_id": "tp_cqa_536c64e4"
+    },
+    {
+      "question_id": "tp_cqa_536c64e4_11",
+      "family": "target_present",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "You noted down some chart figures for me. How many internet users were in Canada as of January 2021?",
+      "gold_answer": "35.63",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_11",
+      "paraphrase_group_id": "tp_cqa_536c64e4"
+    },
+    {
+      "question_id": "tp_cqa_3dd0635a_00",
+      "family": "target_present",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Hey, How many poker tables were there in casinos in Nevada in 2020? I showed you that chart earlier.",
+      "gold_answer": "313",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_0",
+      "paraphrase_group_id": "tp_cqa_3dd0635a"
+    },
+    {
+      "question_id": "tp_cqa_3dd0635a_01",
+      "family": "target_present",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Can you check \u2014 How many poker tables were there in casinos in Nevada in 2020? It was in that chart I shared.",
+      "gold_answer": "313",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_1",
+      "paraphrase_group_id": "tp_cqa_3dd0635a"
+    },
+    {
+      "question_id": "tp_cqa_3dd0635a_02",
+      "family": "target_present",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "How many poker tables were there in casinos in Nevada in 2020? I need the figure from the chart I sent you.",
+      "gold_answer": "313",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_2",
+      "paraphrase_group_id": "tp_cqa_3dd0635a"
+    },
+    {
+      "question_id": "tp_cqa_3dd0635a_03",
+      "family": "target_present",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Quick question \u2014 How many poker tables were there in casinos in Nevada in 2020?",
+      "gold_answer": "313",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_3",
+      "paraphrase_group_id": "tp_cqa_3dd0635a"
+    },
+    {
+      "question_id": "tp_cqa_3dd0635a_04",
+      "family": "target_present",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Do you still have the answer to this: How many poker tables were there in casinos in Nevada in 2020?",
+      "gold_answer": "313",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_4",
+      "paraphrase_group_id": "tp_cqa_3dd0635a"
+    },
+    {
+      "question_id": "tp_cqa_3dd0635a_05",
+      "family": "target_present",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I remember showing you a chart about this. How many poker tables were there in casinos in Nevada in 2020?",
+      "gold_answer": "313",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_5",
+      "paraphrase_group_id": "tp_cqa_3dd0635a"
+    },
+    {
+      "question_id": "tp_cqa_3dd0635a_06",
+      "family": "target_present",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I shared a chart with you earlier. How many poker tables were there in casinos in Nevada in 2020?",
+      "gold_answer": "313",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_6",
+      "paraphrase_group_id": "tp_cqa_3dd0635a"
+    },
+    {
+      "question_id": "tp_cqa_3dd0635a_07",
+      "family": "target_present",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "From the chart data you saved \u2014 How many poker tables were there in casinos in Nevada in 2020?",
+      "gold_answer": "313",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_7",
+      "paraphrase_group_id": "tp_cqa_3dd0635a"
+    },
+    {
+      "question_id": "tp_cqa_3dd0635a_08",
+      "family": "target_present",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Going back to that chart I sent \u2014 How many poker tables were there in casinos in Nevada in 2020?",
+      "gold_answer": "313",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_8",
+      "paraphrase_group_id": "tp_cqa_3dd0635a"
+    },
+    {
+      "question_id": "tp_cqa_3dd0635a_09",
+      "family": "target_present",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "One of the charts I showed you had this info. How many poker tables were there in casinos in Nevada in 2020?",
+      "gold_answer": "313",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_9",
+      "paraphrase_group_id": "tp_cqa_3dd0635a"
+    },
+    {
+      "question_id": "tp_cqa_3dd0635a_10",
+      "family": "target_present",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Can you pull up that chart data? How many poker tables were there in casinos in Nevada in 2020?",
+      "gold_answer": "313",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_10",
+      "paraphrase_group_id": "tp_cqa_3dd0635a"
+    },
+    {
+      "question_id": "tp_cqa_3dd0635a_11",
+      "family": "target_present",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "You noted down some chart figures for me. How many poker tables were there in casinos in Nevada in 2020?",
+      "gold_answer": "313",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_11",
+      "paraphrase_group_id": "tp_cqa_3dd0635a"
+    },
+    {
+      "question_id": "tp_cqa_92d6ef9a_00",
+      "family": "target_present",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Hey, What was the Fan Cost Index of the Boston Celtics in 2015? I showed you that chart earlier.",
+      "gold_answer": "419.96",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_0",
+      "paraphrase_group_id": "tp_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "tp_cqa_92d6ef9a_01",
+      "family": "target_present",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Can you check \u2014 What was the Fan Cost Index of the Boston Celtics in 2015? It was in that chart I shared.",
+      "gold_answer": "419.96",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_1",
+      "paraphrase_group_id": "tp_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "tp_cqa_92d6ef9a_02",
+      "family": "target_present",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "What was the Fan Cost Index of the Boston Celtics in 2015? I need the figure from the chart I sent you.",
+      "gold_answer": "419.96",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_2",
+      "paraphrase_group_id": "tp_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "tp_cqa_92d6ef9a_03",
+      "family": "target_present",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Quick question \u2014 What was the Fan Cost Index of the Boston Celtics in 2015?",
+      "gold_answer": "419.96",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_3",
+      "paraphrase_group_id": "tp_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "tp_cqa_92d6ef9a_04",
+      "family": "target_present",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Do you still have the answer to this: What was the Fan Cost Index of the Boston Celtics in 2015?",
+      "gold_answer": "419.96",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_4",
+      "paraphrase_group_id": "tp_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "tp_cqa_92d6ef9a_05",
+      "family": "target_present",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I remember showing you a chart about this. What was the Fan Cost Index of the Boston Celtics in 2015?",
+      "gold_answer": "419.96",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_5",
+      "paraphrase_group_id": "tp_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "tp_cqa_92d6ef9a_06",
+      "family": "target_present",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I shared a chart with you earlier. What was the Fan Cost Index of the Boston Celtics in 2015?",
+      "gold_answer": "419.96",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_6",
+      "paraphrase_group_id": "tp_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "tp_cqa_92d6ef9a_07",
+      "family": "target_present",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "From the chart data you saved \u2014 What was the Fan Cost Index of the Boston Celtics in 2015?",
+      "gold_answer": "419.96",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_7",
+      "paraphrase_group_id": "tp_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "tp_cqa_92d6ef9a_08",
+      "family": "target_present",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Going back to that chart I sent \u2014 What was the Fan Cost Index of the Boston Celtics in 2015?",
+      "gold_answer": "419.96",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_8",
+      "paraphrase_group_id": "tp_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "tp_cqa_92d6ef9a_09",
+      "family": "target_present",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "One of the charts I showed you had this info. What was the Fan Cost Index of the Boston Celtics in 2015?",
+      "gold_answer": "419.96",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_9",
+      "paraphrase_group_id": "tp_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "tp_cqa_92d6ef9a_10",
+      "family": "target_present",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Can you pull up that chart data? What was the Fan Cost Index of the Boston Celtics in 2015?",
+      "gold_answer": "419.96",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_10",
+      "paraphrase_group_id": "tp_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "tp_cqa_92d6ef9a_11",
+      "family": "target_present",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "You noted down some chart figures for me. What was the Fan Cost Index of the Boston Celtics in 2015?",
+      "gold_answer": "419.96",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_chart_11",
+      "paraphrase_group_id": "tp_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "tp_ss_324e28cd_00",
+      "family": "target_present",
+      "target_artifact_id": "ss_324e28cd",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "What was shown on that android screenshot I shared \u2014 the one about check week summary?",
+      "gold_answer": "check week summary",
+      "gold_keywords": [
+        "check",
+        "week",
+        "summary"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_ss_0",
+      "paraphrase_group_id": "tp_ss_324e28cd"
+    },
+    {
+      "question_id": "tp_ss_324e28cd_01",
+      "family": "target_present",
+      "target_artifact_id": "ss_324e28cd",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "Can you describe what was on that screenshot? The one with check week summary.",
+      "gold_answer": "check week summary",
+      "gold_keywords": [
+        "check",
+        "week",
+        "summary"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_ss_1",
+      "paraphrase_group_id": "tp_ss_324e28cd"
+    },
+    {
+      "question_id": "tp_ss_324e28cd_02",
+      "family": "target_present",
+      "target_artifact_id": "ss_324e28cd",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "I shared a android screenshot earlier \u2014 the one showing check week summary. What did it show?",
+      "gold_answer": "check week summary",
+      "gold_keywords": [
+        "check",
+        "week",
+        "summary"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_ss_2",
+      "paraphrase_group_id": "tp_ss_324e28cd"
+    },
+    {
+      "question_id": "tp_ss_324e28cd_03",
+      "family": "target_present",
+      "target_artifact_id": "ss_324e28cd",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "What was the main content visible in the check week summary screenshot?",
+      "gold_answer": "check week summary",
+      "gold_keywords": [
+        "check",
+        "week",
+        "summary"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_ss_3",
+      "paraphrase_group_id": "tp_ss_324e28cd"
+    },
+    {
+      "question_id": "tp_ss_324e28cd_04",
+      "family": "target_present",
+      "target_artifact_id": "ss_324e28cd",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "Do you remember that screenshot about check week summary? What was on the screen?",
+      "gold_answer": "check week summary",
+      "gold_keywords": [
+        "check",
+        "week",
+        "summary"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_ss_4",
+      "paraphrase_group_id": "tp_ss_324e28cd"
+    },
+    {
+      "question_id": "tp_ss_324e28cd_05",
+      "family": "target_present",
+      "target_artifact_id": "ss_324e28cd",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "I need to recall what was in that android screenshot with check week summary.",
+      "gold_answer": "check week summary",
+      "gold_keywords": [
+        "check",
+        "week",
+        "summary"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_ss_5",
+      "paraphrase_group_id": "tp_ss_324e28cd"
+    },
+    {
+      "question_id": "tp_ss_102dfb65_00",
+      "family": "target_present",
+      "target_artifact_id": "ss_102dfb65",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "What was shown on that ios screenshot I shared \u2014 the one about allow google maps?",
+      "gold_answer": "allow google maps to send notifications",
+      "gold_keywords": [
+        "allow",
+        "google",
+        "maps",
+        "send",
+        "notifications"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_ss_0",
+      "paraphrase_group_id": "tp_ss_102dfb65"
+    },
+    {
+      "question_id": "tp_ss_102dfb65_01",
+      "family": "target_present",
+      "target_artifact_id": "ss_102dfb65",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "Can you describe what was on that screenshot? The one with allow google maps.",
+      "gold_answer": "allow google maps to send notifications",
+      "gold_keywords": [
+        "allow",
+        "google",
+        "maps",
+        "send",
+        "notifications"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_ss_1",
+      "paraphrase_group_id": "tp_ss_102dfb65"
+    },
+    {
+      "question_id": "tp_ss_102dfb65_02",
+      "family": "target_present",
+      "target_artifact_id": "ss_102dfb65",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "I shared a ios screenshot earlier \u2014 the one showing allow google maps. What did it show?",
+      "gold_answer": "allow google maps to send notifications",
+      "gold_keywords": [
+        "allow",
+        "google",
+        "maps",
+        "send",
+        "notifications"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_ss_2",
+      "paraphrase_group_id": "tp_ss_102dfb65"
+    },
+    {
+      "question_id": "tp_ss_102dfb65_03",
+      "family": "target_present",
+      "target_artifact_id": "ss_102dfb65",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "What was the main content visible in the allow google maps screenshot?",
+      "gold_answer": "allow google maps to send notifications",
+      "gold_keywords": [
+        "allow",
+        "google",
+        "maps",
+        "send",
+        "notifications"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_ss_3",
+      "paraphrase_group_id": "tp_ss_102dfb65"
+    },
+    {
+      "question_id": "tp_ss_102dfb65_04",
+      "family": "target_present",
+      "target_artifact_id": "ss_102dfb65",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "Do you remember that screenshot about allow google maps? What was on the screen?",
+      "gold_answer": "allow google maps to send notifications",
+      "gold_keywords": [
+        "allow",
+        "google",
+        "maps",
+        "send",
+        "notifications"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_ss_4",
+      "paraphrase_group_id": "tp_ss_102dfb65"
+    },
+    {
+      "question_id": "tp_ss_102dfb65_05",
+      "family": "target_present",
+      "target_artifact_id": "ss_102dfb65",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "I need to recall what was in that ios screenshot with allow google maps.",
+      "gold_answer": "allow google maps to send notifications",
+      "gold_keywords": [
+        "allow",
+        "google",
+        "maps",
+        "send",
+        "notifications"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "tp_ss_5",
+      "paraphrase_group_id": "tp_ss_102dfb65"
+    },
+    {
+      "question_id": "ws_cqa_9f9df328_cqa_536c64e4_00",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "What were the internet users numbers from the GDP New Jersey chart I shared?",
+      "gold_answer": "The chart about GDP New Jersey showed: 556.73. Answering with 35.63 (Canada January) is wrong-source.",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_536c64e4"
+      ],
+      "wrong_source_signals": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "base_template_id": "ws_chart_0",
+      "paraphrase_group_id": "ws_cqa_9f9df328_cqa_536c64e4"
+    },
+    {
+      "question_id": "ws_cqa_9f9df328_cqa_536c64e4_01",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Can you check the internet users figures in that GDP New Jersey chart?",
+      "gold_answer": "The chart about GDP New Jersey showed: 556.73. Answering with 35.63 (Canada January) is wrong-source.",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_536c64e4"
+      ],
+      "wrong_source_signals": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "base_template_id": "ws_chart_1",
+      "paraphrase_group_id": "ws_cqa_9f9df328_cqa_536c64e4"
+    },
+    {
+      "question_id": "ws_cqa_9f9df328_cqa_536c64e4_02",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I need the internet users data from the chart about GDP New Jersey.",
+      "gold_answer": "The chart about GDP New Jersey showed: 556.73. Answering with 35.63 (Canada January) is wrong-source.",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_536c64e4"
+      ],
+      "wrong_source_signals": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "base_template_id": "ws_chart_2",
+      "paraphrase_group_id": "ws_cqa_9f9df328_cqa_536c64e4"
+    },
+    {
+      "question_id": "ws_cqa_9f9df328_cqa_536c64e4_03",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "From the GDP New Jersey chart \u2014 what were the internet users numbers?",
+      "gold_answer": "The chart about GDP New Jersey showed: 556.73. Answering with 35.63 (Canada January) is wrong-source.",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_536c64e4"
+      ],
+      "wrong_source_signals": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "base_template_id": "ws_chart_3",
+      "paraphrase_group_id": "ws_cqa_9f9df328_cqa_536c64e4"
+    },
+    {
+      "question_id": "ws_cqa_9f9df328_cqa_536c64e4_04",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "You saved data from the GDP New Jersey chart. What was the internet users?",
+      "gold_answer": "The chart about GDP New Jersey showed: 556.73. Answering with 35.63 (Canada January) is wrong-source.",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_536c64e4"
+      ],
+      "wrong_source_signals": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "base_template_id": "ws_chart_4",
+      "paraphrase_group_id": "ws_cqa_9f9df328_cqa_536c64e4"
+    },
+    {
+      "question_id": "ws_cqa_9f9df328_cqa_536c64e4_05",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Looking at the GDP New Jersey chart data \u2014 do you have the internet users?",
+      "gold_answer": "The chart about GDP New Jersey showed: 556.73. Answering with 35.63 (Canada January) is wrong-source.",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_536c64e4"
+      ],
+      "wrong_source_signals": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "base_template_id": "ws_chart_5",
+      "paraphrase_group_id": "ws_cqa_9f9df328_cqa_536c64e4"
+    },
+    {
+      "question_id": "ws_cqa_9f9df328_cqa_536c64e4_06",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "The chart about GDP New Jersey should have internet users figures. What were they?",
+      "gold_answer": "The chart about GDP New Jersey showed: 556.73. Answering with 35.63 (Canada January) is wrong-source.",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_536c64e4"
+      ],
+      "wrong_source_signals": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "base_template_id": "ws_chart_6",
+      "paraphrase_group_id": "ws_cqa_9f9df328_cqa_536c64e4"
+    },
+    {
+      "question_id": "ws_cqa_9f9df328_cqa_3dd0635a_00",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "What were the poker tables numbers from the GDP New Jersey chart I shared?",
+      "gold_answer": "The chart about GDP New Jersey showed: 556.73. Answering with 313 (Nevada) is wrong-source.",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_3dd0635a"
+      ],
+      "wrong_source_signals": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "base_template_id": "ws_chart_0",
+      "paraphrase_group_id": "ws_cqa_9f9df328_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ws_cqa_9f9df328_cqa_3dd0635a_01",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Can you check the poker tables figures in that GDP New Jersey chart?",
+      "gold_answer": "The chart about GDP New Jersey showed: 556.73. Answering with 313 (Nevada) is wrong-source.",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_3dd0635a"
+      ],
+      "wrong_source_signals": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "base_template_id": "ws_chart_1",
+      "paraphrase_group_id": "ws_cqa_9f9df328_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ws_cqa_9f9df328_cqa_3dd0635a_02",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I need the poker tables data from the chart about GDP New Jersey.",
+      "gold_answer": "The chart about GDP New Jersey showed: 556.73. Answering with 313 (Nevada) is wrong-source.",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_3dd0635a"
+      ],
+      "wrong_source_signals": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "base_template_id": "ws_chart_2",
+      "paraphrase_group_id": "ws_cqa_9f9df328_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ws_cqa_9f9df328_cqa_3dd0635a_03",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "From the GDP New Jersey chart \u2014 what were the poker tables numbers?",
+      "gold_answer": "The chart about GDP New Jersey showed: 556.73. Answering with 313 (Nevada) is wrong-source.",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_3dd0635a"
+      ],
+      "wrong_source_signals": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "base_template_id": "ws_chart_3",
+      "paraphrase_group_id": "ws_cqa_9f9df328_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ws_cqa_9f9df328_cqa_3dd0635a_04",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "You saved data from the GDP New Jersey chart. What was the poker tables?",
+      "gold_answer": "The chart about GDP New Jersey showed: 556.73. Answering with 313 (Nevada) is wrong-source.",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_3dd0635a"
+      ],
+      "wrong_source_signals": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "base_template_id": "ws_chart_4",
+      "paraphrase_group_id": "ws_cqa_9f9df328_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ws_cqa_9f9df328_cqa_3dd0635a_05",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Looking at the GDP New Jersey chart data \u2014 do you have the poker tables?",
+      "gold_answer": "The chart about GDP New Jersey showed: 556.73. Answering with 313 (Nevada) is wrong-source.",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_3dd0635a"
+      ],
+      "wrong_source_signals": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "base_template_id": "ws_chart_5",
+      "paraphrase_group_id": "ws_cqa_9f9df328_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ws_cqa_9f9df328_cqa_3dd0635a_06",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "The chart about GDP New Jersey should have poker tables figures. What were they?",
+      "gold_answer": "The chart about GDP New Jersey showed: 556.73. Answering with 313 (Nevada) is wrong-source.",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_3dd0635a"
+      ],
+      "wrong_source_signals": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "base_template_id": "ws_chart_6",
+      "paraphrase_group_id": "ws_cqa_9f9df328_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ws_cqa_9f9df328_cqa_92d6ef9a_00",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "What were the Fan Cost Index numbers from the GDP New Jersey chart I shared?",
+      "gold_answer": "The chart about GDP New Jersey showed: 556.73. Answering with 419.96 (Fan Cost Index) is wrong-source.",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_92d6ef9a"
+      ],
+      "wrong_source_signals": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "base_template_id": "ws_chart_0",
+      "paraphrase_group_id": "ws_cqa_9f9df328_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ws_cqa_9f9df328_cqa_92d6ef9a_01",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Can you check the Fan Cost Index figures in that GDP New Jersey chart?",
+      "gold_answer": "The chart about GDP New Jersey showed: 556.73. Answering with 419.96 (Fan Cost Index) is wrong-source.",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_92d6ef9a"
+      ],
+      "wrong_source_signals": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "base_template_id": "ws_chart_1",
+      "paraphrase_group_id": "ws_cqa_9f9df328_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ws_cqa_9f9df328_cqa_92d6ef9a_02",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I need the Fan Cost Index data from the chart about GDP New Jersey.",
+      "gold_answer": "The chart about GDP New Jersey showed: 556.73. Answering with 419.96 (Fan Cost Index) is wrong-source.",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_92d6ef9a"
+      ],
+      "wrong_source_signals": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "base_template_id": "ws_chart_2",
+      "paraphrase_group_id": "ws_cqa_9f9df328_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ws_cqa_9f9df328_cqa_92d6ef9a_03",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "From the GDP New Jersey chart \u2014 what were the Fan Cost Index numbers?",
+      "gold_answer": "The chart about GDP New Jersey showed: 556.73. Answering with 419.96 (Fan Cost Index) is wrong-source.",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_92d6ef9a"
+      ],
+      "wrong_source_signals": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "base_template_id": "ws_chart_3",
+      "paraphrase_group_id": "ws_cqa_9f9df328_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ws_cqa_9f9df328_cqa_92d6ef9a_04",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "You saved data from the GDP New Jersey chart. What was the Fan Cost Index?",
+      "gold_answer": "The chart about GDP New Jersey showed: 556.73. Answering with 419.96 (Fan Cost Index) is wrong-source.",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_92d6ef9a"
+      ],
+      "wrong_source_signals": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "base_template_id": "ws_chart_4",
+      "paraphrase_group_id": "ws_cqa_9f9df328_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ws_cqa_9f9df328_cqa_92d6ef9a_05",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Looking at the GDP New Jersey chart data \u2014 do you have the Fan Cost Index?",
+      "gold_answer": "The chart about GDP New Jersey showed: 556.73. Answering with 419.96 (Fan Cost Index) is wrong-source.",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_92d6ef9a"
+      ],
+      "wrong_source_signals": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "base_template_id": "ws_chart_5",
+      "paraphrase_group_id": "ws_cqa_9f9df328_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ws_cqa_9f9df328_cqa_92d6ef9a_06",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "The chart about GDP New Jersey should have Fan Cost Index figures. What were they?",
+      "gold_answer": "The chart about GDP New Jersey showed: 556.73. Answering with 419.96 (Fan Cost Index) is wrong-source.",
+      "gold_keywords": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_92d6ef9a"
+      ],
+      "wrong_source_signals": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "base_template_id": "ws_chart_6",
+      "paraphrase_group_id": "ws_cqa_9f9df328_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ws_cqa_536c64e4_cqa_9f9df328_00",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "What were the GDP numbers from the Canada January chart I shared?",
+      "gold_answer": "The chart about Canada January showed: 35.63. Answering with 556.73 (GDP New Jersey) is wrong-source.",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_9f9df328"
+      ],
+      "wrong_source_signals": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "base_template_id": "ws_chart_0",
+      "paraphrase_group_id": "ws_cqa_536c64e4_cqa_9f9df328"
+    },
+    {
+      "question_id": "ws_cqa_536c64e4_cqa_9f9df328_01",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Can you check the GDP figures in that Canada January chart?",
+      "gold_answer": "The chart about Canada January showed: 35.63. Answering with 556.73 (GDP New Jersey) is wrong-source.",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_9f9df328"
+      ],
+      "wrong_source_signals": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "base_template_id": "ws_chart_1",
+      "paraphrase_group_id": "ws_cqa_536c64e4_cqa_9f9df328"
+    },
+    {
+      "question_id": "ws_cqa_536c64e4_cqa_9f9df328_02",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I need the GDP data from the chart about Canada January.",
+      "gold_answer": "The chart about Canada January showed: 35.63. Answering with 556.73 (GDP New Jersey) is wrong-source.",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_9f9df328"
+      ],
+      "wrong_source_signals": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "base_template_id": "ws_chart_2",
+      "paraphrase_group_id": "ws_cqa_536c64e4_cqa_9f9df328"
+    },
+    {
+      "question_id": "ws_cqa_536c64e4_cqa_9f9df328_03",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "From the Canada January chart \u2014 what were the GDP numbers?",
+      "gold_answer": "The chart about Canada January showed: 35.63. Answering with 556.73 (GDP New Jersey) is wrong-source.",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_9f9df328"
+      ],
+      "wrong_source_signals": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "base_template_id": "ws_chart_3",
+      "paraphrase_group_id": "ws_cqa_536c64e4_cqa_9f9df328"
+    },
+    {
+      "question_id": "ws_cqa_536c64e4_cqa_9f9df328_04",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "You saved data from the Canada January chart. What was the GDP?",
+      "gold_answer": "The chart about Canada January showed: 35.63. Answering with 556.73 (GDP New Jersey) is wrong-source.",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_9f9df328"
+      ],
+      "wrong_source_signals": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "base_template_id": "ws_chart_4",
+      "paraphrase_group_id": "ws_cqa_536c64e4_cqa_9f9df328"
+    },
+    {
+      "question_id": "ws_cqa_536c64e4_cqa_9f9df328_05",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Looking at the Canada January chart data \u2014 do you have the GDP?",
+      "gold_answer": "The chart about Canada January showed: 35.63. Answering with 556.73 (GDP New Jersey) is wrong-source.",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_9f9df328"
+      ],
+      "wrong_source_signals": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "base_template_id": "ws_chart_5",
+      "paraphrase_group_id": "ws_cqa_536c64e4_cqa_9f9df328"
+    },
+    {
+      "question_id": "ws_cqa_536c64e4_cqa_9f9df328_06",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "The chart about Canada January should have GDP figures. What were they?",
+      "gold_answer": "The chart about Canada January showed: 35.63. Answering with 556.73 (GDP New Jersey) is wrong-source.",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_9f9df328"
+      ],
+      "wrong_source_signals": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "base_template_id": "ws_chart_6",
+      "paraphrase_group_id": "ws_cqa_536c64e4_cqa_9f9df328"
+    },
+    {
+      "question_id": "ws_cqa_536c64e4_cqa_3dd0635a_00",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "What were the poker tables numbers from the Canada January chart I shared?",
+      "gold_answer": "The chart about Canada January showed: 35.63. Answering with 313 (Nevada) is wrong-source.",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_3dd0635a"
+      ],
+      "wrong_source_signals": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "base_template_id": "ws_chart_0",
+      "paraphrase_group_id": "ws_cqa_536c64e4_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ws_cqa_536c64e4_cqa_3dd0635a_01",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Can you check the poker tables figures in that Canada January chart?",
+      "gold_answer": "The chart about Canada January showed: 35.63. Answering with 313 (Nevada) is wrong-source.",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_3dd0635a"
+      ],
+      "wrong_source_signals": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "base_template_id": "ws_chart_1",
+      "paraphrase_group_id": "ws_cqa_536c64e4_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ws_cqa_536c64e4_cqa_3dd0635a_02",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I need the poker tables data from the chart about Canada January.",
+      "gold_answer": "The chart about Canada January showed: 35.63. Answering with 313 (Nevada) is wrong-source.",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_3dd0635a"
+      ],
+      "wrong_source_signals": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "base_template_id": "ws_chart_2",
+      "paraphrase_group_id": "ws_cqa_536c64e4_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ws_cqa_536c64e4_cqa_3dd0635a_03",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "From the Canada January chart \u2014 what were the poker tables numbers?",
+      "gold_answer": "The chart about Canada January showed: 35.63. Answering with 313 (Nevada) is wrong-source.",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_3dd0635a"
+      ],
+      "wrong_source_signals": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "base_template_id": "ws_chart_3",
+      "paraphrase_group_id": "ws_cqa_536c64e4_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ws_cqa_536c64e4_cqa_3dd0635a_04",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "You saved data from the Canada January chart. What was the poker tables?",
+      "gold_answer": "The chart about Canada January showed: 35.63. Answering with 313 (Nevada) is wrong-source.",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_3dd0635a"
+      ],
+      "wrong_source_signals": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "base_template_id": "ws_chart_4",
+      "paraphrase_group_id": "ws_cqa_536c64e4_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ws_cqa_536c64e4_cqa_3dd0635a_05",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Looking at the Canada January chart data \u2014 do you have the poker tables?",
+      "gold_answer": "The chart about Canada January showed: 35.63. Answering with 313 (Nevada) is wrong-source.",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_3dd0635a"
+      ],
+      "wrong_source_signals": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "base_template_id": "ws_chart_5",
+      "paraphrase_group_id": "ws_cqa_536c64e4_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ws_cqa_536c64e4_cqa_3dd0635a_06",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "The chart about Canada January should have poker tables figures. What were they?",
+      "gold_answer": "The chart about Canada January showed: 35.63. Answering with 313 (Nevada) is wrong-source.",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_3dd0635a"
+      ],
+      "wrong_source_signals": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "base_template_id": "ws_chart_6",
+      "paraphrase_group_id": "ws_cqa_536c64e4_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ws_cqa_536c64e4_cqa_92d6ef9a_00",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "What were the Fan Cost Index numbers from the Canada January chart I shared?",
+      "gold_answer": "The chart about Canada January showed: 35.63. Answering with 419.96 (Fan Cost Index) is wrong-source.",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_92d6ef9a"
+      ],
+      "wrong_source_signals": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "base_template_id": "ws_chart_0",
+      "paraphrase_group_id": "ws_cqa_536c64e4_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ws_cqa_536c64e4_cqa_92d6ef9a_01",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Can you check the Fan Cost Index figures in that Canada January chart?",
+      "gold_answer": "The chart about Canada January showed: 35.63. Answering with 419.96 (Fan Cost Index) is wrong-source.",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_92d6ef9a"
+      ],
+      "wrong_source_signals": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "base_template_id": "ws_chart_1",
+      "paraphrase_group_id": "ws_cqa_536c64e4_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ws_cqa_536c64e4_cqa_92d6ef9a_02",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I need the Fan Cost Index data from the chart about Canada January.",
+      "gold_answer": "The chart about Canada January showed: 35.63. Answering with 419.96 (Fan Cost Index) is wrong-source.",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_92d6ef9a"
+      ],
+      "wrong_source_signals": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "base_template_id": "ws_chart_2",
+      "paraphrase_group_id": "ws_cqa_536c64e4_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ws_cqa_536c64e4_cqa_92d6ef9a_03",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "From the Canada January chart \u2014 what were the Fan Cost Index numbers?",
+      "gold_answer": "The chart about Canada January showed: 35.63. Answering with 419.96 (Fan Cost Index) is wrong-source.",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_92d6ef9a"
+      ],
+      "wrong_source_signals": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "base_template_id": "ws_chart_3",
+      "paraphrase_group_id": "ws_cqa_536c64e4_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ws_cqa_536c64e4_cqa_92d6ef9a_04",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "You saved data from the Canada January chart. What was the Fan Cost Index?",
+      "gold_answer": "The chart about Canada January showed: 35.63. Answering with 419.96 (Fan Cost Index) is wrong-source.",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_92d6ef9a"
+      ],
+      "wrong_source_signals": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "base_template_id": "ws_chart_4",
+      "paraphrase_group_id": "ws_cqa_536c64e4_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ws_cqa_536c64e4_cqa_92d6ef9a_05",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Looking at the Canada January chart data \u2014 do you have the Fan Cost Index?",
+      "gold_answer": "The chart about Canada January showed: 35.63. Answering with 419.96 (Fan Cost Index) is wrong-source.",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_92d6ef9a"
+      ],
+      "wrong_source_signals": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "base_template_id": "ws_chart_5",
+      "paraphrase_group_id": "ws_cqa_536c64e4_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ws_cqa_536c64e4_cqa_92d6ef9a_06",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "The chart about Canada January should have Fan Cost Index figures. What were they?",
+      "gold_answer": "The chart about Canada January showed: 35.63. Answering with 419.96 (Fan Cost Index) is wrong-source.",
+      "gold_keywords": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_92d6ef9a"
+      ],
+      "wrong_source_signals": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "base_template_id": "ws_chart_6",
+      "paraphrase_group_id": "ws_cqa_536c64e4_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ws_cqa_3dd0635a_cqa_9f9df328_00",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "What were the GDP numbers from the Nevada chart I shared?",
+      "gold_answer": "The chart about Nevada showed: 313. Answering with 556.73 (GDP New Jersey) is wrong-source.",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_9f9df328"
+      ],
+      "wrong_source_signals": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "base_template_id": "ws_chart_0",
+      "paraphrase_group_id": "ws_cqa_3dd0635a_cqa_9f9df328"
+    },
+    {
+      "question_id": "ws_cqa_3dd0635a_cqa_9f9df328_01",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Can you check the GDP figures in that Nevada chart?",
+      "gold_answer": "The chart about Nevada showed: 313. Answering with 556.73 (GDP New Jersey) is wrong-source.",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_9f9df328"
+      ],
+      "wrong_source_signals": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "base_template_id": "ws_chart_1",
+      "paraphrase_group_id": "ws_cqa_3dd0635a_cqa_9f9df328"
+    },
+    {
+      "question_id": "ws_cqa_3dd0635a_cqa_9f9df328_02",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I need the GDP data from the chart about Nevada.",
+      "gold_answer": "The chart about Nevada showed: 313. Answering with 556.73 (GDP New Jersey) is wrong-source.",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_9f9df328"
+      ],
+      "wrong_source_signals": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "base_template_id": "ws_chart_2",
+      "paraphrase_group_id": "ws_cqa_3dd0635a_cqa_9f9df328"
+    },
+    {
+      "question_id": "ws_cqa_3dd0635a_cqa_9f9df328_03",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "From the Nevada chart \u2014 what were the GDP numbers?",
+      "gold_answer": "The chart about Nevada showed: 313. Answering with 556.73 (GDP New Jersey) is wrong-source.",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_9f9df328"
+      ],
+      "wrong_source_signals": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "base_template_id": "ws_chart_3",
+      "paraphrase_group_id": "ws_cqa_3dd0635a_cqa_9f9df328"
+    },
+    {
+      "question_id": "ws_cqa_3dd0635a_cqa_9f9df328_04",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "You saved data from the Nevada chart. What was the GDP?",
+      "gold_answer": "The chart about Nevada showed: 313. Answering with 556.73 (GDP New Jersey) is wrong-source.",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_9f9df328"
+      ],
+      "wrong_source_signals": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "base_template_id": "ws_chart_4",
+      "paraphrase_group_id": "ws_cqa_3dd0635a_cqa_9f9df328"
+    },
+    {
+      "question_id": "ws_cqa_3dd0635a_cqa_9f9df328_05",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Looking at the Nevada chart data \u2014 do you have the GDP?",
+      "gold_answer": "The chart about Nevada showed: 313. Answering with 556.73 (GDP New Jersey) is wrong-source.",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_9f9df328"
+      ],
+      "wrong_source_signals": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "base_template_id": "ws_chart_5",
+      "paraphrase_group_id": "ws_cqa_3dd0635a_cqa_9f9df328"
+    },
+    {
+      "question_id": "ws_cqa_3dd0635a_cqa_9f9df328_06",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "The chart about Nevada should have GDP figures. What were they?",
+      "gold_answer": "The chart about Nevada showed: 313. Answering with 556.73 (GDP New Jersey) is wrong-source.",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_9f9df328"
+      ],
+      "wrong_source_signals": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "base_template_id": "ws_chart_6",
+      "paraphrase_group_id": "ws_cqa_3dd0635a_cqa_9f9df328"
+    },
+    {
+      "question_id": "ws_cqa_3dd0635a_cqa_536c64e4_00",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "What were the internet users numbers from the Nevada chart I shared?",
+      "gold_answer": "The chart about Nevada showed: 313. Answering with 35.63 (Canada January) is wrong-source.",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_536c64e4"
+      ],
+      "wrong_source_signals": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "base_template_id": "ws_chart_0",
+      "paraphrase_group_id": "ws_cqa_3dd0635a_cqa_536c64e4"
+    },
+    {
+      "question_id": "ws_cqa_3dd0635a_cqa_536c64e4_01",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Can you check the internet users figures in that Nevada chart?",
+      "gold_answer": "The chart about Nevada showed: 313. Answering with 35.63 (Canada January) is wrong-source.",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_536c64e4"
+      ],
+      "wrong_source_signals": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "base_template_id": "ws_chart_1",
+      "paraphrase_group_id": "ws_cqa_3dd0635a_cqa_536c64e4"
+    },
+    {
+      "question_id": "ws_cqa_3dd0635a_cqa_536c64e4_02",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I need the internet users data from the chart about Nevada.",
+      "gold_answer": "The chart about Nevada showed: 313. Answering with 35.63 (Canada January) is wrong-source.",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_536c64e4"
+      ],
+      "wrong_source_signals": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "base_template_id": "ws_chart_2",
+      "paraphrase_group_id": "ws_cqa_3dd0635a_cqa_536c64e4"
+    },
+    {
+      "question_id": "ws_cqa_3dd0635a_cqa_536c64e4_03",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "From the Nevada chart \u2014 what were the internet users numbers?",
+      "gold_answer": "The chart about Nevada showed: 313. Answering with 35.63 (Canada January) is wrong-source.",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_536c64e4"
+      ],
+      "wrong_source_signals": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "base_template_id": "ws_chart_3",
+      "paraphrase_group_id": "ws_cqa_3dd0635a_cqa_536c64e4"
+    },
+    {
+      "question_id": "ws_cqa_3dd0635a_cqa_536c64e4_04",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "You saved data from the Nevada chart. What was the internet users?",
+      "gold_answer": "The chart about Nevada showed: 313. Answering with 35.63 (Canada January) is wrong-source.",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_536c64e4"
+      ],
+      "wrong_source_signals": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "base_template_id": "ws_chart_4",
+      "paraphrase_group_id": "ws_cqa_3dd0635a_cqa_536c64e4"
+    },
+    {
+      "question_id": "ws_cqa_3dd0635a_cqa_536c64e4_05",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Looking at the Nevada chart data \u2014 do you have the internet users?",
+      "gold_answer": "The chart about Nevada showed: 313. Answering with 35.63 (Canada January) is wrong-source.",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_536c64e4"
+      ],
+      "wrong_source_signals": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "base_template_id": "ws_chart_5",
+      "paraphrase_group_id": "ws_cqa_3dd0635a_cqa_536c64e4"
+    },
+    {
+      "question_id": "ws_cqa_3dd0635a_cqa_536c64e4_06",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "The chart about Nevada should have internet users figures. What were they?",
+      "gold_answer": "The chart about Nevada showed: 313. Answering with 35.63 (Canada January) is wrong-source.",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_536c64e4"
+      ],
+      "wrong_source_signals": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "base_template_id": "ws_chart_6",
+      "paraphrase_group_id": "ws_cqa_3dd0635a_cqa_536c64e4"
+    },
+    {
+      "question_id": "ws_cqa_3dd0635a_cqa_92d6ef9a_00",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "What were the Fan Cost Index numbers from the Nevada chart I shared?",
+      "gold_answer": "The chart about Nevada showed: 313. Answering with 419.96 (Fan Cost Index) is wrong-source.",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_92d6ef9a"
+      ],
+      "wrong_source_signals": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "base_template_id": "ws_chart_0",
+      "paraphrase_group_id": "ws_cqa_3dd0635a_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ws_cqa_3dd0635a_cqa_92d6ef9a_01",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Can you check the Fan Cost Index figures in that Nevada chart?",
+      "gold_answer": "The chart about Nevada showed: 313. Answering with 419.96 (Fan Cost Index) is wrong-source.",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_92d6ef9a"
+      ],
+      "wrong_source_signals": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "base_template_id": "ws_chart_1",
+      "paraphrase_group_id": "ws_cqa_3dd0635a_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ws_cqa_3dd0635a_cqa_92d6ef9a_02",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I need the Fan Cost Index data from the chart about Nevada.",
+      "gold_answer": "The chart about Nevada showed: 313. Answering with 419.96 (Fan Cost Index) is wrong-source.",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_92d6ef9a"
+      ],
+      "wrong_source_signals": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "base_template_id": "ws_chart_2",
+      "paraphrase_group_id": "ws_cqa_3dd0635a_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ws_cqa_3dd0635a_cqa_92d6ef9a_03",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "From the Nevada chart \u2014 what were the Fan Cost Index numbers?",
+      "gold_answer": "The chart about Nevada showed: 313. Answering with 419.96 (Fan Cost Index) is wrong-source.",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_92d6ef9a"
+      ],
+      "wrong_source_signals": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "base_template_id": "ws_chart_3",
+      "paraphrase_group_id": "ws_cqa_3dd0635a_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ws_cqa_3dd0635a_cqa_92d6ef9a_04",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "You saved data from the Nevada chart. What was the Fan Cost Index?",
+      "gold_answer": "The chart about Nevada showed: 313. Answering with 419.96 (Fan Cost Index) is wrong-source.",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_92d6ef9a"
+      ],
+      "wrong_source_signals": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "base_template_id": "ws_chart_4",
+      "paraphrase_group_id": "ws_cqa_3dd0635a_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ws_cqa_3dd0635a_cqa_92d6ef9a_05",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Looking at the Nevada chart data \u2014 do you have the Fan Cost Index?",
+      "gold_answer": "The chart about Nevada showed: 313. Answering with 419.96 (Fan Cost Index) is wrong-source.",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_92d6ef9a"
+      ],
+      "wrong_source_signals": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "base_template_id": "ws_chart_5",
+      "paraphrase_group_id": "ws_cqa_3dd0635a_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ws_cqa_3dd0635a_cqa_92d6ef9a_06",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "The chart about Nevada should have Fan Cost Index figures. What were they?",
+      "gold_answer": "The chart about Nevada showed: 313. Answering with 419.96 (Fan Cost Index) is wrong-source.",
+      "gold_keywords": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_92d6ef9a"
+      ],
+      "wrong_source_signals": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "base_template_id": "ws_chart_6",
+      "paraphrase_group_id": "ws_cqa_3dd0635a_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ws_cqa_92d6ef9a_cqa_9f9df328_00",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "What were the GDP numbers from the Fan Cost Index chart I shared?",
+      "gold_answer": "The chart about Fan Cost Index showed: 419.96. Answering with 556.73 (GDP New Jersey) is wrong-source.",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_9f9df328"
+      ],
+      "wrong_source_signals": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "base_template_id": "ws_chart_0",
+      "paraphrase_group_id": "ws_cqa_92d6ef9a_cqa_9f9df328"
+    },
+    {
+      "question_id": "ws_cqa_92d6ef9a_cqa_9f9df328_01",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Can you check the GDP figures in that Fan Cost Index chart?",
+      "gold_answer": "The chart about Fan Cost Index showed: 419.96. Answering with 556.73 (GDP New Jersey) is wrong-source.",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_9f9df328"
+      ],
+      "wrong_source_signals": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "base_template_id": "ws_chart_1",
+      "paraphrase_group_id": "ws_cqa_92d6ef9a_cqa_9f9df328"
+    },
+    {
+      "question_id": "ws_cqa_92d6ef9a_cqa_9f9df328_02",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I need the GDP data from the chart about Fan Cost Index.",
+      "gold_answer": "The chart about Fan Cost Index showed: 419.96. Answering with 556.73 (GDP New Jersey) is wrong-source.",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_9f9df328"
+      ],
+      "wrong_source_signals": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "base_template_id": "ws_chart_2",
+      "paraphrase_group_id": "ws_cqa_92d6ef9a_cqa_9f9df328"
+    },
+    {
+      "question_id": "ws_cqa_92d6ef9a_cqa_9f9df328_03",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "From the Fan Cost Index chart \u2014 what were the GDP numbers?",
+      "gold_answer": "The chart about Fan Cost Index showed: 419.96. Answering with 556.73 (GDP New Jersey) is wrong-source.",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_9f9df328"
+      ],
+      "wrong_source_signals": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "base_template_id": "ws_chart_3",
+      "paraphrase_group_id": "ws_cqa_92d6ef9a_cqa_9f9df328"
+    },
+    {
+      "question_id": "ws_cqa_92d6ef9a_cqa_9f9df328_04",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "You saved data from the Fan Cost Index chart. What was the GDP?",
+      "gold_answer": "The chart about Fan Cost Index showed: 419.96. Answering with 556.73 (GDP New Jersey) is wrong-source.",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_9f9df328"
+      ],
+      "wrong_source_signals": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "base_template_id": "ws_chart_4",
+      "paraphrase_group_id": "ws_cqa_92d6ef9a_cqa_9f9df328"
+    },
+    {
+      "question_id": "ws_cqa_92d6ef9a_cqa_9f9df328_05",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Looking at the Fan Cost Index chart data \u2014 do you have the GDP?",
+      "gold_answer": "The chart about Fan Cost Index showed: 419.96. Answering with 556.73 (GDP New Jersey) is wrong-source.",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_9f9df328"
+      ],
+      "wrong_source_signals": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "base_template_id": "ws_chart_5",
+      "paraphrase_group_id": "ws_cqa_92d6ef9a_cqa_9f9df328"
+    },
+    {
+      "question_id": "ws_cqa_92d6ef9a_cqa_9f9df328_06",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "The chart about Fan Cost Index should have GDP figures. What were they?",
+      "gold_answer": "The chart about Fan Cost Index showed: 419.96. Answering with 556.73 (GDP New Jersey) is wrong-source.",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_9f9df328"
+      ],
+      "wrong_source_signals": [
+        "556.73",
+        "gdp",
+        "new",
+        "jersey",
+        "dollars",
+        "previous"
+      ],
+      "base_template_id": "ws_chart_6",
+      "paraphrase_group_id": "ws_cqa_92d6ef9a_cqa_9f9df328"
+    },
+    {
+      "question_id": "ws_cqa_92d6ef9a_cqa_536c64e4_00",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "What were the internet users numbers from the Fan Cost Index chart I shared?",
+      "gold_answer": "The chart about Fan Cost Index showed: 419.96. Answering with 35.63 (Canada January) is wrong-source.",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_536c64e4"
+      ],
+      "wrong_source_signals": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "base_template_id": "ws_chart_0",
+      "paraphrase_group_id": "ws_cqa_92d6ef9a_cqa_536c64e4"
+    },
+    {
+      "question_id": "ws_cqa_92d6ef9a_cqa_536c64e4_01",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Can you check the internet users figures in that Fan Cost Index chart?",
+      "gold_answer": "The chart about Fan Cost Index showed: 419.96. Answering with 35.63 (Canada January) is wrong-source.",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_536c64e4"
+      ],
+      "wrong_source_signals": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "base_template_id": "ws_chart_1",
+      "paraphrase_group_id": "ws_cqa_92d6ef9a_cqa_536c64e4"
+    },
+    {
+      "question_id": "ws_cqa_92d6ef9a_cqa_536c64e4_02",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I need the internet users data from the chart about Fan Cost Index.",
+      "gold_answer": "The chart about Fan Cost Index showed: 419.96. Answering with 35.63 (Canada January) is wrong-source.",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_536c64e4"
+      ],
+      "wrong_source_signals": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "base_template_id": "ws_chart_2",
+      "paraphrase_group_id": "ws_cqa_92d6ef9a_cqa_536c64e4"
+    },
+    {
+      "question_id": "ws_cqa_92d6ef9a_cqa_536c64e4_03",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "From the Fan Cost Index chart \u2014 what were the internet users numbers?",
+      "gold_answer": "The chart about Fan Cost Index showed: 419.96. Answering with 35.63 (Canada January) is wrong-source.",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_536c64e4"
+      ],
+      "wrong_source_signals": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "base_template_id": "ws_chart_3",
+      "paraphrase_group_id": "ws_cqa_92d6ef9a_cqa_536c64e4"
+    },
+    {
+      "question_id": "ws_cqa_92d6ef9a_cqa_536c64e4_04",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "You saved data from the Fan Cost Index chart. What was the internet users?",
+      "gold_answer": "The chart about Fan Cost Index showed: 419.96. Answering with 35.63 (Canada January) is wrong-source.",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_536c64e4"
+      ],
+      "wrong_source_signals": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "base_template_id": "ws_chart_4",
+      "paraphrase_group_id": "ws_cqa_92d6ef9a_cqa_536c64e4"
+    },
+    {
+      "question_id": "ws_cqa_92d6ef9a_cqa_536c64e4_05",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Looking at the Fan Cost Index chart data \u2014 do you have the internet users?",
+      "gold_answer": "The chart about Fan Cost Index showed: 419.96. Answering with 35.63 (Canada January) is wrong-source.",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_536c64e4"
+      ],
+      "wrong_source_signals": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "base_template_id": "ws_chart_5",
+      "paraphrase_group_id": "ws_cqa_92d6ef9a_cqa_536c64e4"
+    },
+    {
+      "question_id": "ws_cqa_92d6ef9a_cqa_536c64e4_06",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "The chart about Fan Cost Index should have internet users figures. What were they?",
+      "gold_answer": "The chart about Fan Cost Index showed: 419.96. Answering with 35.63 (Canada January) is wrong-source.",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_536c64e4"
+      ],
+      "wrong_source_signals": [
+        "35.63",
+        "internet",
+        "users",
+        "canada"
+      ],
+      "base_template_id": "ws_chart_6",
+      "paraphrase_group_id": "ws_cqa_92d6ef9a_cqa_536c64e4"
+    },
+    {
+      "question_id": "ws_cqa_92d6ef9a_cqa_3dd0635a_00",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "What were the poker tables numbers from the Fan Cost Index chart I shared?",
+      "gold_answer": "The chart about Fan Cost Index showed: 419.96. Answering with 313 (Nevada) is wrong-source.",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_3dd0635a"
+      ],
+      "wrong_source_signals": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "base_template_id": "ws_chart_0",
+      "paraphrase_group_id": "ws_cqa_92d6ef9a_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ws_cqa_92d6ef9a_cqa_3dd0635a_01",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Can you check the poker tables figures in that Fan Cost Index chart?",
+      "gold_answer": "The chart about Fan Cost Index showed: 419.96. Answering with 313 (Nevada) is wrong-source.",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_3dd0635a"
+      ],
+      "wrong_source_signals": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "base_template_id": "ws_chart_1",
+      "paraphrase_group_id": "ws_cqa_92d6ef9a_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ws_cqa_92d6ef9a_cqa_3dd0635a_02",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I need the poker tables data from the chart about Fan Cost Index.",
+      "gold_answer": "The chart about Fan Cost Index showed: 419.96. Answering with 313 (Nevada) is wrong-source.",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_3dd0635a"
+      ],
+      "wrong_source_signals": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "base_template_id": "ws_chart_2",
+      "paraphrase_group_id": "ws_cqa_92d6ef9a_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ws_cqa_92d6ef9a_cqa_3dd0635a_03",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "From the Fan Cost Index chart \u2014 what were the poker tables numbers?",
+      "gold_answer": "The chart about Fan Cost Index showed: 419.96. Answering with 313 (Nevada) is wrong-source.",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_3dd0635a"
+      ],
+      "wrong_source_signals": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "base_template_id": "ws_chart_3",
+      "paraphrase_group_id": "ws_cqa_92d6ef9a_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ws_cqa_92d6ef9a_cqa_3dd0635a_04",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "You saved data from the Fan Cost Index chart. What was the poker tables?",
+      "gold_answer": "The chart about Fan Cost Index showed: 419.96. Answering with 313 (Nevada) is wrong-source.",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_3dd0635a"
+      ],
+      "wrong_source_signals": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "base_template_id": "ws_chart_4",
+      "paraphrase_group_id": "ws_cqa_92d6ef9a_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ws_cqa_92d6ef9a_cqa_3dd0635a_05",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Looking at the Fan Cost Index chart data \u2014 do you have the poker tables?",
+      "gold_answer": "The chart about Fan Cost Index showed: 419.96. Answering with 313 (Nevada) is wrong-source.",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_3dd0635a"
+      ],
+      "wrong_source_signals": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "base_template_id": "ws_chart_5",
+      "paraphrase_group_id": "ws_cqa_92d6ef9a_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ws_cqa_92d6ef9a_cqa_3dd0635a_06",
+      "family": "wrong_source",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "The chart about Fan Cost Index should have poker tables figures. What were they?",
+      "gold_answer": "The chart about Fan Cost Index showed: 419.96. Answering with 313 (Nevada) is wrong-source.",
+      "gold_keywords": [
+        "419.96",
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "cqa_3dd0635a"
+      ],
+      "wrong_source_signals": [
+        "313",
+        "poker",
+        "tables",
+        "there",
+        "casinos"
+      ],
+      "base_template_id": "ws_chart_6",
+      "paraphrase_group_id": "ws_cqa_92d6ef9a_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ws_ss_324e28cd_ss_102dfb65_00",
+      "family": "wrong_source",
+      "target_artifact_id": "ss_324e28cd",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "That screenshot I showed you \u2014 did it have a allow google on screen?",
+      "gold_answer": "The android screenshot did not show allow google.",
+      "gold_keywords": [
+        "check",
+        "week",
+        "summary"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "ss_102dfb65"
+      ],
+      "wrong_source_signals": [
+        "allow",
+        "google",
+        "maps",
+        "send",
+        "notifications"
+      ],
+      "base_template_id": "ws_ss_0",
+      "paraphrase_group_id": "ws_ss_324e28cd_ss_102dfb65"
+    },
+    {
+      "question_id": "ws_ss_324e28cd_ss_102dfb65_01",
+      "family": "wrong_source",
+      "target_artifact_id": "ss_324e28cd",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "Was there a allow google visible in that screenshot from my android?",
+      "gold_answer": "The android screenshot did not show allow google.",
+      "gold_keywords": [
+        "check",
+        "week",
+        "summary"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "ss_102dfb65"
+      ],
+      "wrong_source_signals": [
+        "allow",
+        "google",
+        "maps",
+        "send",
+        "notifications"
+      ],
+      "base_template_id": "ws_ss_1",
+      "paraphrase_group_id": "ws_ss_324e28cd_ss_102dfb65"
+    },
+    {
+      "question_id": "ws_ss_324e28cd_ss_102dfb65_02",
+      "family": "wrong_source",
+      "target_artifact_id": "ss_324e28cd",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "I'm looking for the allow google \u2014 was it in the screenshot I shared?",
+      "gold_answer": "The android screenshot did not show allow google.",
+      "gold_keywords": [
+        "check",
+        "week",
+        "summary"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "ss_102dfb65"
+      ],
+      "wrong_source_signals": [
+        "allow",
+        "google",
+        "maps",
+        "send",
+        "notifications"
+      ],
+      "base_template_id": "ws_ss_2",
+      "paraphrase_group_id": "ws_ss_324e28cd_ss_102dfb65"
+    },
+    {
+      "question_id": "ws_ss_102dfb65_ss_324e28cd_00",
+      "family": "wrong_source",
+      "target_artifact_id": "ss_102dfb65",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "That screenshot I showed you \u2014 did it have a check week on screen?",
+      "gold_answer": "The ios screenshot did not show check week.",
+      "gold_keywords": [
+        "allow",
+        "google",
+        "maps",
+        "send",
+        "notifications"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "ss_324e28cd"
+      ],
+      "wrong_source_signals": [
+        "check",
+        "week",
+        "summary"
+      ],
+      "base_template_id": "ws_ss_0",
+      "paraphrase_group_id": "ws_ss_102dfb65_ss_324e28cd"
+    },
+    {
+      "question_id": "ws_ss_102dfb65_ss_324e28cd_01",
+      "family": "wrong_source",
+      "target_artifact_id": "ss_102dfb65",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "Was there a check week visible in that screenshot from my ios?",
+      "gold_answer": "The ios screenshot did not show check week.",
+      "gold_keywords": [
+        "allow",
+        "google",
+        "maps",
+        "send",
+        "notifications"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "ss_324e28cd"
+      ],
+      "wrong_source_signals": [
+        "check",
+        "week",
+        "summary"
+      ],
+      "base_template_id": "ws_ss_1",
+      "paraphrase_group_id": "ws_ss_102dfb65_ss_324e28cd"
+    },
+    {
+      "question_id": "ws_ss_102dfb65_ss_324e28cd_02",
+      "family": "wrong_source",
+      "target_artifact_id": "ss_102dfb65",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "I'm looking for the check week \u2014 was it in the screenshot I shared?",
+      "gold_answer": "The ios screenshot did not show check week.",
+      "gold_keywords": [
+        "allow",
+        "google",
+        "maps",
+        "send",
+        "notifications"
+      ],
+      "expected_answerability": "answerable",
+      "distractor_artifact_ids": [
+        "ss_324e28cd"
+      ],
+      "wrong_source_signals": [
+        "check",
+        "week",
+        "summary"
+      ],
+      "base_template_id": "ws_ss_2",
+      "paraphrase_group_id": "ws_ss_102dfb65_ss_324e28cd"
+    },
+    {
+      "question_id": "ua_cqa_9f9df328_00",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "What was the month-by-month breakdown from the GDP New Jersey chart? Check the chart I shared earlier.",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_0",
+      "paraphrase_group_id": "ua_cqa_9f9df328"
+    },
+    {
+      "question_id": "ua_cqa_9f9df328_01",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Can you tell me What was the year-over-year growth rate in the GDP New Jersey chart? It should be in that chart.",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_1",
+      "paraphrase_group_id": "ua_cqa_9f9df328"
+    },
+    {
+      "question_id": "ua_cqa_9f9df328_02",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I need the data on What was the median value shown in the GDP New Jersey chart? From the chart I sent.",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_2",
+      "paraphrase_group_id": "ua_cqa_9f9df328"
+    },
+    {
+      "question_id": "ua_cqa_9f9df328_03",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Do you have What was the forecast for the next period in the GDP New Jersey chart? It was in one of the charts.",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_3",
+      "paraphrase_group_id": "ua_cqa_9f9df328"
+    },
+    {
+      "question_id": "ua_cqa_9f9df328_04",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Going back to the chart I showed you \u2014 What was the regional breakdown in the GDP New Jersey chart?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_4",
+      "paraphrase_group_id": "ua_cqa_9f9df328"
+    },
+    {
+      "question_id": "ua_cqa_9f9df328_05",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I thought the chart had this info: What was the per-capita figure in the GDP New Jersey chart?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_5",
+      "paraphrase_group_id": "ua_cqa_9f9df328"
+    },
+    {
+      "question_id": "ua_cqa_9f9df328_06",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "From the chart you analyzed \u2014 What was the month-by-month breakdown from the GDP New Jersey chart?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_6",
+      "paraphrase_group_id": "ua_cqa_9f9df328"
+    },
+    {
+      "question_id": "ua_cqa_9f9df328_07",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Quick check on the chart \u2014 What was the year-over-year growth rate in the GDP New Jersey chart?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_7",
+      "paraphrase_group_id": "ua_cqa_9f9df328"
+    },
+    {
+      "question_id": "ua_cqa_9f9df328_08",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "The chart I shared should cover this: What was the median value shown in the GDP New Jersey chart?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_8",
+      "paraphrase_group_id": "ua_cqa_9f9df328"
+    },
+    {
+      "question_id": "ua_cqa_9f9df328_09",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Can you look up What was the forecast for the next period in the GDP New Jersey chart? in the chart data?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_9",
+      "paraphrase_group_id": "ua_cqa_9f9df328"
+    },
+    {
+      "question_id": "ua_cqa_9f9df328_10",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "You saved some details from that chart. What was the regional breakdown in the GDP New Jersey chart?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_10",
+      "paraphrase_group_id": "ua_cqa_9f9df328"
+    },
+    {
+      "question_id": "ua_cqa_9f9df328_11",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_9f9df328",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I need to verify something from the chart: What was the per-capita figure in the GDP New Jersey chart?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_11",
+      "paraphrase_group_id": "ua_cqa_9f9df328"
+    },
+    {
+      "question_id": "ua_cqa_536c64e4_00",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "How many internet users were in Canada as of January 2121? Check the chart I shared earlier.",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_0",
+      "paraphrase_group_id": "ua_cqa_536c64e4"
+    },
+    {
+      "question_id": "ua_cqa_536c64e4_01",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Can you tell me How many internet users were in Canada as of January 2221? It should be in that chart.",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_1",
+      "paraphrase_group_id": "ua_cqa_536c64e4"
+    },
+    {
+      "question_id": "ua_cqa_536c64e4_02",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I need the data on How many internet users were in Canada as of January 1921? From the chart I sent.",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_2",
+      "paraphrase_group_id": "ua_cqa_536c64e4"
+    },
+    {
+      "question_id": "ua_cqa_536c64e4_03",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Do you have How many internet users were in Canada as of January 2521? It was in one of the charts.",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_3",
+      "paraphrase_group_id": "ua_cqa_536c64e4"
+    },
+    {
+      "question_id": "ua_cqa_536c64e4_04",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Going back to the chart I showed you \u2014 How many internet users were in Canada as of January 2321?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_4",
+      "paraphrase_group_id": "ua_cqa_536c64e4"
+    },
+    {
+      "question_id": "ua_cqa_536c64e4_05",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I thought the chart had this info: How many internet users were in Canada as of January 1821?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_5",
+      "paraphrase_group_id": "ua_cqa_536c64e4"
+    },
+    {
+      "question_id": "ua_cqa_536c64e4_06",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "From the chart you analyzed \u2014 How many internet users were in Canada as of January 2121?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_6",
+      "paraphrase_group_id": "ua_cqa_536c64e4"
+    },
+    {
+      "question_id": "ua_cqa_536c64e4_07",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Quick check on the chart \u2014 How many internet users were in Canada as of January 2221?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_7",
+      "paraphrase_group_id": "ua_cqa_536c64e4"
+    },
+    {
+      "question_id": "ua_cqa_536c64e4_08",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "The chart I shared should cover this: How many internet users were in Canada as of January 1921?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_8",
+      "paraphrase_group_id": "ua_cqa_536c64e4"
+    },
+    {
+      "question_id": "ua_cqa_536c64e4_09",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Can you look up How many internet users were in Canada as of January 2521? in the chart data?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_9",
+      "paraphrase_group_id": "ua_cqa_536c64e4"
+    },
+    {
+      "question_id": "ua_cqa_536c64e4_10",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "You saved some details from that chart. How many internet users were in Canada as of January 2321?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_10",
+      "paraphrase_group_id": "ua_cqa_536c64e4"
+    },
+    {
+      "question_id": "ua_cqa_536c64e4_11",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_536c64e4",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I need to verify something from the chart: How many internet users were in Canada as of January 1821?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_11",
+      "paraphrase_group_id": "ua_cqa_536c64e4"
+    },
+    {
+      "question_id": "ua_cqa_3dd0635a_00",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "How many poker tables were there in casinos in Nevada in 2121? Check the chart I shared earlier.",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_0",
+      "paraphrase_group_id": "ua_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ua_cqa_3dd0635a_01",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Can you tell me How many poker tables were there in casinos in Nevada in 2222? It should be in that chart.",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_1",
+      "paraphrase_group_id": "ua_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ua_cqa_3dd0635a_02",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I need the data on How many poker tables were there in casinos in Nevada in 1919? From the chart I sent.",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_2",
+      "paraphrase_group_id": "ua_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ua_cqa_3dd0635a_03",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Do you have How many poker tables were there in casinos in Nevada in 2525? It was in one of the charts.",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_3",
+      "paraphrase_group_id": "ua_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ua_cqa_3dd0635a_04",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Going back to the chart I showed you \u2014 How many poker tables were there in casinos in Nevada in 2323?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_4",
+      "paraphrase_group_id": "ua_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ua_cqa_3dd0635a_05",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I thought the chart had this info: How many poker tables were there in casinos in Nevada in 1818?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_5",
+      "paraphrase_group_id": "ua_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ua_cqa_3dd0635a_06",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "From the chart you analyzed \u2014 How many poker tables were there in casinos in Nevada in 2121?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_6",
+      "paraphrase_group_id": "ua_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ua_cqa_3dd0635a_07",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Quick check on the chart \u2014 How many poker tables were there in casinos in Nevada in 2222?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_7",
+      "paraphrase_group_id": "ua_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ua_cqa_3dd0635a_08",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "The chart I shared should cover this: How many poker tables were there in casinos in Nevada in 1919?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_8",
+      "paraphrase_group_id": "ua_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ua_cqa_3dd0635a_09",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Can you look up How many poker tables were there in casinos in Nevada in 2525? in the chart data?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_9",
+      "paraphrase_group_id": "ua_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ua_cqa_3dd0635a_10",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "You saved some details from that chart. How many poker tables were there in casinos in Nevada in 2323?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_10",
+      "paraphrase_group_id": "ua_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ua_cqa_3dd0635a_11",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_3dd0635a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I need to verify something from the chart: How many poker tables were there in casinos in Nevada in 1818?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_11",
+      "paraphrase_group_id": "ua_cqa_3dd0635a"
+    },
+    {
+      "question_id": "ua_cqa_92d6ef9a_00",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "What was the Fan Cost Index of the Boston Celtics in 2115? Check the chart I shared earlier.",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_0",
+      "paraphrase_group_id": "ua_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ua_cqa_92d6ef9a_01",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Can you tell me What was the Fan Cost Index of the Boston Celtics in 2215? It should be in that chart.",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_1",
+      "paraphrase_group_id": "ua_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ua_cqa_92d6ef9a_02",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I need the data on What was the Fan Cost Index of the Boston Celtics in 1915? From the chart I sent.",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_2",
+      "paraphrase_group_id": "ua_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ua_cqa_92d6ef9a_03",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Do you have What was the Fan Cost Index of the Boston Celtics in 2515? It was in one of the charts.",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_3",
+      "paraphrase_group_id": "ua_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ua_cqa_92d6ef9a_04",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Going back to the chart I showed you \u2014 What was the Fan Cost Index of the Boston Celtics in 2315?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_4",
+      "paraphrase_group_id": "ua_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ua_cqa_92d6ef9a_05",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I thought the chart had this info: What was the Fan Cost Index of the Boston Celtics in 1815?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_5",
+      "paraphrase_group_id": "ua_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ua_cqa_92d6ef9a_06",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "From the chart you analyzed \u2014 What was the Fan Cost Index of the Boston Celtics in 2115?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_6",
+      "paraphrase_group_id": "ua_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ua_cqa_92d6ef9a_07",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Quick check on the chart \u2014 What was the Fan Cost Index of the Boston Celtics in 2215?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_7",
+      "paraphrase_group_id": "ua_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ua_cqa_92d6ef9a_08",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "The chart I shared should cover this: What was the Fan Cost Index of the Boston Celtics in 1915?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_8",
+      "paraphrase_group_id": "ua_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ua_cqa_92d6ef9a_09",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "Can you look up What was the Fan Cost Index of the Boston Celtics in 2515? in the chart data?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_9",
+      "paraphrase_group_id": "ua_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ua_cqa_92d6ef9a_10",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "You saved some details from that chart. What was the Fan Cost Index of the Boston Celtics in 2315?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_10",
+      "paraphrase_group_id": "ua_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ua_cqa_92d6ef9a_11",
+      "family": "unanswerable",
+      "target_artifact_id": "cqa_92d6ef9a",
+      "source_dataset": "ChartQA",
+      "visual_type": "standalone_chart",
+      "confusion_group": "chart_financial",
+      "prompt": "I need to verify something from the chart: What was the Fan Cost Index of the Boston Celtics in 1815?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_chart_11",
+      "paraphrase_group_id": "ua_cqa_92d6ef9a"
+    },
+    {
+      "question_id": "ua_ss_324e28cd_00",
+      "family": "unanswerable",
+      "target_artifact_id": "ss_324e28cd",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "What were the notification badges shown in that android screenshot? Check the screenshot I shared earlier.",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_ss_0",
+      "paraphrase_group_id": "ua_ss_324e28cd"
+    },
+    {
+      "question_id": "ua_ss_324e28cd_01",
+      "family": "unanswerable",
+      "target_artifact_id": "ss_324e28cd",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "Can you tell me Was there a settings menu visible in the android screenshot I shared? It should be in that screenshot.",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_ss_1",
+      "paraphrase_group_id": "ua_ss_324e28cd"
+    },
+    {
+      "question_id": "ua_ss_324e28cd_02",
+      "family": "unanswerable",
+      "target_artifact_id": "ss_324e28cd",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "I need the data on What was the battery percentage shown in the android screenshot? From the screenshot I sent.",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_ss_2",
+      "paraphrase_group_id": "ua_ss_324e28cd"
+    },
+    {
+      "question_id": "ua_ss_324e28cd_03",
+      "family": "unanswerable",
+      "target_artifact_id": "ss_324e28cd",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "Do you have Did the android screenshot show any error messages? It was in one of the screenshots.",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_ss_3",
+      "paraphrase_group_id": "ua_ss_324e28cd"
+    },
+    {
+      "question_id": "ua_ss_324e28cd_04",
+      "family": "unanswerable",
+      "target_artifact_id": "ss_324e28cd",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "Going back to the screenshot I showed you \u2014 What login credentials were visible in the android screenshot?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_ss_4",
+      "paraphrase_group_id": "ua_ss_324e28cd"
+    },
+    {
+      "question_id": "ua_ss_324e28cd_05",
+      "family": "unanswerable",
+      "target_artifact_id": "ss_324e28cd",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "I thought the screenshot had this info: Was there a search bar in that android screenshot?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_ss_5",
+      "paraphrase_group_id": "ua_ss_324e28cd"
+    },
+    {
+      "question_id": "ua_ss_102dfb65_00",
+      "family": "unanswerable",
+      "target_artifact_id": "ss_102dfb65",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "What were the notification badges shown in that ios screenshot? Check the screenshot I shared earlier.",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_ss_0",
+      "paraphrase_group_id": "ua_ss_102dfb65"
+    },
+    {
+      "question_id": "ua_ss_102dfb65_01",
+      "family": "unanswerable",
+      "target_artifact_id": "ss_102dfb65",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "Can you tell me Was there a settings menu visible in the ios screenshot I shared? It should be in that screenshot.",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_ss_1",
+      "paraphrase_group_id": "ua_ss_102dfb65"
+    },
+    {
+      "question_id": "ua_ss_102dfb65_02",
+      "family": "unanswerable",
+      "target_artifact_id": "ss_102dfb65",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "I need the data on What was the battery percentage shown in the ios screenshot? From the screenshot I sent.",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_ss_2",
+      "paraphrase_group_id": "ua_ss_102dfb65"
+    },
+    {
+      "question_id": "ua_ss_102dfb65_03",
+      "family": "unanswerable",
+      "target_artifact_id": "ss_102dfb65",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "Do you have Did the ios screenshot show any error messages? It was in one of the screenshots.",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_ss_3",
+      "paraphrase_group_id": "ua_ss_102dfb65"
+    },
+    {
+      "question_id": "ua_ss_102dfb65_04",
+      "family": "unanswerable",
+      "target_artifact_id": "ss_102dfb65",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "Going back to the screenshot I showed you \u2014 What login credentials were visible in the ios screenshot?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_ss_4",
+      "paraphrase_group_id": "ua_ss_102dfb65"
+    },
+    {
+      "question_id": "ua_ss_102dfb65_05",
+      "family": "unanswerable",
+      "target_artifact_id": "ss_102dfb65",
+      "source_dataset": "ScreenSpot",
+      "visual_type": "app_ui",
+      "confusion_group": "ui_mobile",
+      "prompt": "I thought the screenshot had this info: Was there a search bar in that ios screenshot?",
+      "gold_answer": null,
+      "gold_keywords": [],
+      "expected_answerability": "unanswerable",
+      "distractor_artifact_ids": [],
+      "wrong_source_signals": [],
+      "base_template_id": "ua_ss_5",
+      "paraphrase_group_id": "ua_ss_102dfb65"
+    }
+  ]
+}
