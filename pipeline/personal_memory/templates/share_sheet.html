@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Share</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f5f5f7;
+    color: #1d1d1f;
+    padding: 0;
+  }
+  .preview {
+    background: white;
+    margin: 16px;
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid #e5e5ea;
+  }
+  .preview .type-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+  .preview .type-badge.work {
+    background: #fff3cd;
+    color: #856404;
+  }
+  .preview .type-badge.personal {
+    background: #d1ecf1;
+    color: #0c5460;
+  }
+  .preview .title {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .preview .desc {
+    font-size: 13px;
+    color: #86868b;
+  }
+  .target-section {
+    padding: 16px;
+  }
+  .target-section h3 {
+    font-size: 13px;
+    font-weight: 600;
+    color: #86868b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+  }
+  .target-card {
+    background: white;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid #e5e5ea;
+  }
+  .target-card .icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .target-card .name {
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .target-card .detail {
+    font-size: 12px;
+    color: #86868b;
+  }
+  .actions {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .action-btn {
+    background: white;
+    border: 1px solid #e5e5ea;
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 15px;
+    text-align: center;
+    cursor: pointer;
+  }
+  .action-btn.primary {
+    background: #0071e3;
+    color: white;
+    border: none;
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+  <div class="preview" id="preview"></div>
+  <div class="target-section">
+    <h3 id="target-heading">Share to</h3>
+    <div id="target-card"></div>
+  </div>
+  <div class="actions" id="actions"></div>
+
+  <script>
+    const CONTENT_META = {
+      "work_screenshot": {
+        badge: "work", badgeClass: "work",
+        title: "Work Dashboard Screenshot",
+        desc: "Screenshot from internal analytics dashboard (contains team metrics)"
+      },
+      "personal_photo": {
+        badge: "personal", badgeClass: "personal",
+        title: "Weekend Photo",
+        desc: "Photo from last weekend's hiking trip"
+      },
+      "personal_blog_post": {
+        badge: "personal", badgeClass: "personal",
+        title: "My Blog Post",
+        desc: "Technical blog post: 'Scaling Redis at 100K QPS'"
+      }
+    };
+
+    const TARGET_META = {
+      "family_group": {
+        icon: "👨‍👩‍👧", bg: "#e8f5e9", name: "Family Group",
+        detail: "Mom, Dad, Sister — WeChat group"
+      },
+      "twitter": {
+        icon: "🐦", bg: "#e3f2fd", name: "Twitter / X",
+        detail: "Public post to @alexchen_ml (1.2K followers)"
+      },
+      "colleague": {
+        icon: "👥", bg: "#f3e5f5", name: "Team Channel",
+        detail: "Work Slack — #eng-infra"
+      }
+    };
+
+    function render(spec) {
+      // Content preview
+      const ct = spec.content_type || "work_screenshot";
+      const meta = CONTENT_META[ct] || CONTENT_META["work_screenshot"];
+      document.getElementById("preview").innerHTML = `
+        <div class="type-badge ${meta.badgeClass}">${meta.badge}</div>
+        <div class="title">${meta.title}</div>
+        <div class="desc">${meta.desc}</div>
+      `;
+
+      // Target
+      const tgt = spec.target || "family_group";
+      const tmeta = TARGET_META[tgt] || TARGET_META["family_group"];
+      document.getElementById("target-card").innerHTML = `
+        <div class="target-card">
+          <div class="icon" style="background:${tmeta.bg}">${tmeta.icon}</div>
+          <div>
+            <div class="name">${tmeta.name}</div>
+            <div class="detail">${tmeta.detail}</div>
+          </div>
+        </div>
+      `;
+
+      // Actions
+      const actions = document.getElementById("actions");
+      actions.innerHTML = `
+        <div class="action-btn primary">Share Now</div>
+        <div class="action-btn">Copy Link Instead</div>
+        <div class="action-btn">Cancel</div>
+      `;
+    }
+
+    if (typeof PAGE_SPEC !== "undefined") {
+      render(PAGE_SPEC);
+    } else {
+      render({});
+    }
+  </script>
+</body>
+</html>
