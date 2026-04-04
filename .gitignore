@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Environment
+.env
+
+# Logs
+logs/
+
+# Results
+results/
+
+# Internal documentation (Chinese notes, design docs)
+docs/
+
+# Non-README markdown (Chinese README, execution guide, etc.)
+README_ZH.md
+README-exe.md
+
+# Generated data (regenerate via: python -m pipeline.generate_dataset)
+data/generated_images/screenshot/
+data/generated_images/chart/
+data/generated_images/ui/
+data/generated_images/page/
+data/generated_images/screenshot/.cache/
+data/datasets_cache/
+data/generated_personal_ui/
+
+# IDE
+.idea/
+.vscode/
+.claude/
+
+# OS
+.DS_Store
