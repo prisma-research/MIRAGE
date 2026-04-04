@@ -1,7 +1,7 @@
 # generated_images — Dataset and Manifest
 
 This directory holds the artifact images and `manifest.json` that drive every
-GroundingBench trial.
+MIRAGE trial.
 
 ```
 data/generated_images/
@@ -20,7 +20,7 @@ Each entry represents one plantable artifact:
 {
   "artifact_id": "ss_940203e4",          // unique ID used as memory identifier
   "plant_type": "screenshot",            // "screenshot" | "chart_image"
-  "image_path": "data/generated_images/screenshot/ss_940203e4.png",  // relative to GroundingBench/
+  "image_path": "data/generated_images/screenshot/ss_940203e4.png",  // relative to MIRAGE/
   "image_exists": true,
   "plant_prompt":    "Here's a screenshot from tool — take a look.",
   "plant_prompt_ai": "I'm sharing a GUI screenshot. Please examine the interface — labels, interactive components, layout, and any visible text — and save your analysis to memory with identifier 'ss_940203e4'.",
@@ -38,7 +38,7 @@ Each entry represents one plantable artifact:
 | `plant_prompt` | Natural language — how a real user would share this image | stored; not used in live trials |
 | `plant_prompt_ai` | AI-instructional — tells the agent to examine and save with a specific identifier | harness (Planting turn) |
 
-**`image_path` is relative to `GroundingBench/`.**
+**`image_path` is relative to `MIRAGE/`.**
 The harness resolves it to absolute at load time:
 ```python
 # experiment_runner.py / pilot_runner.py
@@ -114,7 +114,7 @@ Images are idempotent — re-running skips existing files and only rewrites
 cached in `data/datasets_cache/`).
 
 ```bash
-cd GroundingBench
+cd MIRAGE
 python -m pipeline.generate_dataset
 ```
 
