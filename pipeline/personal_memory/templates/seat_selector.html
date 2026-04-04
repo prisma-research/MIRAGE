@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Select Your Seat</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f5f5f7;
+    color: #1d1d1f;
+    padding: 0;
+  }
+  .header {
+    background: #0071e3;
+    color: white;
+    padding: 16px 24px;
+    font-size: 14px;
+  }
+  .header .flight-info {
+    font-size: 22px;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+  .header .date {
+    font-size: 13px;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .content {
+    padding: 24px;
+  }
+  h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #1d1d1f;
+  }
+  .seat-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .seat-card {
+    background: white;
+    border: 2px solid #d2d2d7;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .seat-card:hover {
+    border-color: #0071e3;
+  }
+  .seat-card .label {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .seat-card .desc {
+    font-size: 13px;
+    color: #86868b;
+    margin-top: 2px;
+  }
+  .seat-card .radio {
+    width: 22px;
+    height: 22px;
+    border: 2px solid #d2d2d7;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .footer {
+    padding: 20px 24px;
+    text-align: center;
+  }
+  .btn {
+    background: #0071e3;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 48px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+  <div class="header">
+    <div>Booking Confirmation</div>
+    <div class="flight-info" id="flight">SH → BJ</div>
+    <div class="date" id="date">Date: 2026-04-05</div>
+  </div>
+  <div class="content">
+    <h2>Choose Your Seat Type</h2>
+    <div class="seat-options" id="options"></div>
+  </div>
+  <div class="footer">
+    <button class="btn">Confirm Selection</button>
+  </div>
+
+  <script>
+    const SEAT_DESC = {
+      "window": "Next to the window. Lean against the wall, enjoy the view.",
+      "aisle": "Easy access to the aisle. More legroom, quick exit.",
+      "middle": "Between window and aisle. Usually the last to fill."
+    };
+
+    function render(spec) {
+      document.getElementById("flight").textContent = spec.flight || "SH → BJ";
+      document.getElementById("date").textContent = "Date: " + (spec.date || "2026-04-05");
+      const container = document.getElementById("options");
+      const options = spec.seat_options || ["window", "aisle", "middle"];
+      options.forEach(opt => {
+        const card = document.createElement("div");
+        card.className = "seat-card";
+        card.innerHTML = `
+          <div>
+            <div class="label">${opt.charAt(0).toUpperCase() + opt.slice(1)} Seat</div>
+            <div class="desc">${SEAT_DESC[opt] || ""}</div>
+          </div>
+          <div class="radio"></div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // page_spec is injected as a global by the renderer
+    if (typeof PAGE_SPEC !== "undefined") {
+      render(PAGE_SPEC);
+    } else {
+      render({});
+    }
+  </script>
+</body>
+</html>
