@@ -1,0 +1,20 @@
+{
+  "name": "mirage-artifact-recall",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Condition-gated artifact_recall tool for MIRAGE CitationForce C2/C3/Cm trials.",
+  "type": "module",
+  "peerDependencies": {
+    "openclaw": ">=2026.3.7"
+  },
+  "peerDependenciesMeta": {
+    "openclaw": {
+      "optional": true
+    }
+  },
+  "openclaw": {
+    "extensions": [
+      "./openclaw_artifact_recall_plugin.ts"
+    ]
+  }
+}
