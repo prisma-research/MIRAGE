@@ -57,31 +57,65 @@ logger = logging.getLogger(__name__)
 
 UPSTREAM_BASE = "https://api.shubiaobiao.cn"
 
+# Model-to-upstream routing table.  Built lazily from EXPERIMENT_MODEL_REGISTRY
+# for providers with needsUsageProxy=True.  Maps model ID → upstream base URL
+# (without trailing /v1).  Requests whose model isn't in the table fall back to
+# UPSTREAM_BASE.
+_MODEL_UPSTREAM_ROUTES: dict[str, str] | None = None
+
+
+def _get_model_upstream_routes() -> dict[str, str]:
+    """Build model→upstream mapping from EXPERIMENT_MODEL_REGISTRY (cached)."""
+    global _MODEL_UPSTREAM_ROUTES
+    if _MODEL_UPSTREAM_ROUTES is not None:
+        return _MODEL_UPSTREAM_ROUTES
+    from constants import EXPERIMENT_MODEL_REGISTRY
+    routes: dict[str, str] = {}
+    for pid, reg in EXPERIMENT_MODEL_REGISTRY.items():
+        if not reg.get("needsUsageProxy"):
+            continue
+        base = reg["baseUrl"].rstrip("/")
+        # Strip trailing /v1 — we'll re-add the request path
+        if base.endswith("/v1"):
+            base = base[:-3]
+        for m in reg.get("models", []):
+            routes[m["id"]] = base
+    _MODEL_UPSTREAM_ROUTES = routes
+    return routes
+
+
 # Fields that the shubiaobiao proxy populates incorrectly (always 0)
 # while the standard prompt_tokens/completion_tokens carry the real values.
 MISLEADING_USAGE_FIELDS = {"input_tokens", "output_tokens", "input_tokens_details"}
 
 
 def _strip_misleading_usage(body: dict) -> dict:
-    """Fix misleading zero-valued usage fields from shubiaobiao API response.
+    """Normalise usage fields so OpenClaw's cascade always finds correct values.
 
-    Strategy: overwrite misleading zero-valued fields with the correct values
-    from prompt_tokens/completion_tokens. This ensures OpenClaw's ?? cascade
-    reads the correct value regardless of which field it hits first.
+    Handles two cases:
+      1. Shubiaobiao: sends input_tokens: 0 alongside correct prompt_tokens.
+         → overwrite input_tokens with prompt_tokens.
+      2. Local vllm: only sends prompt_tokens/completion_tokens (no input_tokens).
+         → inject input_tokens/output_tokens from prompt_tokens/completion_tokens.
 
-    - input_tokens: 0 → overwrite with prompt_tokens value
-    - output_tokens: 0 → overwrite with completion_tokens value
-    - input_tokens_details: 0/null → remove
+    OpenClaw's usage cascade checks input_tokens → prompt_tokens in order.
+    By ensuring input_tokens is always populated, we guarantee correct counting.
     """
     usage = body.get("usage")
     if isinstance(usage, dict):
         prompt = usage.get("prompt_tokens", 0)
         completion = usage.get("completion_tokens", 0)
 
-        # Overwrite misleading zeros with correct values
-        if usage.get("input_tokens") is not None and usage["input_tokens"] == 0 and prompt:
+        # Ensure input_tokens is present and correct
+        if "input_tokens" not in usage and prompt:
             usage["input_tokens"] = prompt
-        if usage.get("output_tokens") is not None and usage["output_tokens"] == 0 and completion:
+        elif usage.get("input_tokens") is not None and usage["input_tokens"] == 0 and prompt:
+            usage["input_tokens"] = prompt
+
+        # Ensure output_tokens is present and correct
+        if "output_tokens" not in usage and completion:
+            usage["output_tokens"] = completion
+        elif usage.get("output_tokens") is not None and usage["output_tokens"] == 0 and completion:
             usage["output_tokens"] = completion
 
         # Remove details fields that are always null/zero
@@ -160,71 +194,6 @@ def _json_to_sse(data: dict) -> bytes:
     return b"\n\n".join(lines)
 
 
-# JSON Schema keywords that Gemini's function-calling API rejects.
-# Gemini uses a strict subset of JSON Schema and does not recognise these.
-_GEMINI_UNSUPPORTED_SCHEMA_KEYS = frozenset({
-    "patternProperties",
-    "unevaluatedProperties",
-    "$schema",
-    "$id",
-    "$comment",
-    "if",
-    "then",
-    "else",
-    "allOf",
-    "anyOf",
-    "oneOf",
-    "not",
-    "contentMediaType",
-    "contentEncoding",
-})
-
-_GEMINI_MODEL_SUBSTRINGS = ("gemini",)
-
-
-def _is_gemini_model(model: str) -> bool:
-    if not model:
-        return False
-    model_lower = model.lower()
-    return any(s in model_lower for s in _GEMINI_MODEL_SUBSTRINGS)
-
-
-def _strip_gemini_schema_keys(obj: object) -> object:
-    """Recursively remove JSON Schema keywords unsupported by Gemini from *obj*."""
-    if isinstance(obj, dict):
-        return {
-            k: _strip_gemini_schema_keys(v)
-            for k, v in obj.items()
-            if k not in _GEMINI_UNSUPPORTED_SCHEMA_KEYS
-        }
-    if isinstance(obj, list):
-        return [_strip_gemini_schema_keys(item) for item in obj]
-    return obj
-
-
-def _sanitize_tools_for_gemini(req_json: dict) -> dict:
-    """Strip unsupported schema keywords from tool function declarations for Gemini.
-
-    Gemini rejects requests whose tool schemas contain keywords like
-    ``patternProperties`` that are not part of Gemini's supported subset
-    of JSON Schema.  This function strips those keys recursively from the
-    ``tools`` array before the request is forwarded upstream.
-
-    Only applied when the model name contains ``gemini``.
-    """
-    model = req_json.get("model", "")
-    if not _is_gemini_model(model):
-        return req_json
-    tools = req_json.get("tools")
-    if not tools:
-        return req_json
-    cleaned = _strip_gemini_schema_keys(tools)
-    if cleaned != tools:
-        logger.info("Gemini tool-schema sanitize: stripped unsupported keys from tools for model=%s", model)
-        req_json = {**req_json, "tools": cleaned}
-    return req_json
-
-
 def _strip_usage_from_sse(body: bytes) -> bytes:
     """Strip misleading usage fields from SSE ``data:`` chunks.
 
@@ -257,11 +226,25 @@ def _strip_usage_from_sse(body: bytes) -> bytes:
 class ProxyHandler(BaseHTTPRequestHandler):
     """Forward requests to upstream, strip misleading usage on return."""
 
+    def _resolve_upstream(self, request_body: bytes) -> str:
+        """Pick upstream base URL from the model field in the request body."""
+        try:
+            model = json.loads(request_body).get("model")
+            if model:
+                routes = _get_model_upstream_routes()
+                upstream = routes.get(model)
+                if upstream:
+                    return upstream
+        except (json.JSONDecodeError, ValueError):
+            pass
+        return UPSTREAM_BASE
+
     def do_POST(self):
         content_length = int(self.headers.get("Content-Length", 0))
         request_body = self.rfile.read(content_length) if content_length > 0 else b""
 
-        upstream_url = f"{UPSTREAM_BASE}{self.path}"
+        upstream_base = self._resolve_upstream(request_body)
+        upstream_url = f"{upstream_base}{self.path}"
 
         # Forward all headers except Host
         headers = {}
@@ -270,11 +253,11 @@ class ProxyHandler(BaseHTTPRequestHandler):
                 headers[key] = self.headers[key]
 
         # Destream: convert streaming requests to non-streaming so we get usage
-        # in the JSON response.  OpenClaw's pi-ai sets supportsUsageInStreaming=false
-        # for non-standard endpoints, so the SDK omits stream_options.  Shubiaobiao
-        # also doesn't support stream_options.  By destreaming, we get a JSON
-        # response with prompt_tokens/completion_tokens, then re-emit it as SSE
-        # so pi-ai's streaming parser can read the usage chunk.
+        # in the JSON response, then re-emit as SSE.
+        #
+        # OpenClaw's agent SDK sets supportsUsageInStreaming=false for non-standard
+        # endpoints, so it omits stream_options.  Both shubiaobiao and local vllm
+        # need this destreaming treatment to get usage data back to OpenClaw.
         was_streaming = False
         try:
             req_json = json.loads(request_body)
@@ -282,13 +265,11 @@ class ProxyHandler(BaseHTTPRequestHandler):
                 was_streaming = True
                 req_json["stream"] = False
                 req_json.pop("stream_options", None)
+                request_body = json.dumps(req_json).encode()
                 logger.info(
-                    "Proxy destream: model=%s (converting stream→non-stream for usage)",
-                    req_json.get("model"),
+                    "Proxy destream: model=%s upstream=%s",
+                    req_json.get("model"), upstream_base,
                 )
-            # Strip Gemini-incompatible JSON Schema keywords from tool declarations.
-            req_json = _sanitize_tools_for_gemini(req_json)
-            request_body = json.dumps(req_json).encode()
         except (json.JSONDecodeError, ValueError):
             pass
 
@@ -307,8 +288,8 @@ class ProxyHandler(BaseHTTPRequestHandler):
             resp_headers = dict(e.headers)
             if status >= 400:
                 logger.warning(
-                    "Proxy upstream %d: %s (first 300 chars: %s)",
-                    status, self.path, resp_body[:300],
+                    "Proxy upstream %d: %s upstream=%s (first 500 chars: %s)",
+                    status, self.path, upstream_base, resp_body[:500],
                 )
 
         # Decompress gzip if needed (OpenAI SDK sends Accept-Encoding: gzip)
@@ -316,7 +297,12 @@ class ProxyHandler(BaseHTTPRequestHandler):
             resp_body = gzip.decompress(resp_body)
             del resp_headers["Content-Encoding"]
 
-        content_type = resp_headers.get("Content-Type", "")
+        # Normalize header lookup (vllm returns lowercase, shubiaobiao mixed case)
+        content_type = ""
+        for k, v in resp_headers.items():
+            if k.lower() == "content-type":
+                content_type = v
+                break
         if was_streaming:
             logger.info(
                 "Proxy destream response: status=%d content_type=%r was_streaming=%s",
@@ -361,7 +347,8 @@ class ProxyHandler(BaseHTTPRequestHandler):
         self.wfile.write(resp_body)
 
     def do_GET(self):
-        # Forward GET requests (e.g. /v1/models) transparently
+        # Forward GET requests (e.g. /v1/models) transparently.
+        # GET has no body, so we can't route by model — use default upstream.
         upstream_url = f"{UPSTREAM_BASE}{self.path}"
         headers = {}
         for key in self.headers:
@@ -394,10 +381,21 @@ class ProxyHandler(BaseHTTPRequestHandler):
 # ---------------------------------------------------------------------------
 
 # Provider IDs whose baseUrl should be routed through the local proxy.
-PROXY_PROVIDERS = ("shubiaobiao",)
+# Built dynamically: all providers with needsUsageProxy=True in the registry.
+def _proxy_provider_ids() -> tuple[str, ...]:
+    from constants import EXPERIMENT_MODEL_REGISTRY
+    return tuple(
+        pid for pid, reg in EXPERIMENT_MODEL_REGISTRY.items()
+        if reg.get("needsUsageProxy")
+    )
+
+PROXY_PROVIDERS = _proxy_provider_ids()
 
 # Default compaction summarization model — text-only, no Azure content filter.
-DEFAULT_COMPACTION_MODEL = "deepseek/deepseek-chat"
+# Override with OPENCLAW_COMPACTION_MODEL env var for local serving.
+DEFAULT_COMPACTION_MODEL = (
+    os.environ.get("OPENCLAW_COMPACTION_MODEL") or "deepseek/deepseek-chat"
+)
 
 
 def patch_openclaw_config(
@@ -424,45 +422,35 @@ def patch_openclaw_config(
     """
     from constants import EXPERIMENT_MODEL_REGISTRY
 
-    providers = cfg.get("models", {}).get("providers", {})
+    providers = cfg.setdefault("models", {}).setdefault("providers", {})
 
-    # 1. Proxy baseUrl
-    if proxy_port is not None:
-        for pid in PROXY_PROVIDERS:
-            spec = providers.get(pid)
-            if spec and "baseUrl" in spec:
-                spec["baseUrl"] = f"http://127.0.0.1:{proxy_port}/v1"
-                logger.info("Config patch: %s baseUrl → proxy port %d", pid, proxy_port)
-
-    # 2. Experiment model merge — add entire provider if missing, merge models if present
+    # 1. Experiment model merge — register missing providers AND models
+    #    (must run BEFORE proxy rewrite so newly-created providers get proxied)
     for pid, reg in EXPERIMENT_MODEL_REGISTRY.items():
         spec = providers.get(pid)
         if not spec:
-            # Provider absent from global config — add it from the registry.
-            # Resolve API key from env.
-            api_key = None
+            # Provider missing from config — create it from the registry.
+            # Resolve an API key from the env vars listed in apiKeyEnvs.
+            api_key_env = None
             for env_name in reg.get("apiKeyEnvs", []):
-                api_key = os.environ.get(env_name)
-                if api_key:
+                if os.environ.get(env_name):
+                    api_key_env = env_name
                     break
-            if not api_key:
+            if not api_key_env:
                 logger.warning(
-                    "Config patch: skipping provider %s — no API key found in env vars %s",
-                    pid, reg.get("apiKeyEnvs", []),
+                    "Config patch: skipping provider %s — no API key found in env (%s)",
+                    pid, reg.get("apiKeyEnvs"),
                 )
                 continue
-            base_url = reg["baseUrl"]
-            if proxy_port is not None and pid in PROXY_PROVIDERS:
-                base_url = f"http://127.0.0.1:{proxy_port}/v1"
             spec = {
-                "baseUrl": base_url,
-                "apiKey": api_key,
+                "baseUrl": reg["baseUrl"],
+                "apiKey": api_key_env,
                 "api": reg.get("api", "openai-completions"),
                 "models": [],
             }
-            cfg.setdefault("models", {}).setdefault("providers", {})[pid] = spec
             providers[pid] = spec
-            logger.info("Config patch: added provider %s (baseUrl=%s)", pid, base_url)
+            logger.info("Config patch: created provider %s (baseUrl=%s, apiKey=$%s)", pid, reg["baseUrl"], api_key_env)
+
         existing_ids = {m["id"] for m in spec.get("models", [])}
         for reg_model in reg.get("models", []):
             if reg_model["id"] not in existing_ids:
@@ -476,6 +464,15 @@ def patch_openclaw_config(
                 }
                 spec["models"].append(entry)
                 logger.info("Config patch: added model %s/%s", pid, reg_model["id"])
+
+    # 2. Proxy baseUrl — redirect needsUsageProxy providers through the local proxy.
+    #    Runs after model merge so newly-created providers are already in `providers`.
+    if proxy_port is not None:
+        for pid in PROXY_PROVIDERS:
+            spec = providers.get(pid)
+            if spec and "baseUrl" in spec:
+                spec["baseUrl"] = f"http://127.0.0.1:{proxy_port}/v1"
+                logger.info("Config patch: %s baseUrl → proxy port %d", pid, proxy_port)
 
     # 3. contextWindow override
     if context_window_override:

@@ -380,7 +380,7 @@ def _rewrite_branch_paths(
     """
     old_prefix = original_state_dir.rstrip("/")
     new_prefix = str(branch_state_dir).rstrip("/")
-    summary: dict = {"openclaw_json": [], "sessions_json": []}
+    summary: dict = {"openclaw_json": [], "sessions_json": [], "workspace_data_json": []}
 
     # --- 1. Rewrite openclaw.json ---
     cfg_path = branch_state_dir / "openclaw.json"
@@ -431,6 +431,32 @@ def _rewrite_branch_paths(
         if changed:
             with sessions_json.open("w") as f:
                 json.dump(data, f, indent=2)
+
+    # --- 3. Rewrite imagePath fields in workspace data json files ---
+    # Artifact data files (data/**/*.json) store absolute imagePath fields that
+    # point to the original episode state dir. Rewrite them to the branch path
+    # so OpenClaw can resolve image attachments during probing.
+    summary["workspace_data_json"] = []
+    for ws_dir in branch_state_dir.glob("workspace-*"):
+        data_dir = ws_dir / "data"
+        if not data_dir.is_dir():
+            continue
+        for data_json in data_dir.rglob("*.json"):
+            try:
+                with data_json.open() as f:
+                    obj = json.load(f)
+            except (json.JSONDecodeError, OSError):
+                continue
+            if not isinstance(obj, dict):
+                continue
+            ip = obj.get("imagePath")
+            if ip and isinstance(ip, str) and old_prefix in ip:
+                obj["imagePath"] = ip.replace(old_prefix, new_prefix)
+                with data_json.open("w") as f:
+                    json.dump(obj, f, indent=2)
+                summary["workspace_data_json"].append(
+                    f"{data_json.relative_to(branch_state_dir)}: imagePath rewritten"
+                )
 
     return summary
 
@@ -502,10 +528,11 @@ async def restore_checkpoint(
     )
     n_rewrites = sum(len(v) for v in rewrite_summary.values())
     logger.info(
-        "Path rewrite complete: %d changes (openclaw.json=%d, sessions.json=%d)",
+        "Path rewrite complete: %d changes (openclaw.json=%d, sessions.json=%d, workspace_data=%d)",
         n_rewrites,
         len(rewrite_summary["openclaw_json"]),
         len(rewrite_summary["sessions_json"]),
+        len(rewrite_summary["workspace_data_json"]),
     )
     for category, entries in rewrite_summary.items():
         for entry in entries:
@@ -531,20 +558,23 @@ async def restore_checkpoint(
         )
         logger.info("Branch gateway starting (port=%d, pid=%d)", port, gateway_proc.pid)
 
-        # Poll for readiness
+        # Poll for readiness via HTTP (systemctl not available on HPC nodes)
+        from urllib.request import urlopen
+        from urllib.error import URLError
         deadline = time.monotonic() + gateway_timeout
         ready = False
         while time.monotonic() < deadline:
             try:
-                result = subprocess.run(
-                    ["openclaw", "gateway", "status"],
-                    capture_output=True, timeout=15, env=env,
-                )
-                if result.returncode == 0:
-                    ready = True
-                    break
-            except subprocess.TimeoutExpired:
+                urlopen(f"http://127.0.0.1:{port}/", timeout=2)
+                ready = True
+                break
+            except (URLError, OSError, ConnectionRefusedError):
                 pass
+            if gateway_proc.poll() is not None:
+                raise RuntimeError(
+                    f"Branch gateway exited early (code={gateway_proc.returncode}). "
+                    f"Check {branch_state_dir / 'logs' / 'gateway.err.log'}"
+                )
             await asyncio.sleep(0.5)
 
         if not ready:
@@ -620,6 +650,10 @@ async def continue_same_session(
         # Read JSONL AFTER the follow-up
         jsonl_after = client.get_session_jsonl(branch.session_id)
         count_after = len(jsonl_after)
+
+        # Fallback: if CLI returned empty text, extract from JSONL entries
+        if not response_text or response_text.startswith("{"):
+            response_text = _extract_text_from_jsonl(jsonl_after, count_before)
 
         # Hard proof: the same file was appended to
         session_id_match = branch.session_id == (
@@ -1005,6 +1039,41 @@ async def _reindex_memory(agent_id: str, state_dir: Path) -> None:
 # ---------------------------------------------------------------------------
 # Text extraction helper (from trial_runner pattern)
 # ---------------------------------------------------------------------------
+
+def _extract_text_from_jsonl(jsonl: list[dict], split: int) -> str:
+    """Extract assistant response text from new JSONL entries after `split`.
+
+    Fallback for when ``openclaw agent --json`` returns empty stdout but the
+    session JSONL was updated.  Scans entries added after the split point for
+    assistant-role content.
+
+    OpenClaw JSONL format: each entry has ``type: "message"`` with a nested
+    ``message`` dict containing ``role`` and ``content``.
+    """
+    new_entries = jsonl[split:]
+    parts: list[str] = []
+    for entry in new_entries:
+        msg = entry.get("message", {})
+        if not isinstance(msg, dict):
+            continue
+        role = msg.get("role", "")
+        if role != "assistant":
+            continue
+        content = msg.get("content", "")
+        if isinstance(content, str) and content:
+            parts.append(content)
+        elif isinstance(content, list):
+            for part in content:
+                if isinstance(part, dict) and part.get("type") == "text":
+                    text = part.get("text", "")
+                    # Strip OpenClaw reply markers like [[reply_to_current]]
+                    text = text.replace("[[reply_to_current]]", "").strip()
+                    if text:
+                        parts.append(text)
+                elif isinstance(part, str):
+                    parts.append(part)
+    return "\n".join(parts)
+
 
 def _extract_text(payload: dict) -> str:
     """Extract assistant text from an openclaw response payload."""

@@ -1,9 +1,34 @@
 name: mirage
 channels:
-  - defaults
+  - pytorch
+  - nvidia
   - conda-forge
+  - defaults
+
 dependencies:
-  - python>=3.11
+  - python>=3.11,<3.13
+  - cmake
+  - git
+
   - pip
   - pip:
+    # Benchmark core
     - -r requirements.txt
+
+    # Local VLM serving
+    - vllm>=0.18.0
+    - ms-swift
+
+    # Transformers ecosystem (also pulled by vllm, pinned for clarity)
+    - transformers>=4.37.0
+    - accelerate>=0.26.0
+
+    # openclaw Python SDK
+    - openclaw
+
+# Post-install (run manually after conda env create):
+#   pip install flash-attn --no-build-isolation
+#
+# Env vars for vllm on H100:
+#   export VLLM_ATTENTION_BACKEND=FLASH_ATTN
+#   export VLLM_USE_TRITON_FLASH_ATTN=0

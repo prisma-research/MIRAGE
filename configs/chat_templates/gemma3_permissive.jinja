@@ -1,0 +1,54 @@
+{{ bos_token }}
+{%- set ns = namespace(last_role="") -%}
+{%- if messages[0]['role'] == 'system' -%}
+    {%- if messages[0]['content'] is string -%}
+        {%- set first_user_prefix = messages[0]['content'] + '\n\n' -%}
+    {%- else -%}
+        {%- set first_user_prefix = messages[0]['content'][0]['text'] + '\n\n' -%}
+    {%- endif -%}
+    {%- set loop_messages = messages[1:] -%}
+{%- else -%}
+    {%- set first_user_prefix = "" -%}
+    {%- set loop_messages = messages -%}
+{%- endif -%}
+{%- for message in loop_messages -%}
+    {%- if message['role'] == 'assistant' -%}
+        {%- set mapped_role = "model" -%}
+    {%- elif message['role'] in ['tool', 'toolResult', 'function'] -%}
+        {%- set mapped_role = "user" -%}
+    {%- else -%}
+        {%- set mapped_role = "user" -%}
+    {%- endif -%}
+    {%- if mapped_role != ns.last_role -%}
+        {%- if ns.last_role != "" -%}
+            {{ '<end_of_turn>\n' }}
+        {%- endif -%}
+        {{ '<start_of_turn>' + mapped_role + '\n' + (first_user_prefix if loop.first else "") }}
+        {%- set ns.last_role = mapped_role -%}
+    {%- else -%}
+        {{ '\n' }}
+    {%- endif -%}
+    {%- if message['content'] is string -%}
+        {{ message['content'] | trim }}
+    {%- elif message['content'] is iterable -%}
+        {%- for item in message['content'] -%}
+            {%- if item['type'] == 'image' -%}
+                {{ '<start_of_image>' }}
+            {%- elif item['type'] == 'text' -%}
+                {{ item['text'] | trim }}
+            {%- elif item['type'] == 'toolCall' -%}
+                {{ '[Tool call: ' + item.get('name', '') + '(' + (item.get('arguments', '') | string) + ')]' }}
+            {%- elif item['type'] == 'toolResult' -%}
+                {{ '[Tool result: ' + (item.get('content', '') | string | truncate(200)) + ']' }}
+            {%- endif -%}
+        {%- endfor -%}
+    {%- else -%}
+        {{ message['content'] | string | trim }}
+    {%- endif -%}
+{%- endfor -%}
+{%- if ns.last_role != "" -%}
+    {{ '<end_of_turn>\n' }}
+{%- endif -%}
+{%- if add_generation_prompt -%}
+    {{ '<start_of_turn>model\n' }}
+{%- endif -%}

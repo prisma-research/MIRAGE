@@ -315,6 +315,33 @@ def _start_worker_gateways(
         with (state_dir / "openclaw.json").open("w") as f:
             json.dump(cfg, f, indent=2)
 
+        # Seed auth-profiles for the main agent so all providers have API keys.
+        # Copy from the global main agent, then inject entries for any
+        # EXPERIMENT_MODEL_REGISTRY providers whose keys are in env.
+        auth_dir = state_dir / "agents" / "main" / "agent"
+        auth_dir.mkdir(parents=True, exist_ok=True)
+        auth_file = auth_dir / "auth-profiles.json"
+        main_auth = Path.home() / ".openclaw" / "agents" / "main" / "agent" / "auth-profiles.json"
+        if main_auth.exists():
+            auth_data = json.loads(main_auth.read_text())
+        else:
+            auth_data = {"version": 1, "profiles": {}}
+        profiles = auth_data.setdefault("profiles", {})
+        for pid, reg in EXPERIMENT_MODEL_REGISTRY.items():
+            profile_key = f"{pid}:default"
+            if profile_key not in profiles:
+                for env_name in reg.get("apiKeyEnvs", []):
+                    key_val = os.environ.get(env_name)
+                    if key_val:
+                        profiles[profile_key] = {
+                            "type": "api_key",
+                            "provider": pid,
+                            "key": key_val,
+                        }
+                        break
+        with auth_file.open("w") as f:
+            json.dump(auth_data, f, indent=2)
+
         env = {**os.environ, "OPENCLAW_STATE_DIR": str(state_dir)}
         log_out = (state_dir / "logs" / "gateway.log").open("a")
         log_err = (state_dir / "logs" / "gateway.err.log").open("a")
@@ -759,7 +786,7 @@ async def run_trial_set_cell(
             context_threshold=context_threshold,
         )
 
-        run_axis3 = bool(os.environ.get("ANTHROPIC_API_KEY"))
+        run_axis3 = bool(os.environ.get("LLM_API_KEY") or os.environ.get("ANTHROPIC_API_KEY"))
         scored_trials = []
         for trial in trials:
             trial = score_trial(

@@ -878,7 +878,7 @@ async def _run_native_compaction_phase(
     session_id: str,
     filler_offset: int = 0,
     state_dir: Path | None = None,
-    max_filler_turns: int = 40,
+    max_filler_turns: int = 200,
 ) -> tuple[bool, list[dict], int, int | None, bool]:
     """Inject filler turns until OpenClaw fires native compaction, return session state.
 

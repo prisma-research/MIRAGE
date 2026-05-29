@@ -13,7 +13,7 @@ Usage:
 """
 
 from __future__ import annotations
-import argparse, asyncio, json, logging, os, re, subprocess, sys, time, uuid
+import argparse, asyncio, json, logging, os, re, shutil, subprocess, sys, time, uuid
 from collections import defaultdict, Counter
 from pathlib import Path
 
@@ -28,15 +28,35 @@ from harness.checkpoint import (
     continue_same_session, create_fresh_session,
 )
 from harness.branch_probe_runner import classify_r_path, _extract_tool_trace
+from mitigations.citation_force.bootstrap_hook import (
+    inject_citation_force_into_bootstrap,
+    CONDITION_MARKER_FILE,
+)
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 logger = logging.getLogger(__name__)
 
+# ── Cm query-time wrapper ────────────────────────────────────────────────
+# For same-session continuations the system prompt is already fixed (set at
+# session creation in the checkpoint). BOOTSTRAP.md edits do NOT propagate.
+# The workspace-side marker + BOOTSTRAP.md injection only gates tool exposure
+# (the TypeScript plugin reads the marker at request time).
+#
+# To get the citation-force constraint in front of the model during same-session
+# probes we prepend a query-time wrapper to the user prompt.
+CM_QUERY_PREFIX = (
+    "[IMPORTANT — CitationForce protocol is active for this query]\n"
+    "Before answering, you MUST call the `artifact_recall` tool with the "
+    "artifact identifier or relevant keywords. Do NOT use `memory_search` "
+    "or `read` — `artifact_recall` is the ONLY approved retrieval method.\n"
+    "After calling `artifact_recall`, include [Source: <path>] in your response.\n"
+    "If `artifact_recall` returns no results, say: "
+    "\"I was unable to locate the artifact.\"\n\n"
+)
+
 GB_ROOT = Path(__file__).parent.parent
 BANK_PATH = GB_ROOT / "configs" / "study" / "unified_state_conditioned_bank.json"
 OUTPUT_DIR = GB_ROOT / "logs" / "probes" / "unified_v1"
-
-ALL_STATE_LABELS = ["d0", "d50k", "d80k", "S2", "S3"]
 
 # Default postcomp episode. Use --postcomp-episode to switch between:
 #   pilot_v3_100k_prewrite          (leaked prewrite — original, answer-bearing prompt)
@@ -73,12 +93,8 @@ _DERIVED = {
 def _canon_source(raw: str) -> str:
     if not raw or raw.upper() == "NONE":
         return "none"
-    # Strip common markdown / formatting wrappers before basename mapping.
-    s = raw.strip().strip("*`_ ").strip()
-    if not s or s.upper() == "NONE":
-        return "none"
     # Strip URL-style fragment anchors: #L1, #L5C3, #section-name
-    s = re.sub(r'#.*$', '', s)
+    s = re.sub(r'#.*$', '', raw)
     s = os.path.basename(s)
     s = re.sub(r'\.(png|jpg|jpeg|json|md)$', '', s)
     sl = s.lower()
@@ -200,6 +216,26 @@ def parse_and_score(response: str, bq: dict) -> dict:
     m1 = re.search(r'ANSWERABLE\s*=\s*(YES|NO)', response, re.I)
     m2 = re.search(r'SOURCE\s*=\s*(\S+)', response, re.I)
     m3 = re.search(r'ANSWER\s*=\s*(.+)', response, re.I)
+    # Fallback: JSON format (e.g. Gemma wraps in ```json {"ANSWERABLE": "YES", ...} ```)
+    if not (m1 and m2 and m3):
+        try:
+            # Strip markdown code fences
+            cleaned = re.sub(r'```(?:json)?\s*', '', response).strip()
+            obj = json.loads(cleaned)
+            if isinstance(obj, dict) and "ANSWERABLE" in obj:
+                m1 = re.match(r'(YES|NO)', str(obj["ANSWERABLE"]), re.I)
+                m2_val = str(obj.get("SOURCE", "NONE")).strip()
+                m3_val = str(obj.get("ANSWER", "NONE")).strip()
+                if m1:
+                    # Create fake match-like values for downstream
+                    class _M:
+                        def __init__(self, v): self._v = v
+                        def group(self, _=1): return self._v
+                    m1 = _M(m1.group(1))
+                    m2 = _M(m2_val)
+                    m3 = _M(m3_val)
+        except (json.JSONDecodeError, ValueError, KeyError):
+            pass
     if not (m1 and m2 and m3):
         return r
     r["parse_success"] = True
@@ -242,111 +278,185 @@ def parse_and_score(response: str, bq: dict) -> dict:
         r["wrong_source"] = None
     return r
 
-# ── Model override ────────────────────────────────────────────────────────
-def _is_rate_limited(text: str) -> bool:
-    t = (text or "").lower()
-    return "rate limit" in t or "429" in t or "too many requests" in t
-
-def _swap_api_key(cfg: dict, provider_id: str, new_key: str):
-    """Replace the apiKey for a provider in the config dict (in-place)."""
-    spec = cfg.get("models", {}).get("providers", {}).get(provider_id)
-    if spec:
-        spec["apiKey"] = new_key
-        logger.info("API key swap: %s → backup key", provider_id)
-
-def _patch_model_override(cfg: dict, model_id: str):
-    """Override the primary model in an openclaw config dict (in-place).
-
-    Patches:
-      1. agents.defaults.model.primary
-      2. Per-agent model field in agents.list[*]
-    """
-    cfg.setdefault("agents", {}).setdefault("defaults", {}).setdefault("model", {})["primary"] = model_id
-    for agent in cfg.get("agents", {}).get("list", []):
-        if "model" in agent:
-            agent["model"] = model_id
-    logger.info("Model override: primary → %s", model_id)
-
-async def _restore_and_start(manifest, branch_id, proxy_port, model_override, api_key_override=None):
-    """Restore checkpoint, apply patches, start gateway. Returns branch."""
-    needs_manual_gw = proxy_port is not None or model_override or api_key_override
-    if needs_manual_gw:
-        branch = await restore_checkpoint(manifest, branch_id=branch_id,
-                                          port_start=19800, start_gateway=False)
-        cfg_path = branch.branch_state_dir / "openclaw.json"
-        with cfg_path.open() as f: cfg = json.load(f)
-        if proxy_port is not None:
-            patch_openclaw_config(cfg, proxy_port=proxy_port, compaction_model=None)
-        else:
-            patch_openclaw_config(cfg, proxy_port=None, compaction_model=None)
-        if model_override:
-            _patch_model_override(cfg, model_override)
-        if api_key_override:
-            provider = model_override.split("/")[0] if model_override else "anthropic"
-            _swap_api_key(cfg, provider, api_key_override)
-        with cfg_path.open("w") as f: json.dump(cfg, f, indent=2)
-        env = {**os.environ, "OPENCLAW_STATE_DIR": str(branch.branch_state_dir)}
-        (branch.branch_state_dir / "logs").mkdir(parents=True, exist_ok=True)
-        gw = subprocess.Popen(
-            ["openclaw","gateway","run","--port",str(branch.gateway_port),"--force"],
-            stdout=(branch.branch_state_dir/"logs"/"gateway.log").open("a"),
-            stderr=(branch.branch_state_dir/"logs"/"gateway.err.log").open("a"), env=env)
-        branch.gateway_proc = gw
-        dl = time.monotonic() + 60
-        while time.monotonic() < dl:
-            try:
-                r = subprocess.run(["openclaw","gateway","status"],capture_output=True,timeout=15,env=env)
-                if r.returncode == 0: break
-            except subprocess.TimeoutExpired: pass
-            await asyncio.sleep(0.5)
-    else:
-        branch = await restore_checkpoint(manifest, branch_id=branch_id, port_start=19800)
-    return branch
-
 # ── Run one probe ─────────────────────────────────────────────────────────
-async def run_one(ep, ckpt, cont, bq, state_label, proxy_port, model_override=None,
-                  keep_branch_dir=None):
-    """Run one probe. If keep_branch_dir is set, preserve the branch state there instead of deleting."""
-    manifest = load_checkpoint(ep, ckpt)
-    pid = f"u_{state_label}_{bq['base_question_id']}_{uuid.uuid4().hex[:4]}"
-    backup_key = os.environ.get("ANTHROPIC_API_KEY_BACKUP")
+def _patch_agent_model(cfg: dict, model_id: str) -> None:
+    """Override the probing-model in a branch openclaw.json (in-place).
 
-    branch = await _restore_and_start(manifest, f"br_{pid}", proxy_port, model_override)
+    Sets both agents.defaults.model.primary and the per-agent model entry so
+    that both same-session continuation (which uses the current agent model)
+    and fresh-session creation (which picks up the agent default) use the
+    requested probing model instead of the checkpoint's original gpt-5.
+    The source checkpoint is NOT touched — this only runs on the ephemeral
+    branch copy created by restore_checkpoint.
+    """
+    agents = cfg.setdefault("agents", {})
+    agents.setdefault("defaults", {}).setdefault("model", {})["primary"] = model_id
+    for entry in agents.get("list", []):
+        if "model" in entry:
+            entry["model"] = model_id
+    logger.info("Config patch: agent model → %s", model_id)
+
+
+def _persist_raw_conversation(
+    raw_root: Path,
+    probe_id: str,
+    episode_id: str,
+    checkpoint_id: str,
+    continuation: str,
+    state_label: str,
+    bq: dict,
+    cr,
+    duration_s: float,
+    scores: dict,
+) -> dict[str, str]:
+    """Persist the full session transcript before branch cleanup removes it."""
+    state_dir = raw_root / state_label
+    state_dir.mkdir(parents=True, exist_ok=True)
+
+    stem = f"{state_label}__{bq['base_question_id']}"
+    jsonl_path = state_dir / f"{stem}.jsonl"
+    meta_path = state_dir / f"{stem}.meta.json"
+
+    with jsonl_path.open("w") as f:
+        for entry in cr.jsonl:
+            f.write(json.dumps(entry) + "\n")
+
+    meta = {
+        "probe_id": probe_id,
+        "episode_id": episode_id,
+        "checkpoint_id": checkpoint_id,
+        "continuation": continuation,
+        "state": state_label,
+        "base_question_id": bq["base_question_id"],
+        "prompt": bq["prompt"],
+        "session_id": cr.session_id,
+        "duration_seconds": round(duration_s, 1),
+        "jsonl_entry_count": len(cr.jsonl),
+        "history_split_index": cr.jsonl_count_before if cr.jsonl_count_before is not None else 0,
+        "jsonl_count_before": cr.jsonl_count_before,
+        "jsonl_count_after": cr.jsonl_count_after,
+        "jsonl_file_path": cr.jsonl_file_path,
+        "session_id_matches_checkpoint": cr.session_id_matches_checkpoint,
+        "response_text": cr.response_text,
+        "response_payload": cr.response,
+        "scores": scores,
+    }
+    with meta_path.open("w") as f:
+        json.dump(meta, f, indent=2)
+
+    return {
+        "raw_session_jsonl": str(jsonl_path),
+        "raw_session_meta": str(meta_path),
+    }
+
+
+async def run_one(ep, ckpt, cont, bq, state_label, proxy_port, model_id=None,
+                  raw_root: Path | None = None, condition: str = "C0",
+                  keep_branch_dir: Path | None = None):
+    manifest = load_checkpoint(ep, ckpt)
+    pid = f"u_{condition}_{state_label}_{bq['base_question_id']}_{uuid.uuid4().hex[:4]}"
+
+    # Always restore with start_gateway=False so we can patch the branch config
+    # (proxy baseUrl, probing model) before the gateway reads openclaw.json.
+    branch = await restore_checkpoint(manifest, branch_id=f"br_{pid}",
+                                      port_start=19800, start_gateway=False)
+    cfg_path = branch.branch_state_dir / "openclaw.json"
+    with cfg_path.open() as f:
+        cfg = json.load(f)
+
+    if proxy_port is not None:
+        patch_openclaw_config(cfg, proxy_port=proxy_port, compaction_model=None)
+
+    if model_id is not None:
+        _patch_agent_model(cfg, model_id)
+
+    with cfg_path.open("w") as f:
+        json.dump(cfg, f, indent=2)
+
+    # ── Cm workspace setup (before gateway start) ──
+    # Write condition marker + BOOTSTRAP.md so the TypeScript plugin exposes
+    # artifact_recall for Cm. For C0 nothing is written.
+    if condition == "Cm":
+        ws_candidates = list(branch.branch_state_dir.glob(f"workspace-{branch.agent_id}"))
+        if not ws_candidates:
+            ws_candidates = list(branch.branch_state_dir.glob("workspace"))
+        if ws_candidates:
+            inject_citation_force_into_bootstrap(
+                workspace_dir=ws_candidates[0], condition="Cm",
+            )
+            logger.info("Cm: injected CitationForce + marker into %s", ws_candidates[0])
+
+    env = {**os.environ, "OPENCLAW_STATE_DIR": str(branch.branch_state_dir)}
+    (branch.branch_state_dir / "logs").mkdir(parents=True, exist_ok=True)
+    gw = subprocess.Popen(
+        ["openclaw", "gateway", "run", "--port", str(branch.gateway_port), "--force"],
+        stdout=(branch.branch_state_dir / "logs" / "gateway.log").open("a"),
+        stderr=(branch.branch_state_dir / "logs" / "gateway.err.log").open("a"),
+        env=env,
+    )
+    branch.gateway_proc = gw
+    # Wait for gateway readiness by probing its HTTP endpoint.
+    # `openclaw gateway status` requires systemd which isn't available on HPC nodes.
+    import urllib.request, urllib.error
+    dl = time.monotonic() + 60
+    while time.monotonic() < dl:
+        try:
+            urllib.request.urlopen(
+                f"http://127.0.0.1:{branch.gateway_port}/", timeout=2,
+            )
+            break
+        except (urllib.error.URLError, OSError, ConnectionRefusedError):
+            pass
+        if gw.poll() is not None:
+            raise RuntimeError(
+                f"Gateway exited early (code={gw.returncode}). "
+                f"Check {branch.branch_state_dir / 'logs' / 'gateway.err.log'}"
+            )
+        await asyncio.sleep(0.5)
+
     try:
         t0 = time.monotonic()
-        if cont == "same_session":
-            cr = await continue_same_session(branch, message=bq["prompt"])
-        else:
-            cr = await create_fresh_session(branch, message=bq["prompt"])
-        dur = time.monotonic() - t0
+        # For Cm same-session: prepend query-time wrapper since BOOTSTRAP.md
+        # edits don't retroactively affect the existing system prompt.
+        prompt = bq["prompt"]
+        if condition == "Cm" and cont == "same_session":
+            prompt = CM_QUERY_PREFIX + prompt
 
-        # Rate-limit retry with backup key
-        if _is_rate_limited(cr.response_text) and backup_key:
-            logger.warning("Rate limit on primary key — retrying with backup key (%s/%s)",
-                           state_label, bq["base_question_id"])
-            branch.cleanup()
-            pid2 = f"u_{state_label}_{bq['base_question_id']}_{uuid.uuid4().hex[:4]}_bk"
-            branch = await _restore_and_start(manifest, f"br_{pid2}", proxy_port,
-                                              model_override, api_key_override=backup_key)
-            t0 = time.monotonic()
-            if cont == "same_session":
-                cr = await continue_same_session(branch, message=bq["prompt"])
-            else:
-                cr = await create_fresh_session(branch, message=bq["prompt"])
-            dur = time.monotonic() - t0
+        if cont == "same_session":
+            cr = await continue_same_session(branch, message=prompt)
+        else:
+            cr = await create_fresh_session(branch, message=prompt)
+        dur = time.monotonic() - t0
 
         split = cr.jsonl_count_before if cr.jsonl_count_before is not None else 0
         tt = _extract_tool_trace(cr.jsonl, split)
         rp = classify_r_path(tt, cont, cr.jsonl)
 
         scores = parse_and_score(cr.response_text, bq)
+        raw_paths = {}
+        if raw_root is not None:
+            raw_paths = _persist_raw_conversation(
+                raw_root=raw_root,
+                probe_id=pid,
+                episode_id=ep,
+                checkpoint_id=ckpt,
+                continuation=cont,
+                state_label=state_label,
+                bq=bq,
+                cr=cr,
+                duration_s=dur,
+                scores=scores,
+            )
+
         result = {
             "probe_id": pid,
             "base_question_id": bq["base_question_id"],
             "state": state_label,
+            "condition": condition,
             "response_text": cr.response_text[:500],
             "R_path": rp,
             "duration": round(dur, 1),
+            **raw_paths,
             **scores,
         }
 
@@ -356,20 +466,18 @@ async def run_one(ep, ckpt, cont, bq, state_label, proxy_port, model_override=No
         return result
     finally:
         if keep_branch_dir:
-            # Stop gateway but preserve state dir by moving it
             branch.stop_gateway()
             keep_branch_dir.mkdir(parents=True, exist_ok=True)
             if branch.branch_state_dir.exists():
-                import shutil as _shutil
                 dest = keep_branch_dir / "state"
                 if dest.exists():
-                    _shutil.rmtree(dest)
-                _shutil.move(str(branch.branch_state_dir), str(dest))
-                # Write probe metadata
+                    shutil.rmtree(dest)
+                shutil.move(str(branch.branch_state_dir), str(dest))
                 meta = {
                     "probe_id": pid,
                     "base_question_id": bq["base_question_id"],
                     "state": state_label,
+                    "condition": condition,
                     "checkpoint": ckpt,
                     "episode": ep,
                     "continuation_mode": cont,
@@ -378,79 +486,135 @@ async def run_one(ep, ckpt, cont, bq, state_label, proxy_port, model_override=No
                 }
                 with (keep_branch_dir / "probe_meta.json").open("w") as f:
                     json.dump(meta, f, indent=2)
-                logger.info("Branch kept: %s", keep_branch_dir)
         else:
             branch.cleanup()
 
 # ── Analysis ──────────────────────────────────────────────────────────────
 def analyze(results):
     s = {"n": len(results)}
-    # Derive states from actual results, in canonical order
-    present = {r["state"] for r in results}
-    states = [st for st in ALL_STATE_LABELS if st in present]
-    s["states"] = states
+    # Dynamic state/condition discovery (no hardcoded S3)
+    _state_order = ["d0", "d50k", "d80k", "S2", "S3"]
+    seen_states = sorted(set(r["state"] for r in results),
+                         key=lambda x: _state_order.index(x) if x in _state_order else 99)
+    seen_conditions = sorted(set(r.get("condition", "C0") for r in results))
     metrics = ["answerable_correct","source_correct","answer_correct","grounded_correct","hallucinated","wrong_source"]
 
     def _rate(items, field):
         vals = [r[field] for r in items if r.get(field) is not None]
         return round(sum(vals)/len(vals),3) if vals else None
 
-    # State table
-    table = {}
-    for st in states:
+    # Per-condition × state table
+    by_condition = {}
+    for cond in seen_conditions:
+        table = {}
+        cond_results = [r for r in results if r.get("condition", "C0") == cond]
+        for st in seen_states:
+            rs = [r for r in cond_results if r["state"]==st and r.get("parse_success")]
+            row = {m: _rate(rs, m) for m in metrics}
+            pf = sum(1 for r in cond_results if r["state"]==st and not r.get("parse_success"))
+            row["parse_failure"] = pf
+            row["n"] = len(rs) + pf
+            table[st] = row
+        by_condition[cond] = table
+    s["by_condition"] = by_condition
+
+    # Flat by_state for backward compat (uses all results)
+    table_flat = {}
+    for st in seen_states:
         rs = [r for r in results if r["state"]==st and r.get("parse_success")]
         row = {m: _rate(rs, m) for m in metrics}
         pf = sum(1 for r in results if r["state"]==st and not r.get("parse_success"))
         row["parse_failure"] = pf
         row["n"] = len(rs) + pf
-        table[st] = row
-    s["by_state"] = table
+        table_flat[st] = row
+    s["by_state"] = table_flat
 
-    # Penalties — only between adjacent states actually present
+    # Penalties (within each condition)
     pen = {}
-    pairs = [(states[i], states[i+1]) for i in range(len(states)-1)]
-    for m in ["answerable_correct","source_correct","grounded_correct"]:
-        for s1,s2 in pairs:
-            v1 = table.get(s1,{}).get(m)
-            v2 = table.get(s2,{}).get(m)
-            if v1 is not None and v2 is not None:
-                pen[f"{s1}_to_{s2}_{m}"] = round(v1-v2, 3)
+    consecutive = [(seen_states[i], seen_states[i+1]) for i in range(len(seen_states)-1)]
+    for cond in seen_conditions:
+        tbl = by_condition[cond]
+        for m in ["answerable_correct","source_correct","grounded_correct"]:
+            for s1,s2 in consecutive:
+                v1 = tbl.get(s1,{}).get(m)
+                v2 = tbl.get(s2,{}).get(m)
+                if v1 is not None and v2 is not None:
+                    label = f"{cond}_{s1}_to_{s2}_{m}" if len(seen_conditions) > 1 else f"{s1}_to_{s2}_{m}"
+                    pen[label] = round(v1-v2, 3)
     s["penalties"] = pen
 
-    # R_path by state
-    rp = defaultdict(lambda: defaultdict(int))
+    # R_path by condition × state
+    rp = defaultdict(lambda: defaultdict(lambda: defaultdict(int)))
     for r in results:
-        if r.get("R_path"): rp[r["state"]][r["R_path"]] += 1
-    s["rpath"] = {k: dict(v) for k,v in rp.items()}
+        if r.get("R_path"):
+            rp[r.get("condition","C0")][r["state"]][r["R_path"]] += 1
+    s["rpath"] = {c: {st: dict(v) for st,v in sv.items()} for c,sv in rp.items()}
 
     s["parse_failure_rate"] = round(sum(1 for r in results if not r.get("parse_success"))/max(len(results),1), 3)
+    s["states"] = seen_states
+    s["conditions"] = seen_conditions
     return s
 
 def print_analysis(s):
-    states = s.get("states", ALL_STATE_LABELS)
     print(f"\n{'='*80}")
     print("UNIFIED STATE-CONDITIONED ANALYSIS")
     print(f"{'='*80}")
     print(f"Total: {s['n']}, parse_failure_rate: {s['parse_failure_rate']}")
 
-    print(f"\n--- By State ---")
-    header = f"{'State':<7}{'n':>4} {'answerable':>11} {'source':>8} {'grounded':>9} {'answer':>8} {'halluc':>7} {'ws':>5} {'pf':>3}"
-    print(header)
-    for st in states:
-        r = s["by_state"].get(st, {})
-        def f(v): return f"{v:.3f}" if v is not None else "-"
-        print(f"{st:<7}{r.get('n',0):>4} {f(r.get('answerable_correct')):>11} "
-              f"{f(r.get('source_correct')):>8} {f(r.get('grounded_correct')):>9} "
-              f"{f(r.get('answer_correct')):>8} "
-              f"{f(r.get('hallucinated')):>7} {f(r.get('wrong_source')):>5} {r.get('parse_failure',0):>3}")
+    states = s.get("states", ["d0","d50k","d80k","S2","S3"])
+    conditions = s.get("conditions", ["C0"])
+
+    def _f(v):
+        return f"{v:.3f}" if v is not None else "-"
+
+    for cond in conditions:
+        tbl = s.get("by_condition", {}).get(cond, s.get("by_state", {}))
+        print(f"\n--- {cond} by State ---")
+        header = f"{'State':<7}{'n':>4} {'answerable':>11} {'source':>8} {'grounded':>9} {'answer':>8} {'halluc':>7} {'ws':>5} {'pf':>3}"
+        print(header)
+        for st in states:
+            r = tbl.get(st, {})
+            print(f"{st:<7}{r.get('n',0):>4} {_f(r.get('answerable_correct')):>11} "
+                  f"{_f(r.get('source_correct')):>8} {_f(r.get('grounded_correct')):>9} "
+                  f"{_f(r.get('answer_correct')):>8} "
+                  f"{_f(r.get('hallucinated')):>7} {_f(r.get('wrong_source')):>5} {r.get('parse_failure',0):>3}")
+
+    # C0 vs Cm delta table (if both present)
+    if "C0" in conditions and len(conditions) > 1:
+        c0_tbl = s["by_condition"]["C0"]
+        for cond in conditions:
+            if cond == "C0":
+                continue
+            cx_tbl = s["by_condition"][cond]
+            print(f"\n--- Delta ({cond} − C0) ---")
+            header = f"{'State':<7} {'Δground':>8} {'Δsource':>8} {'Δw_src':>7} {'ΔR_tool':>8}"
+            print(header)
+            for st in states:
+                c0r = c0_tbl.get(st, {})
+                cxr = cx_tbl.get(st, {})
+                dg = round(cxr.get("grounded_correct",0) - c0r.get("grounded_correct",0), 3) if cxr.get("grounded_correct") is not None and c0r.get("grounded_correct") is not None else None
+                ds = round(cxr.get("source_correct",0) - c0r.get("source_correct",0), 3) if cxr.get("source_correct") is not None and c0r.get("source_correct") is not None else None
+                dw = round(cxr.get("wrong_source",0) - c0r.get("wrong_source",0), 3) if cxr.get("wrong_source") is not None and c0r.get("wrong_source") is not None else None
+                # R_tool share delta
+                c0_rp = s.get("rpath",{}).get("C0",{}).get(st,{})
+                cx_rp = s.get("rpath",{}).get(cond,{}).get(st,{})
+                c0_total = sum(c0_rp.values()) or 1
+                cx_total = sum(cx_rp.values()) or 1
+                c0_rt = c0_rp.get("R_tool",0)/c0_total
+                cx_rt = cx_rp.get("R_tool",0)/cx_total
+                drt = round(cx_rt - c0_rt, 3) if c0_total > 0 and cx_total > 0 else None
+                print(f"{st:<7} {_f(dg):>8} {_f(ds):>8} {_f(dw):>7} {_f(drt):>8}")
 
     print(f"\n--- Penalties ---")
     for k,v in s.get("penalties",{}).items():
         print(f"  {k}: {v:+.3f}")
 
     print(f"\n--- R_path ---")
-    for st in states:
-        print(f"  {st}: {s.get('rpath',{}).get(st,{})}")
+    for cond in conditions:
+        rp_cond = s.get("rpath",{}).get(cond, {})
+        for st in states:
+            label = f"{cond}/{st}" if len(conditions) > 1 else st
+            print(f"  {label}: {rp_cond.get(st,{})}")
 
 # ── Main ──────────────────────────────────────────────────────────────────
 async def main_async(args):
@@ -547,10 +711,6 @@ async def main_async(args):
     run_dir.mkdir(parents=True, exist_ok=True)
     print(f"run_id:     {run_id}")
     print(f"output_dir: {run_dir}")
-    if args.model:
-        print(f"model:      {args.model}")
-    else:
-        print(f"model:      (checkpoint default — no override)")
 
     bank = json.load(BANK_PATH.open())
     all_bqs = bank["base_questions"]
@@ -570,16 +730,21 @@ async def main_async(args):
         if not added: break
 
     # Slice selection
+    start = args.start_index or 0
+    count = args.count or args.max_bq or len(ordered)
+    bqs = ordered[start:start + count]
+
+    # --question-ids filter (applied after slice)
     if args.question_ids:
-        allowed_ids = set(qid.strip() for qid in args.question_ids.split(","))
-        bqs = [q for q in ordered if q["base_question_id"] in allowed_ids]
-        print(f"Question filter: {len(bqs)} specific IDs: {[q['base_question_id'] for q in bqs]}")
-    else:
-        start = args.start_index or 0
-        count = args.count or args.max_bq or len(ordered)
-        bqs = ordered[start:start + count]
-        print(f"Question selection: ordered[{start}:{start+count}] → {len(bqs)} base questions")
-        print(f"  IDs: {[q['base_question_id'] for q in bqs]}")
+        wanted = set(q.strip() for q in args.question_ids.split(","))
+        bqs = [q for q in bqs if q["base_question_id"] in wanted]
+
+    print(f"Question selection: ordered[{start}:{start+count}] → {len(bqs)} base questions")
+    print(f"  IDs: {[q['base_question_id'] for q in bqs]}")
+
+    # Conditions
+    cf_conditions = [c.strip() for c in args.cf_conditions.split(",")]
+    print(f"Conditions: {cf_conditions}")
 
     proxy = UsageProxy(patch_global=False) if any(
         s.get("needsUsageProxy") for s in EXPERIMENT_MODEL_REGISTRY.values()) else None
@@ -587,39 +752,44 @@ async def main_async(args):
     if proxy: proxy.__enter__(); pp = proxy.port; print(f"Proxy on {pp}")
 
     rf = run_dir / "results.jsonl"
+    raw_root = run_dir / "raw_conversations"
     all_r = []
     try:
         states = _build_states(args.postcomp_episode)
+        if args.skip_s3:
+            states = [(ep, ck, co, sl) for ep, ck, co, sl in states if sl != "S3"]
+        # --states filter
         if args.states:
-            allowed = [s.strip() for s in args.states.split(",")]
-            states = [s for s in states if s[3] in allowed]
-            print(f"State filter: {allowed} → running {[s[3] for s in states]}")
-        for ep, ckpt, cont, sl in states:
-            print(f"\n--- {sl} ({ckpt}, {cont}) ---")
-            for i, bq in enumerate(bqs):
-                logger.info("[%d/%d] %s", i+1, len(bqs), bq["base_question_id"])
-                try:
-                    kb_dir = None
-                    if args.keep_branches:
-                        kb_dir = run_dir / "branches" / sl / f"{bq['base_question_id']}"
-                    r = await run_one(ep, ckpt, cont, bq, sl, pp,
-                                      model_override=args.model, keep_branch_dir=kb_dir)
-                    all_r.append(r)
-                    with rf.open("a") as f: f.write(json.dumps(r)+"\n")
-                    logger.info("  → parse=%s ans_ok=%s src_ok=%s R=%s",
-                        r.get("parse_success"), r.get("answerable_correct"),
-                        r.get("source_correct"), r.get("R_path"))
-                except Exception as e:
-                    logger.error("  FAILED: %s", e)
+            allowed = set(s.strip() for s in args.states.split(","))
+            states = [(ep, ck, co, sl) for ep, ck, co, sl in states if sl in allowed]
+
+        for cond in cf_conditions:
+            for ep, ckpt, cont, sl in states:
+                print(f"\n--- {cond}/{sl} ({ckpt}, {cont}) ---")
+                for i, bq in enumerate(bqs):
+                    logger.info("[%s] [%d/%d] %s", cond, i+1, len(bqs), bq["base_question_id"])
+                    try:
+                        kb_dir = None
+                        if args.keep_branches:
+                            kb_dir = run_dir / "branches" / cond / sl / bq["base_question_id"]
+                        r = await run_one(ep, ckpt, cont, bq, sl, pp, args.model,
+                                          raw_root=raw_root, condition=cond,
+                                          keep_branch_dir=kb_dir)
+                        all_r.append(r)
+                        with rf.open("a") as f: f.write(json.dumps(r)+"\n")
+                        logger.info("  → cond=%s parse=%s ans_ok=%s src_ok=%s R=%s",
+                            cond, r.get("parse_success"), r.get("answerable_correct"),
+                            r.get("source_correct"), r.get("R_path"))
+                    except Exception as e:
+                        logger.error("  FAILED: %s", e)
     finally:
         if proxy: proxy.__exit__(None,None,None)
 
     print(f"\nTotal: {len(all_r)}")
     summary = analyze(all_r)
     summary["run_id"] = run_id
-    summary["model_override"] = args.model
-    summary["states_filter"] = args.states
     summary["n_base_questions"] = len(bqs)
+    summary["cf_conditions"] = cf_conditions
     print_analysis(summary)
     with (run_dir/"summary.json").open("w") as f: json.dump(summary, f, indent=2)
     print(f"\nResults: {rf}")
@@ -634,23 +804,31 @@ def main():
     p.add_argument("--analysis-only", action="store_true")
     p.add_argument("--rescore", nargs="+", help="Re-score existing runs with updated canonicalization (no re-run)")
     p.add_argument("--merge", nargs="+", help="Merge multiple run dirs into cumulative summary")
+    p.add_argument("--skip-s3", action="store_true",
+                   help="Skip S3 (fresh_session) state — useful on HPC without systemd")
+    p.add_argument("--model", type=str, default="local_qwen30b/qwen3-vl-30b-instruct",
+                   help="Probing model override in provider/model-id format "
+                        "(default: local_qwen30b/qwen3-vl-30b-instruct). "
+                        "Applied to agents.defaults.model.primary and each agent's model "
+                        "in the ephemeral branch config before gateway start. "
+                        "The source checkpoint is never mutated.")
     p.add_argument("--postcomp-episode", type=str, default=DEFAULT_POSTCOMP_EPISODE,
                    help="Episode ID for S2/S3 post-compaction checkpoint "
                         "(default: %(default)s). "
                         "Use 'pilot_v3_100k_prewrite' for leaked-prewrite, "
                         "'pilot_v3_100k_prewrite_generic' for generic-prewrite.")
-    p.add_argument("--model", type=str, default=None,
-                   help="Override primary model in restored branch config "
-                        "(e.g. 'anthropic/claude-haiku-4-5-20251001')")
     p.add_argument("--states", type=str, default=None,
                    help="Comma-separated state labels to run (default: all). "
                         "E.g. 'd0,d50k,d80k,S2'")
     p.add_argument("--question-ids", type=str, default=None,
-                   help="Comma-separated base_question_ids to run (overrides --start-index/--count/--max-bq). "
-                        "E.g. 'tp_c1_01,ua_s2_06'")
+                   help="Comma-separated base_question_ids to run "
+                        "(default: all in slice)")
     p.add_argument("--keep-branches", action="store_true",
                    help="Preserve probe branch state dirs instead of deleting them. "
-                        "Saved to <run_dir>/branches/<state>/<base_question_id>/")
+                        "Saved to <run_dir>/branches/<condition>/<state>/<base_question_id>/")
+    p.add_argument("--cf-conditions", type=str, default="C0",
+                   help="Comma-separated CitationForce conditions to run "
+                        "(default: C0). E.g. 'C0,Cm' for baseline vs mitigation.")
     asyncio.run(main_async(p.parse_args()))
 
 if __name__ == "__main__":

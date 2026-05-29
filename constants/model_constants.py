@@ -144,6 +144,74 @@ LLM_BASE_URL: str = os.getenv("LLM_BASE_URL") or ACTIVE_PROVIDER.base_url
 LLM_MODEL: str    = os.getenv("LLM_MODEL") or ACTIVE_PROVIDER.text_model
 
 # ---------------------------------------------------------------------------
+# Local providers — GPU machine vllm-served endpoints
+# ---------------------------------------------------------------------------
+
+PROVIDER_LOCAL_QWEN30B = ProviderConfig(
+    openclaw_id="local_qwen30b",
+    base_url=os.getenv("LOCAL_QWEN30B_BASE_URL", "http://127.0.0.1:8000/v1"),
+    api_key_env="LOCAL_VLM_API_KEY",
+    vlm_model="qwen3-vl-30b-instruct",
+    text_model="qwen3-vl-30b-instruct",
+)
+
+PROVIDER_LOCAL_QWEN8B = ProviderConfig(
+    openclaw_id="local_qwen8b",
+    base_url=os.getenv("LOCAL_QWEN8B_BASE_URL", "http://127.0.0.1:8001/v1"),
+    api_key_env="LOCAL_VLM_API_KEY",
+    vlm_model="qwen3-vl-8b-instruct",
+    text_model="qwen3-vl-8b-instruct",
+)
+
+PROVIDER_LOCAL_QWEN4B = ProviderConfig(
+    openclaw_id="local_qwen4b",
+    base_url=os.getenv("LOCAL_QWEN4B_BASE_URL", "http://127.0.0.1:8002/v1"),
+    api_key_env="LOCAL_VLM_API_KEY",
+    vlm_model="qwen3-vl-4b-instruct",
+    text_model="qwen3-vl-4b-instruct",
+)
+
+PROVIDER_LOCAL_GEMMA12B = ProviderConfig(
+    openclaw_id="local_gemma12b",
+    base_url=os.getenv("LOCAL_GEMMA12B_BASE_URL", "http://127.0.0.1:8003/v1"),
+    api_key_env="LOCAL_VLM_API_KEY",
+    vlm_model="gemma-3-12b-it",
+    text_model="gemma-3-12b-it",
+)
+
+PROVIDER_LOCAL_GEMMA27B = ProviderConfig(
+    openclaw_id="local_gemma27b",
+    base_url=os.getenv("LOCAL_GEMMA27B_BASE_URL", "http://127.0.0.1:8004/v1"),
+    api_key_env="LOCAL_VLM_API_KEY",
+    vlm_model="gemma-3-27b-it",
+    text_model="gemma-3-27b-it",
+)
+
+PROVIDER_LOCAL_GEMMA27B = ProviderConfig(
+    openclaw_id="local_gemma27b",
+    base_url=os.getenv("LOCAL_GEMMA27B_BASE_URL", "http://127.0.0.1:8004/v1"),
+    api_key_env="LOCAL_VLM_API_KEY",
+    vlm_model="gemma-3-27b-it",
+    text_model="gemma-3-27b-it",
+)
+
+PROVIDER_LOCAL_INTERNVL14B = ProviderConfig(
+    openclaw_id="local_internvl14b",
+    base_url=os.getenv("LOCAL_INTERNVL14B_BASE_URL", "http://127.0.0.1:8005/v1"),
+    api_key_env="LOCAL_VLM_API_KEY",
+    vlm_model="internvl3_5-14b-instruct",
+    text_model="internvl3_5-14b-instruct",
+)
+
+PROVIDER_LOCAL_INTERNVL20B = ProviderConfig(
+    openclaw_id="local_internvl20b",
+    base_url=os.getenv("LOCAL_INTERNVL20B_BASE_URL", "http://127.0.0.1:8006/v1"),
+    api_key_env="LOCAL_VLM_API_KEY",
+    vlm_model="internvl3_5-20b-a4b",
+    text_model="internvl3_5-20b-a4b",
+)
+
+# ---------------------------------------------------------------------------
 # Paper model groups (use provider-qualified strings for --model CLI arg)
 # ---------------------------------------------------------------------------
 
@@ -197,6 +265,69 @@ EXPERIMENT_MODEL_REGISTRY: dict[str, dict] = {
         "api": "openai-completions",
         "models": [
             {"id": "doubao-1.5-vision-pro-250328", "name": "Doubao 1.5 Vision Pro", "input": ["text", "image"], "maxTokens": 8192},
+        ],
+    },
+    "local_qwen30b": {
+        "baseUrl": os.getenv("LOCAL_QWEN30B_BASE_URL", "http://127.0.0.1:8000/v1"),
+        "needsUsageProxy": True,
+        "apiKeyEnvs": ["LOCAL_VLM_API_KEY", "OPENAI_API_KEY"],
+        "api": "openai-completions",
+        "models": [
+            {"id": "qwen3-vl-30b-instruct", "name": "Qwen3-VL-30B (local)", "input": ["text", "image"], "maxTokens": 8192},
+        ],
+    },
+    "local_qwen8b": {
+        "baseUrl": os.getenv("LOCAL_QWEN8B_BASE_URL", "http://127.0.0.1:8001/v1"),
+        "needsUsageProxy": True,
+        "apiKeyEnvs": ["LOCAL_VLM_API_KEY", "OPENAI_API_KEY"],
+        "api": "openai-completions",
+        "models": [
+            {"id": "qwen3-vl-8b-instruct", "name": "Qwen3-VL-8B (local)", "input": ["text", "image"], "maxTokens": 8192},
+        ],
+    },
+    "local_qwen4b": {
+        "baseUrl": os.getenv("LOCAL_QWEN4B_BASE_URL", "http://127.0.0.1:8002/v1"),
+        "needsUsageProxy": True,
+        "apiKeyEnvs": ["LOCAL_VLM_API_KEY", "OPENAI_API_KEY"],
+        "api": "openai-completions",
+        "models": [
+            {"id": "qwen3-vl-4b-instruct", "name": "Qwen3-VL-4B (local)", "input": ["text", "image"], "maxTokens": 8192},
+        ],
+    },
+    "local_gemma12b": {
+        "baseUrl": os.getenv("LOCAL_GEMMA12B_BASE_URL", "http://127.0.0.1:8003/v1"),
+        "needsUsageProxy": True,
+        "apiKeyEnvs": ["LOCAL_VLM_API_KEY", "OPENAI_API_KEY"],
+        "api": "openai-completions",
+        "models": [
+            {"id": "gemma-3-12b-it", "name": "Gemma 3 12B IT (local)", "input": ["text", "image"], "maxTokens": 8192},
+        ],
+    },
+    "local_gemma27b": {
+        "baseUrl": os.getenv("LOCAL_GEMMA27B_BASE_URL", "http://127.0.0.1:8004/v1"),
+        "needsUsageProxy": True,
+        "apiKeyEnvs": ["LOCAL_VLM_API_KEY", "OPENAI_API_KEY"],
+        "api": "openai-completions",
+        "models": [
+            {"id": "gemma-3-27b-it", "name": "Gemma 3 27B IT (local)", "input": ["text", "image"], "maxTokens": 8192},
+        ],
+    },
+    "local_internvl14b": {
+        "baseUrl": os.getenv("LOCAL_INTERNVL14B_BASE_URL", "http://127.0.0.1:8005/v1"),
+        "needsUsageProxy": True,
+        "apiKeyEnvs": ["LOCAL_VLM_API_KEY", "OPENAI_API_KEY"],
+        "api": "openai-completions",
+        "models": [
+            {"id": "internvl3_5-14b-instruct", "name": "InternVL3.5-14B (local)", "input": ["text", "image"], "maxTokens": 8192},
+        ],
+    },
+    "local_internvl20b": {
+        "baseUrl": os.getenv("LOCAL_INTERNVL20B_BASE_URL", "http://127.0.0.1:8006/v1"),
+        "needsUsageProxy": True,
+        "apiKeyEnvs": ["LOCAL_VLM_API_KEY", "OPENAI_API_KEY"],
+        "api": "openai-completions",
+        "models": [
+            {"id": "internvl3_5-20b-a4b", "name": "InternVL3.5-20B-A4B (local)", "input": ["text", "image"], "maxTokens": 8192},
         ],
     },
 }
