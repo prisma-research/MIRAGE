@@ -5,7 +5,7 @@ Single prompt protocol: ANSWERABLE/SOURCE/ANSWER.
 Runs the same 200 questions across 5 states, scores from one structured response.
 
 Usage:
-    cd MIRAGE
+    cd GroundingBench
     python -m harness.run_unified_pilot --max-bq 6        # smoke test
     python -m harness.run_unified_pilot --max-bq 20       # small validation
     python -m harness.run_unified_pilot                    # full run (200 × 5 = 1000)
@@ -54,6 +54,52 @@ CM_QUERY_PREFIX = (
     "\"I was unable to locate the artifact.\"\n\n"
 )
 
+# ── CitationForce mitigation ladder (query-time prefixes) ────────────────
+# All probe states of interest (d0/d50k/d80k/S2) are same-session continuations,
+# so the system prompt is fixed at session creation and BOOTSTRAP.md edits never
+# reach the model. The constraint is therefore delivered at query time, mirroring
+# CM_QUERY_PREFIX. Each rung adds exactly one thing over the previous:
+#   C0  no mitigation (no prefix, no tool)
+#   C1  prompt-only: ask for a [Source: <path>] citation, NO tool available
+#   C2  C1 + the artifact_recall retrieval tool is available
+#   C3  C2 + post-compaction-aware re-injection ("context was compacted, re-retrieve")
+#   Cm  mandatory artifact_recall routing (CM_QUERY_PREFIX), memory_search prohibited
+C1_QUERY_PREFIX = (
+    "[CitationForce protocol — grounding]\n"
+    "When you reference any artifact, file, screenshot, chart, or image from the "
+    "earlier conversation or from memory, you MUST include its source path in your "
+    "response as [Source: <path>]. Do NOT describe or paraphrase an artifact from "
+    "memory without citing the specific source it came from.\n\n"
+)
+C2_QUERY_PREFIX = (
+    "[CitationForce protocol — grounding via retrieval]\n"
+    "An `artifact_recall` tool is available: call it with the artifact identifier or "
+    "relevant keywords to retrieve the artifact and its source path. When you "
+    "reference any artifact, retrieve it with `artifact_recall` and include its "
+    "source path in your response as [Source: <path>]. Do NOT describe an artifact "
+    "from memory without retrieving it first.\n\n"
+)
+C3_QUERY_PREFIX = (
+    "[CitationForce protocol — grounding via retrieval]\n"
+    "NOTE: the earlier conversation context has been compacted/summarized, so any "
+    "artifact details you recall from it may be lossy. Before answering, RE-RETRIEVE "
+    "the artifact with the `artifact_recall` tool (using its identifier or relevant "
+    "keywords) rather than relying on the summary. Include the retrieved source path "
+    "in your response as [Source: <path>], and do NOT cite from the compacted summary "
+    "alone.\n\n"
+)
+
+# condition → query-time prefix (C0 has none → not in the map)
+CF_QUERY_PREFIXES = {
+    "C1": C1_QUERY_PREFIX,
+    "C2": C2_QUERY_PREFIX,
+    "C3": C3_QUERY_PREFIX,
+    "Cm": CM_QUERY_PREFIX,
+}
+# conditions that need the workspace marker + BOOTSTRAP injection
+# (marker gates the artifact_recall plugin: it exposes the tool for C2/C3/Cm)
+CF_MITIGATION_CONDITIONS = ("C1", "C2", "C3", "Cm")
+
 GB_ROOT = Path(__file__).parent.parent
 BANK_PATH = GB_ROOT / "configs" / "study" / "unified_state_conditioned_bank.json"
 OUTPUT_DIR = GB_ROOT / "logs" / "probes" / "unified_v1"
@@ -63,11 +109,11 @@ OUTPUT_DIR = GB_ROOT / "logs" / "probes" / "unified_v1"
 #   pilot_v3_100k_prewrite_generic  (generic prewrite — no answer leakage)
 DEFAULT_POSTCOMP_EPISODE = "pilot_v3_100k_prewrite_generic"
 
-def _build_states(postcomp_episode: str) -> list[tuple]:
+def _build_states(postcomp_episode: str, s1_episode: str = "pilot_v3_100k") -> list[tuple]:
     return [
-        ("pilot_v3_100k",   "s1_prequery_d0",   "same_session",  "d0"),
-        ("pilot_v3_100k",   "s1_prequery_d50k", "same_session",  "d50k"),
-        ("pilot_v3_100k",   "s1_prequery_d80k", "same_session",  "d80k"),
+        (s1_episode,        "s1_prequery_d0",   "same_session",  "d0"),
+        (s1_episode,        "s1_prequery_d50k", "same_session",  "d50k"),
+        (s1_episode,        "s1_prequery_d80k", "same_session",  "d80k"),
         (postcomp_episode,  "postcomp_100k",    "same_session",  "S2"),
         (postcomp_episode,  "postcomp_100k",    "fresh_session", "S3"),
     ]
@@ -96,7 +142,7 @@ def _canon_source(raw: str) -> str:
     # Strip URL-style fragment anchors: #L1, #L5C3, #section-name
     s = re.sub(r'#.*$', '', raw)
     s = os.path.basename(s)
-    s = re.sub(r'\.(png|jpg|jpeg|json|md)$', '', s)
+    s = re.sub(r'\.(png|jpg|jpeg|json|md|py|txt|pdf|csv)$', '', s)
     sl = s.lower()
     return _DERIVED.get(sl, sl)
 
@@ -352,14 +398,16 @@ def _persist_raw_conversation(
 
 async def run_one(ep, ckpt, cont, bq, state_label, proxy_port, model_id=None,
                   raw_root: Path | None = None, condition: str = "C0",
-                  keep_branch_dir: Path | None = None):
+                  keep_branch_dir: Path | None = None, port_start: int = 19800):
     manifest = load_checkpoint(ep, ckpt)
     pid = f"u_{condition}_{state_label}_{bq['base_question_id']}_{uuid.uuid4().hex[:4]}"
 
     # Always restore with start_gateway=False so we can patch the branch config
     # (proxy baseUrl, probing model) before the gateway reads openclaw.json.
+    # port_start is offset per concurrency slot so parallel probes don't race
+    # on the same gateway port.
     branch = await restore_checkpoint(manifest, branch_id=f"br_{pid}",
-                                      port_start=19800, start_gateway=False)
+                                      port_start=port_start, start_gateway=False)
     cfg_path = branch.branch_state_dir / "openclaw.json"
     with cfg_path.open() as f:
         cfg = json.load(f)
@@ -373,23 +421,26 @@ async def run_one(ep, ckpt, cont, bq, state_label, proxy_port, model_id=None,
     with cfg_path.open("w") as f:
         json.dump(cfg, f, indent=2)
 
-    # ── Cm workspace setup (before gateway start) ──
+    # ── CitationForce workspace setup (before gateway start) ──
     # Write condition marker + BOOTSTRAP.md so the TypeScript plugin exposes
-    # artifact_recall for Cm. For C0 nothing is written.
-    if condition == "Cm":
+    # artifact_recall for the tool-bearing rungs (C2/C3/Cm). C1 writes the marker
+    # too (gates the tool OFF — prompt-only) so the plugin stays consistent.
+    # For C0 nothing is written.
+    if condition in CF_MITIGATION_CONDITIONS:
         ws_candidates = list(branch.branch_state_dir.glob(f"workspace-{branch.agent_id}"))
         if not ws_candidates:
             ws_candidates = list(branch.branch_state_dir.glob("workspace"))
         if ws_candidates:
             inject_citation_force_into_bootstrap(
-                workspace_dir=ws_candidates[0], condition="Cm",
+                workspace_dir=ws_candidates[0], condition=condition,
             )
-            logger.info("Cm: injected CitationForce + marker into %s", ws_candidates[0])
+            logger.info("%s: injected CitationForce + marker into %s", condition, ws_candidates[0])
 
     env = {**os.environ, "OPENCLAW_STATE_DIR": str(branch.branch_state_dir)}
     (branch.branch_state_dir / "logs").mkdir(parents=True, exist_ok=True)
     gw = subprocess.Popen(
-        ["openclaw", "gateway", "run", "--port", str(branch.gateway_port), "--force"],
+        ["openclaw", "gateway", "run", "--port", str(branch.gateway_port),
+         "--force", "--allow-unconfigured"],
         stdout=(branch.branch_state_dir / "logs" / "gateway.log").open("a"),
         stderr=(branch.branch_state_dir / "logs" / "gateway.err.log").open("a"),
         env=env,
@@ -416,11 +467,12 @@ async def run_one(ep, ckpt, cont, bq, state_label, proxy_port, model_id=None,
 
     try:
         t0 = time.monotonic()
-        # For Cm same-session: prepend query-time wrapper since BOOTSTRAP.md
-        # edits don't retroactively affect the existing system prompt.
+        # For same-session probes: prepend the condition's query-time prefix since
+        # BOOTSTRAP.md edits don't retroactively affect the existing system prompt.
+        # (C0 has no prefix; C1/C2/C3/Cm each prepend their CitationForce ladder text.)
         prompt = bq["prompt"]
-        if condition == "Cm" and cont == "same_session":
-            prompt = CM_QUERY_PREFIX + prompt
+        if cont == "same_session" and condition in CF_QUERY_PREFIXES:
+            prompt = CF_QUERY_PREFIXES[condition] + prompt
 
         if cont == "same_session":
             cr = await continue_same_session(branch, message=prompt)
@@ -712,15 +764,24 @@ async def main_async(args):
     print(f"run_id:     {run_id}")
     print(f"output_dir: {run_dir}")
 
-    bank = json.load(BANK_PATH.open())
+    bank_path = Path(args.bank) if getattr(args, "bank", None) else BANK_PATH
+    if not bank_path.is_absolute():
+        bank_path = GB_ROOT / bank_path if not bank_path.exists() else bank_path
+    bank = json.load(bank_path.open())
     all_bqs = bank["base_questions"]
+    print(f"bank: {bank_path} ({len(all_bqs)} questions)")
 
-    # Stable stratified ordering: round-robin across 4 strata.
-    # This order is deterministic and reproducible for any start/count slice.
+    # Stable stratified ordering: round-robin across strata (answerable × visual_type).
+    # Generalized over whatever visual_types are present in the bank (combined modality
+    # banks carry natural_photo / infographic / code_text / email_text / pdf_text in
+    # addition to the original standalone_chart / app_ui), so no questions are dropped.
+    vts = sorted(set(q.get("visual_type", "") for q in all_bqs))
     strata = []
-    for ans in ["YES","NO"]:
-        for vt in ["standalone_chart","app_ui"]:
-            strata.append([q for q in all_bqs if q["gold_answerable"]==ans and q["visual_type"]==vt])
+    for ans in ["YES", "NO"]:
+        for vt in vts:
+            pool = [q for q in all_bqs if q["gold_answerable"] == ans and q.get("visual_type") == vt]
+            if pool:
+                strata.append(pool)
     ordered, idxs = [], [0]*len(strata)
     while True:
         added = False
@@ -754,8 +815,40 @@ async def main_async(args):
     rf = run_dir / "results.jsonl"
     raw_root = run_dir / "raw_conversations"
     all_r = []
+
+    # ── Resume: load probes already completed for this run_id, skip them ────
+    done_keys = set()
+    if rf.exists():
+        for line in rf.open():
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                rr = json.loads(line)
+            except Exception:
+                continue
+            done_keys.add((rr.get("condition", "C0"), rr.get("state"), rr.get("base_question_id")))
+            all_r.append(rr)
+        if done_keys:
+            print(f"RESUME: {len(done_keys)} probes already in results.jsonl — skipping them")
+
+    import os as _os
+    max_workers = max(1, getattr(args, "max_workers", None) or 1)
+    # Per-process port base (PID-offset) so concurrent processes don't collide;
+    # per-slot offset (below) so concurrent probes within this process don't race.
+    base_port = 19500 + (_os.getpid() % 200) * 20
+    slot_q: asyncio.Queue = asyncio.Queue()
+    for _s in range(max_workers):
+        slot_q.put_nowait(_s)
+    write_lock = asyncio.Lock()
+
     try:
-        states = _build_states(args.postcomp_episode)
+        # --family overrides BOTH the s1 and postcomp checkpoint families (e.g.
+        # modality_ext_v1 builds all of d0/d50k/d80k/postcomp_100k in one family).
+        fam = getattr(args, "family", None)
+        s1_ep = fam or "pilot_v3_100k"
+        postcomp_ep = fam or args.postcomp_episode
+        states = _build_states(postcomp_ep, s1_ep)
         if args.skip_s3:
             states = [(ep, ck, co, sl) for ep, ck, co, sl in states if sl != "S3"]
         # --states filter
@@ -763,25 +856,47 @@ async def main_async(args):
             allowed = set(s.strip() for s in args.states.split(","))
             states = [(ep, ck, co, sl) for ep, ck, co, sl in states if sl in allowed]
 
+        # Build worklist, skipping probes already done (resume)
+        specs = []
         for cond in cf_conditions:
             for ep, ckpt, cont, sl in states:
-                print(f"\n--- {cond}/{sl} ({ckpt}, {cont}) ---")
-                for i, bq in enumerate(bqs):
-                    logger.info("[%s] [%d/%d] %s", cond, i+1, len(bqs), bq["base_question_id"])
-                    try:
-                        kb_dir = None
-                        if args.keep_branches:
-                            kb_dir = run_dir / "branches" / cond / sl / bq["base_question_id"]
-                        r = await run_one(ep, ckpt, cont, bq, sl, pp, args.model,
-                                          raw_root=raw_root, condition=cond,
-                                          keep_branch_dir=kb_dir)
-                        all_r.append(r)
-                        with rf.open("a") as f: f.write(json.dumps(r)+"\n")
-                        logger.info("  → cond=%s parse=%s ans_ok=%s src_ok=%s R=%s",
-                            cond, r.get("parse_success"), r.get("answerable_correct"),
+                for bq in bqs:
+                    if (cond, sl, bq["base_question_id"]) in done_keys:
+                        continue
+                    specs.append((cond, ep, ckpt, cont, sl, bq))
+        total = len(specs)
+        print(f"TO RUN: {total} probes (skipped {len(done_keys)} done) | max_workers={max_workers} base_port={base_port}")
+        progress = {"n": 0, "ok": 0}
+
+        async def _worker(cond, ep, ckpt, cont, sl, bq):
+            slot = await slot_q.get()
+            try:
+                kb_dir = None
+                if args.keep_branches:
+                    kb_dir = run_dir / "branches" / cond / sl / bq["base_question_id"]
+                r = await run_one(ep, ckpt, cont, bq, sl, pp, args.model,
+                                  raw_root=raw_root, condition=cond,
+                                  keep_branch_dir=kb_dir,
+                                  port_start=base_port + slot * 6)
+            except Exception as e:
+                logger.error("FAILED %s/%s/%s: %s", cond, sl, bq["base_question_id"], e)
+                slot_q.put_nowait(slot)
+                return
+            slot_q.put_nowait(slot)
+            async with write_lock:
+                all_r.append(r)
+                with rf.open("a") as f:
+                    f.write(json.dumps(r) + "\n")
+                progress["n"] += 1
+                if r.get("source_correct"):
+                    progress["ok"] += 1
+                logger.info("[%d/%d done | SC=%d] %s/%s %s parse=%s src_ok=%s R=%s",
+                            progress["n"], total, progress["ok"], cond, sl,
+                            bq["base_question_id"], r.get("parse_success"),
                             r.get("source_correct"), r.get("R_path"))
-                    except Exception as e:
-                        logger.error("  FAILED: %s", e)
+
+        if specs:
+            await asyncio.gather(*[_worker(*s) for s in specs])
     finally:
         if proxy: proxy.__exit__(None,None,None)
 
@@ -799,6 +914,8 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--max-bq", type=int, default=None, help="Select first N from stable order (shorthand for --start-index 0 --count N)")
     p.add_argument("--start-index", type=int, default=None, help="Start index in stable question order")
+    p.add_argument("--max-workers", type=int, default=1,
+                   help="Concurrent probes (each self-isolated gateway/branch). 1 = sequential.")
     p.add_argument("--count", type=int, default=None, help="Number of questions from start-index")
     p.add_argument("--run-id", type=str, default=None, help="Unique run identifier (auto-generated if omitted)")
     p.add_argument("--analysis-only", action="store_true")
@@ -817,6 +934,12 @@ def main():
                         "(default: %(default)s). "
                         "Use 'pilot_v3_100k_prewrite' for leaked-prewrite, "
                         "'pilot_v3_100k_prewrite_generic' for generic-prewrite.")
+    p.add_argument("--bank", type=str, default=None,
+                   help="Path to question bank JSON (default: unified_state_conditioned_bank.json). "
+                        "Use configs/study/combined_modality_bank.json for the modality extension.")
+    p.add_argument("--family", type=str, default=None,
+                   help="Checkpoint family for ALL states (s1 d0/d50k/d80k + postcomp_100k). "
+                        "E.g. modality_ext_v1. Overrides the default pilot_v3_100k / postcomp episode.")
     p.add_argument("--states", type=str, default=None,
                    help="Comma-separated state labels to run (default: all). "
                         "E.g. 'd0,d50k,d80k,S2'")

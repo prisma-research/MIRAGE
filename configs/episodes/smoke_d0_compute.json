@@ -1,0 +1,45 @@
+{
+  "episode_id": "smoke_d0_compute",
+  "description": "compute-node smoke: plant 2 objects -> d0 only. Validates gateway-start+connect on compute.",
+  "model": "volcengine/doubao-seed-2-0-pro-260215",
+  "artifacts": {
+    "cqa_9f9df328": {
+      "plant_type": "chart_image",
+      "image_path": "data/generated_images/chart/cqa_9f9df328.png",
+      "ocr_keywords": [
+        "gdp",
+        "new",
+        "jersey",
+        "556",
+        "dollars"
+      ]
+    },
+    "ss_324e28cd": {
+      "plant_type": "screenshot",
+      "image_path": "data/generated_images/screenshot/ss_324e28cd.png",
+      "ocr_keywords": [
+        "week",
+        "summary"
+      ]
+    }
+  },
+  "trunk": [
+    {
+      "type": "artifact",
+      "artifact_id": "cqa_9f9df328",
+      "prompt": "I pulled this chart from a state economics report. Take a look — I'll probably need to reference these GDP numbers later.",
+      "image": true
+    },
+    {
+      "type": "artifact",
+      "artifact_id": "ss_324e28cd",
+      "prompt": "I grabbed this screenshot from my phone. Note what's on the screen — I'll probably want to come back to this later.",
+      "image": true
+    },
+    {
+      "type": "checkpoint",
+      "checkpoint_kind": "s1_prequery",
+      "depth_label": 0
+    }
+  ]
+}

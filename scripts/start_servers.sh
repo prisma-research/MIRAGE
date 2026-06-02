@@ -1,6 +1,6 @@
 #!/bin/bash
-# Start Qwen3-VL-30B server via ms-swift (vllm backend) for MIRAGE QA.
-# Uses all 4 GPUs (TP=4) for maximum throughput.
+# Start Qwen3-VL-30B server via ms-swift (vllm backend) for GroundingBench QA.
+# Uses all 4 H100 NVL GPUs (TP=4) for maximum throughput.
 # max_model_len=131072 covers long-context checkpoints (d80k ≈ 81k tokens).
 #
 # Run from repo root: bash scripts/start_servers.sh
@@ -17,12 +17,12 @@ REPO="$(cd "$(dirname "$0")/.." && pwd)"
 LOG_DIR="$REPO/logs"
 mkdir -p "$LOG_DIR"
 
-export HF_HOME="${HF_HOME:-$HOME/.cache/huggingface}"
-export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0,1,2,3}"
-export PYTHONNOUSERSITE=1
+HF_CACHE="${HF_HOME:-$HOME/.cache/huggingface}"
+MODEL_30B="$HF_CACHE/hub/models--Qwen--Qwen3-VL-30B-A3B-Instruct/snapshots/9c4b90e1e4ba969fd3b5378b57d966d725f1b86c"
 
-# HF repo ID — resolved under $HF_HOME (downloads if absent).
-MODEL_30B="${MODEL_30B:-Qwen/Qwen3-VL-30B-A3B-Instruct}"
+export HF_HOME="$HF_CACHE"
+export CUDA_VISIBLE_DEVICES=0,1,2,3
+export PYTHONNOUSERSITE=1
 
 echo "[start_servers] Starting 30B on GPUs 0-3 (TP=4), port 8000 ..."
 swift deploy \

@@ -2,7 +2,7 @@
 Smoke test: run S1 + S2 for 1 manifest artifact with DeepSeek backbone.
 
 Usage:
-    cd MIRAGE
+    cd GroundingBench
     python -m harness.run_s1_s2_smoke
 """
 

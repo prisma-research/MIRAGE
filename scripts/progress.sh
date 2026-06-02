@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # progress.sh — Show current experiment progress.
-# Must be run from the MIRAGE/ directory.
+# Must be run from the GroundingBench/ directory.
 
 set -euo pipefail
 
@@ -11,7 +11,7 @@ s2=$(ls logs/trials/*_S2.json 2>/dev/null | wc -l | tr -d ' ')
 s3=$(ls logs/trials/*_S3.json 2>/dev/null | wc -l | tr -d ' ')
 errors=$(grep -c '"error"' logs/errors.jsonl 2>/dev/null || echo 0)
 
-echo "=== MIRAGE Progress ==="
+echo "=== GroundingBench Progress ==="
 echo "Completed trials: $total  (S1=$s1  S2=$s2  S3=$s3)"
 echo "Errors:           $errors"
 echo ""

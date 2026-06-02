@@ -1,20 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Activate your environment before running, e.g.:
-#   conda activate mirage
-# (uncomment and adjust the lines below if you source conda manually)
-# source "$HOME/miniconda3/etc/profile.d/conda.sh"
-# conda activate mirage
-
-REPO="$(cd "$(dirname "$0")/.." && pwd)"
+source "$(conda info --base)/etc/profile.d/conda.sh"
+conda activate groundingbench
 
 export HF_HOME="${HF_HOME:-$HOME/.cache/huggingface}"
 export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0,1,2,3}"
 
-# HF repo ID — resolved under $HF_HOME (downloads if absent).
-MODEL_PATH="${MODEL_PATH:-google/gemma-3-27b-it}"
-CHAT_TEMPLATE="${CHAT_TEMPLATE:-$REPO/configs/chat_templates/gemma3_permissive.jinja}"
+MODEL_PATH="${MODEL_PATH:-${HF_HOME:-$HOME/.cache/huggingface}/hub/models--google--gemma-3-27b-it/snapshots/005ad3404e59d6023443cb575daa05336842228a}"
+CHAT_TEMPLATE="${CHAT_TEMPLATE:-configs/chat_templates/gemma3_permissive.jinja}"
 PORT="${PORT:-8004}"
 MAX_MODEL_LEN="${MAX_MODEL_LEN:-131072}"
 GPU_MEM_UTIL="${GPU_MEM_UTIL:-0.95}"

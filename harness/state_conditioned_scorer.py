@@ -79,11 +79,8 @@ def canonicalize_source(raw: str) -> str:
     if not raw or raw.upper() == "NONE":
         return "none"
     import os.path
-    s = raw.strip().strip("*`_ ").strip()
-    if not s or s.upper() == "NONE":
-        return "none"
     # Strip URL-style fragment anchors: #L1, #L5C3, #section-name
-    s = re.sub(r'#.*$', '', s)
+    s = re.sub(r'#.*$', '', raw)
     s = os.path.basename(s)
     s = re.sub(r'\.(png|jpg|jpeg|json|md)$', '', s)
     s_lower = s.lower()

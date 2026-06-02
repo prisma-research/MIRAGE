@@ -1,5 +1,5 @@
 """
-aggregate_paper_results.py — Paper-ready table aggregation for MIRAGE.
+aggregate_paper_results.py — Paper-ready table aggregation for GroundingBench.
 
 Aggregates results across multiple experiment run directories into markdown/CSV
 tables suitable for inclusion in the MM2026 paper.
@@ -486,7 +486,7 @@ def build_table_paired(csv_paths: list[tuple[str, Path]], output_dir: Path) -> N
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Aggregate MIRAGE paper tables")
+    parser = argparse.ArgumentParser(description="Aggregate GroundingBench paper tables")
     parser.add_argument(
         "--backbone-dirs", nargs="*", type=Path, default=[],
         metavar="DIR",

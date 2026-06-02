@@ -11,7 +11,7 @@ Post-compaction states (prewrite intervention):
   S3@100k  — pilot_v3_100k_prewrite / postcomp_100k (fresh-session)
 
 Usage:
-    cd MIRAGE
+    cd GroundingBench
     python -m harness.run_pilot --probes-only --max-questions 6   # 90-probe validation
     python -m harness.run_pilot --probes-only                     # full 1500 probes
     python -m harness.run_pilot --analysis-only                   # re-analyze
@@ -47,7 +47,7 @@ QUESTION_BANK_PATH = GB_ROOT / "configs" / "study" / "question_bank_constrained_
 
 # Output label for this mixed-condition run
 OUTPUT_EPISODE_ID = "pilot_v3_100k_mixed"
-MODEL = "anthropic/claude-haiku-4-5-20251001"
+MODEL = "shubiaobiao/gpt-5"
 
 # Episode-aware experiment matrix.
 # Each state specifies its source episode_id and checkpoint_id.

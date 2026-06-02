@@ -28,7 +28,7 @@ from math import comb
 from pathlib import Path
 
 # ---------------------------------------------------------------------------
-# Ensure MIRAGE is importable
+# Ensure GroundingBench is importable
 # ---------------------------------------------------------------------------
 _GROUNDING_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_GROUNDING_ROOT))

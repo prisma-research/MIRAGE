@@ -1,5 +1,5 @@
 """
-OpenClaw Client for MIRAGE.
+OpenClaw Client for GroundingBench.
 
 Uses the `openclaw` CLI for session management and message sending,
 which has full operator.admin scope via device pairing.
@@ -90,7 +90,33 @@ class OpenClawClient:
     # ------------------------------------------------------------------
 
     async def connect(self) -> None:
-        """Verify gateway is reachable."""
+        """Verify gateway is reachable.
+
+        Primary check: HTTP probe of the gateway dashboard (mirrors the
+        readiness poll in harness/checkpoint.py). On OpenClaw 2026.3.x the
+        `gateway status` text emits the "Listening" line only conditionally
+        (and is truncated under the short CLI timeout when run as a managed
+        service is "stopped"), so the CLI-text heuristic is unreliable. The
+        HTTP probe is authoritative: if the WS gateway is serving, the
+        loopback HTTP endpoint returns a response.
+        """
+        # ws://host:port -> http://host:port
+        http_url = self.ws_url.replace("ws://", "http://").replace("wss://", "https://")
+        from urllib.request import urlopen
+        from urllib.error import HTTPError, URLError
+        try:
+            await asyncio.to_thread(lambda: urlopen(http_url, timeout=5).read(0))
+            logger.debug("Gateway connection verified via HTTP (%s)", http_url)
+            return
+        except HTTPError:
+            # The server RESPONDED (e.g. 404 because the web dashboard is disabled
+            # on episode/branch gateways via cfg.pop("web")). An HTTP status of any
+            # kind proves the gateway is listening → reachable.
+            logger.debug("Gateway reachable via HTTP (got HTTP error status) (%s)", http_url)
+            return
+        except (URLError, OSError, ConnectionError) as http_err:
+            logger.debug("HTTP probe failed (%s); falling back to CLI status", http_err)
+
         result = await self._run_cli(["openclaw", "gateway", "status"], timeout=10)
         if "RPC probe: ok" not in result and "Listening" not in result:
             raise ConnectionError(f"Gateway not reachable: {result}")

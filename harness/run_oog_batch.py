@@ -5,7 +5,7 @@ Protocol: VLM plants (Doubao Vision) → target model retrieves (S3)
 All trials: C0, d=0, chart_image, definite, Axis 3 enabled
 
 Usage:
-    cd MIRAGE
+    cd GroundingBench
     python -m harness.run_oog_batch
 """
 

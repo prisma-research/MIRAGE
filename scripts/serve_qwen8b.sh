@@ -6,11 +6,10 @@
 #
 # Usage: bash scripts/serve_qwen8b.sh
 
-# HF repo ID — vllm/swift will resolve it under $HF_HOME (downloads if absent).
-MODEL_PATH="${MODEL_PATH:-Qwen/Qwen3-VL-8B-Instruct}"
+MODEL_PATH="${HF_HOME:-$HOME/.cache/huggingface}/hub/models--Qwen--Qwen3-VL-8B-Instruct/snapshots/0c351dd01ed87e9c1b53cbc748cba10e6187ff3b"
 
-export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0,1,2,3}"
-export HF_HOME="${HF_HOME:-$HOME/.cache/huggingface}"
+export CUDA_VISIBLE_DEVICES=0,1,2,3
+export HF_HOME=${HF_HOME:-$HOME/.cache/huggingface}
 export PYTHONNOUSERSITE=1
 
 exec swift deploy \

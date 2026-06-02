@@ -2,7 +2,7 @@
 audit_manifest_balance.py — Summarize manifest metadata for balanced subset selection.
 
 Usage:
-    cd MIRAGE
+    cd GroundingBench
     python scripts/audit_manifest_balance.py
     python scripts/audit_manifest_balance.py --subset configs/subsets/paper_main_50_50.json
 """

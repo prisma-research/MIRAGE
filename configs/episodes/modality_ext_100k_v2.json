@@ -1,0 +1,268 @@
+{
+  "episode_id": "modality_ext_100k_v2",
+  "description": "Combined 12-object NATIVE trunk: original 6 (chart/UI images) + 6 new across 3 modalities (2 image, 2 text, 2 pdf-via-pdf2text). No prewrite; native compaction.",
+  "model": "volcengine/doubao-seed-2-0-pro-260215",
+  "artifacts": {
+    "cqa_9f9df328": {
+      "plant_type": "chart_image",
+      "image_path": "data/generated_images/chart/cqa_9f9df328.png",
+      "ocr_keywords": [
+        "gdp",
+        "new",
+        "jersey",
+        "556",
+        "dollars"
+      ]
+    },
+    "cqa_536c64e4": {
+      "plant_type": "chart_image",
+      "image_path": "data/generated_images/chart/cqa_536c64e4.png",
+      "ocr_keywords": [
+        "internet",
+        "users",
+        "canada",
+        "35.63"
+      ]
+    },
+    "cqa_3dd0635a": {
+      "plant_type": "chart_image",
+      "image_path": "data/generated_images/chart/cqa_3dd0635a.png",
+      "ocr_keywords": [
+        "poker",
+        "tables",
+        "casinos",
+        "nevada",
+        "313"
+      ]
+    },
+    "cqa_92d6ef9a": {
+      "plant_type": "chart_image",
+      "image_path": "data/generated_images/chart/cqa_92d6ef9a.png",
+      "ocr_keywords": [
+        "fan",
+        "cost",
+        "index",
+        "boston",
+        "celtics",
+        "419"
+      ]
+    },
+    "ss_324e28cd": {
+      "plant_type": "screenshot",
+      "image_path": "data/generated_images/screenshot/ss_324e28cd.png",
+      "ocr_keywords": [
+        "week",
+        "summary"
+      ]
+    },
+    "ss_102dfb65": {
+      "plant_type": "screenshot",
+      "image_path": "data/generated_images/screenshot/ss_102dfb65.png",
+      "ocr_keywords": [
+        "google",
+        "maps",
+        "notifications"
+      ]
+    },
+    "pho_01": {
+      "plant_type": "natural_photo",
+      "ocr_keywords": [
+        "noodle",
+        "soup",
+        "shrimp",
+        "carrot",
+        "foodiebaker"
+      ],
+      "image_path": "data/generated_images/photo/pho_01.png"
+    },
+    "mix_01": {
+      "plant_type": "infographic",
+      "ocr_keywords": [
+        "social",
+        "media",
+        "platform",
+        "pinterest",
+        "linkedin",
+        "constant",
+        "contact"
+      ],
+      "image_path": "data/generated_images/infographic/mix_01.png"
+    },
+    "code_01": {
+      "plant_type": "code_text",
+      "ocr_keywords": [
+        "default_timeout",
+        "max_retries",
+        "api_base_url",
+        "fetch_user",
+        "cache_ttl"
+      ],
+      "file_path": "data/generated_files/code_01.py"
+    },
+    "email_01": {
+      "plant_type": "email_text",
+      "ocr_keywords": [
+        "sarah",
+        "offsite",
+        "lakeside",
+        "deposit",
+        "nw-q2-offsite",
+        "lake2024"
+      ],
+      "file_path": "data/generated_files/email_01.txt"
+    },
+    "pdf_01": {
+      "plant_type": "pdf_text",
+      "ocr_keywords": [
+        "invoice",
+        "inv-2024-0072",
+        "acme",
+        "47000",
+        "po-5519"
+      ],
+      "file_path": "data/generated_pdfs/pdf_01.pdf"
+    },
+    "pdf_02": {
+      "plant_type": "pdf_text",
+      "ocr_keywords": [
+        "quarterly",
+        "revenue",
+        "west",
+        "1530",
+        "4350",
+        "region"
+      ],
+      "file_path": "data/generated_pdfs/pdf_02.pdf"
+    }
+  },
+  "trunk": [
+    {
+      "type": "artifact",
+      "artifact_id": "cqa_9f9df328",
+      "prompt": "I pulled this chart from a state economics report. Take a look — I'll probably need to reference these GDP numbers later.",
+      "image": true
+    },
+    {
+      "type": "work_task",
+      "prompt": "Quick one — polish this message for my team: 'Quarterly review next Weds, need slides by Monday EOD, focus on retention and churn. Thx.' Keep it short."
+    },
+    {
+      "type": "artifact",
+      "artifact_id": "cqa_536c64e4",
+      "prompt": "Here's another chart — internet and social media stats for Canada. Keep the key figures in mind, I may ask about them.",
+      "image": true
+    },
+    {
+      "type": "artifact",
+      "artifact_id": "ss_324e28cd",
+      "prompt": "I grabbed this screenshot from my phone. Note what's on the screen — I'll probably want to come back to this later.",
+      "image": true
+    },
+    {
+      "type": "work_task",
+      "prompt": "Draft a two-sentence vendor follow-up — we're still waiting on their analytics platform pricing proposal after a week of silence."
+    },
+    {
+      "type": "artifact",
+      "artifact_id": "cqa_3dd0635a",
+      "prompt": "One more chart for the research pile — gaming industry trends in Nevada. Note the important numbers.",
+      "image": true
+    },
+    {
+      "type": "work_task",
+      "prompt": "Extract the key dates from this: 'Board meeting April 15. Budget freeze April 1. Headcount deadline March 31. Reviews due April 10.'"
+    },
+    {
+      "type": "artifact",
+      "artifact_id": "cqa_92d6ef9a",
+      "prompt": "Here's a chart about sports event costs across NBA teams. Keep track of these figures — I might need them later.",
+      "image": true
+    },
+    {
+      "type": "artifact",
+      "artifact_id": "ss_102dfb65",
+      "prompt": "Last thing — a screenshot from my phone settings. I'll want to refer back to this screen, so keep it in mind.",
+      "image": true
+    },
+    {
+      "type": "work_task",
+      "prompt": "Which should I prioritize: a 90-min Q1 revenue deep-dive at 2pm, or a 30-min new-hire check-in at 2:30? They overlap."
+    },
+    {
+      "type": "artifact",
+      "artifact_id": "pho_01",
+      "prompt": "Here's a food photo I took — a bowl of noodle soup. I might ask about it later.",
+      "image": true
+    },
+    {
+      "type": "artifact",
+      "artifact_id": "mix_01",
+      "prompt": "A social-media cheat-sheet infographic. Keep the key facts in mind.",
+      "image": true
+    },
+    {
+      "type": "artifact",
+      "artifact_id": "code_01",
+      "prompt": "I've saved a file to your workspace: `code_01.py`.\nHere's a Python config module (service_client.py) I'm working with — note the values and behaviour:\n\n# service_client.py — configuration and user fetch helper\nimport time\n\nDEFAULT_TIMEOUT = 30          # seconds\nMAX_RETRIES = 5\nAPI_BASE_URL = \"https://api.example.com/v2\"\nCACHE_TTL = 3600              # seconds\nRETRY_BACKOFF = 2.0\nENABLE_CACHE = True\nLOG_LEVEL = \"INFO\"\n\n\ndef fetch_user(user_id: int, timeout: int = DEFAULT_TIMEOUT) -> dict:\n    \"\"\"Fetch a user record by id. Returns {} on failure.\"\"\"\n    for attempt in range(MAX_RETRIES):\n        resp = http_get(f\"{API_BASE_URL}/users/{user_id}\", timeout=timeout)\n        if resp.status_code == 200:\n            return resp.json()\n        time.sleep(RETRY_BACKOFF ** attempt)\n    return {}\n\nKeep `code_01.py` in mind — I'll ask about it later.",
+      "image": false
+    },
+    {
+      "type": "work_task",
+      "prompt": "Quick check — list in one line the kinds of materials I've shared so far."
+    },
+    {
+      "type": "artifact",
+      "artifact_id": "email_01",
+      "prompt": "I've saved a file to your workspace: `email_01.txt`.\nHere's an email I received about our Q2 offsite — keep the details, I'll refer back:\n\nFrom: Sarah Chen <s.chen@northwind.io>\nTo: me\nSubject: Q2 offsite logistics — action needed\nDate: 2024-05-14\n\nHi,\nConfirming the Q2 team offsite: it is booked for June 18-19 at the Lakeside Conference Center.\nWe have 24 attendees. The venue deposit of 3200 dollars is due by May 30.\nPlease send your dietary restrictions to Marco by Friday. Book flights under project code\nNW-Q2-OFFSITE. The hotel block code is LAKE2024.\nThanks,\nSarah\n\nKeep `email_01.txt` in mind — I'll ask about it later.",
+      "image": false
+    },
+    {
+      "type": "artifact",
+      "artifact_id": "pdf_01",
+      "prompt": "I've saved a file to your workspace: `pdf_01.pdf`.\nI'm sharing an invoice PDF. Our pdf2text tool extracted the following content — keep the figures:\n\nINVOICE  #INV-2024-0072\nVendor: Acme Analytics Ltd\nBill to: Northwind Data Team\nInvoice date: 2024-03-09\nPO: PO-5519\nPayment terms: Net 30\n\nSubtotal: 42000\nTax: 5000\nTotal due: 47000 USD\nDue date: 2024-04-08\n\nKeep `pdf_01.pdf` in mind — I'll ask about it later.",
+      "image": false
+    },
+    {
+      "type": "artifact",
+      "artifact_id": "pdf_02",
+      "prompt": "I've saved a file to your workspace: `pdf_02.pdf`.\nI'm sharing a quarterly report PDF. Our pdf2text tool extracted the following content — note the table:\n\nQUARTERLY PERFORMANCE REPORT  Q1 2024\nPrepared by: Analytics Team\n\nRegional revenue (USD thousands):\nRegion      Q1-2024   Q4-2023\nNorth        1240      1100\nSouth         860       910\nWest         1530      1420\nEast          720       680\n\nKey findings:\n- West region led with 1530, up from 1420.\n- South was the only region to decline quarter-over-quarter.\n- Total Q1 revenue: 4350.\nNext review: 2024-05-15.\n\nKeep `pdf_02.pdf` in mind — I'll ask about it later.",
+      "image": false
+    },
+    {
+      "type": "checkpoint",
+      "checkpoint_kind": "s1_prequery",
+      "depth_label": 0
+    },
+    {
+      "type": "filler",
+      "target_eit": 50000,
+      "seed": 100
+    },
+    {
+      "type": "checkpoint",
+      "checkpoint_kind": "s1_prequery",
+      "depth_label": 50000
+    },
+    {
+      "type": "filler",
+      "target_eit": 80000,
+      "seed": 200
+    },
+    {
+      "type": "checkpoint",
+      "checkpoint_kind": "s1_prequery",
+      "depth_label": 80000
+    },
+    {
+      "type": "compaction_wait",
+      "compaction_threshold": 100000,
+      "max_filler_turns": 60,
+      "seed": 300
+    },
+    {
+      "type": "checkpoint",
+      "checkpoint_kind": "postcomp",
+      "compaction_threshold": 100000
+    }
+  ]
+}

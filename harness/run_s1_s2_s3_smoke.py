@@ -14,7 +14,7 @@ Checks (native compaction pipeline):
   8.  S2/S3 R_path in {R_context, R_boot, R_tool, R_none}
 
 Usage:
-    cd MIRAGE
+    cd GroundingBench
     python -m harness.run_s1_s2_s3_smoke
 """
 

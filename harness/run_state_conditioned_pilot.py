@@ -5,7 +5,7 @@ Runs full/locate/verify/extract_in_state probes across 5 states,
 using the split checkpoint family.
 
 Usage:
-    cd MIRAGE
+    cd GroundingBench
     python -m harness.run_state_conditioned_pilot --max-probes 10   # smoke test
     python -m harness.run_state_conditioned_pilot --max-bq 6        # small validation
     python -m harness.run_state_conditioned_pilot                    # full run
@@ -34,7 +34,7 @@ logger = logging.getLogger(__name__)
 GB_ROOT = Path(__file__).parent.parent
 BANK_PATH = GB_ROOT / "configs" / "study" / "state_conditioned_bank.json"
 OUTPUT_DIR = GB_ROOT / "logs" / "probes" / "state_conditioned_v1"
-MODEL = "anthropic/claude-haiku-4-5-20251001"
+MODEL = "shubiaobiao/gpt-5"
 
 # Episode-aware 5-state matrix
 DEFAULT_POSTCOMP_EPISODE = "pilot_v3_100k_prewrite_generic"

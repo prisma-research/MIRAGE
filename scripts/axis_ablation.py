@@ -1,5 +1,5 @@
 """
-axis_ablation.py — Axis ablation analysis for the MIRAGE paper.
+axis_ablation.py — Axis ablation analysis for the GroundingBench paper.
 
 Shows what each scoring axis (R_path, I_strict, S_hat) captures that the
 others don't, using the 600 main-paper trials.
@@ -284,7 +284,7 @@ def _write_csv(rows: list[dict], path: Path) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Axis ablation analysis for MIRAGE paper")
+        description="Axis ablation analysis for GroundingBench paper")
     parser.add_argument(
         "--trial-dirs", nargs="*", type=Path, default=None,
         help="Run directories with trial JSONs (default: both paper_main dirs)")

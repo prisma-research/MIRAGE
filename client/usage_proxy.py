@@ -1,5 +1,5 @@
 """
-Local reverse proxy + openclaw.json config patcher for MIRAGE experiments.
+Local reverse proxy + openclaw.json config patcher for GroundingBench experiments.
 
 Handles two categories of problems when running experiments through non-standard
 OpenAI-compatible endpoints (e.g. shubiaobiao):
@@ -125,6 +125,102 @@ def _strip_misleading_usage(body: dict) -> dict:
     return body
 
 
+# Doubao / GLM emit tool calls as native special-token text rather than as a
+# structured `tool_calls` field when called via the generic openai-completions
+# path (no `tools` param). OpenClaw can't parse that text, so it sees no tool
+# call (→ R_context). This converts those native tokens into a structured
+# `tool_calls` array so the rest of the pipeline (and OpenClaw) treats it as a
+# real tool call (→ R_tool). VLM stays a VLM; only the tool-call wire format is
+# normalized — implemented in our proxy, analogous to vLLM's --tool-call-parser.
+import re as _re_tc
+
+# Doubao emits the markers two ways: clean `<|FunctionCallEnd|>` and, frequently,
+# an XML-close-style slashed variant `</|FunctionCallEnd|>`. Both Begin/End and the
+# slash are optional so the adapter lifts either form (otherwise the slashed calls
+# leak as text → R_context).
+_DOUBAO_FC_RE = _re_tc.compile(
+    r"</?\|FunctionCall(?:Begin)?\|>\s*(.*?)\s*</?\|FunctionCallEnd\|>",
+    _re_tc.DOTALL,
+)
+_DOUBAO_FC_END_RE = _re_tc.compile(r"</?\|FunctionCallEnd\|>")
+_DOUBAO_FC_ANY_RE = _re_tc.compile(r"</?\|FunctionCall(?:Begin|End)?\|>")
+
+
+def _coerce_tool_call_objs(raw: str) -> list[dict]:
+    """Parse the JSON payload inside a FunctionCall block into OpenAI tool_calls."""
+    raw = raw.strip()
+    objs = []
+    try:
+        parsed = json.loads(raw)
+        objs = parsed if isinstance(parsed, list) else [parsed]
+    except (json.JSONDecodeError, ValueError):
+        # Fallback: name(args) python-ish or name + trailing json
+        m = _re_tc.search(r'"?name"?\s*[:=]\s*"?([\w./-]+)"?', raw)
+        if not m:
+            return []
+        argm = _re_tc.search(r'\{.*\}', raw, _re_tc.DOTALL)
+        try:
+            args = json.loads(argm.group(0)) if argm else {}
+        except (json.JSONDecodeError, ValueError):
+            args = {}
+        objs = [{"name": m.group(1), "arguments": args}]
+    out = []
+    for i, o in enumerate(objs):
+        if not isinstance(o, dict):
+            continue
+        name = o.get("name") or o.get("tool")
+        if not name:
+            continue
+        args = o.get("arguments")
+        if args is None:
+            args = o.get("parameters", {})
+        out.append({
+            "id": f"call_doubao_{i}",
+            "type": "function",
+            "function": {"name": name,
+                         "arguments": args if isinstance(args, str) else json.dumps(args, ensure_ascii=False)},
+        })
+    return out
+
+
+def _normalize_native_tool_calls(data: dict) -> dict:
+    """If a choice's message content carries native FunctionCall tokens, lift
+    them into a structured `tool_calls` field and strip them from the text."""
+    for choice in data.get("choices", []):
+        msg = choice.get("message")
+        if not isinstance(msg, dict) or msg.get("tool_calls"):
+            continue
+        content = msg.get("content")
+        # Guard on the marker stem only ("FunctionCall"), so the slashed END-only
+        # variant "</|FunctionCallEnd|>" (which lacks the literal "<|FunctionCall")
+        # is still detected.
+        if not isinstance(content, str) or "FunctionCall" not in content:
+            continue
+        blocks = _DOUBAO_FC_RE.findall(content)
+        if not blocks:
+            # Doubao sometimes emits only the END marker: "<text>{json}<|FunctionCallEnd|>"
+            # (clean or slashed). Take the trailing JSON object before each End marker.
+            for seg in _DOUBAO_FC_END_RE.split(content)[:-1]:
+                jm = _re_tc.search(r'\{.*\}\s*$', seg.strip(), _re_tc.DOTALL)
+                if jm:
+                    blocks.append(jm.group(0))
+        logger.info("Proxy tool-parse: found %d FunctionCall block(s); raw[:160]=%r",
+                    len(blocks), content[:160])
+        tool_calls = []
+        for b in blocks:
+            tool_calls.extend(_coerce_tool_call_objs(b))
+        if tool_calls:
+            msg["tool_calls"] = tool_calls
+            # Strip both paired blocks and any leftover bare markers (END-only case).
+            stripped = _DOUBAO_FC_RE.sub("", content)
+            stripped = _DOUBAO_FC_ANY_RE.sub("", stripped).strip()
+            msg["content"] = stripped or None
+            choice["finish_reason"] = "tool_calls"
+            logger.info("Proxy tool-parse: lifted %d tool_call(s): %s",
+                        len(tool_calls), [t["function"]["name"] for t in tool_calls])
+    return data
+
+
 def _json_to_sse(data: dict) -> bytes:
     """Convert a non-streaming JSON chat completion response to SSE format.
 
@@ -144,8 +240,8 @@ def _json_to_sse(data: dict) -> bytes:
     }
 
     lines: list[bytes] = []
-    for choice in data.get("choices", []):
-        msg = choice.get("message", {})
+    for choice in (data.get("choices") or []):
+        msg = choice.get("message") or {}
         # Content chunk
         content_chunk = {
             **base,
@@ -160,8 +256,8 @@ def _json_to_sse(data: dict) -> bytes:
         }
         lines.append(b"data: " + json.dumps(content_chunk).encode())
 
-        # Tool calls
-        for tc in msg.get("tool_calls", []):
+        # Tool calls (vLLM emits "tool_calls": null when none → guard against None)
+        for tc in (msg.get("tool_calls") or []):
             tc_chunk = {
                 **base,
                 "choices": [{
@@ -244,7 +340,19 @@ class ProxyHandler(BaseHTTPRequestHandler):
         request_body = self.rfile.read(content_length) if content_length > 0 else b""
 
         upstream_base = self._resolve_upstream(request_body)
-        upstream_url = f"{upstream_base}{self.path}"
+        # Path normalization: OpenClaw calls us at /v1/chat/completions, but some
+        # upstreams (e.g. Volcengine Ark) live under /api/v3, not /v1. If the
+        # upstream base already carries its own version path, drop our /v1 prefix.
+        # EXCEPTION: local vLLM servers (127.0.0.1/localhost) serve under /v1 even
+        # though the route table strips the trailing /v1 from their base, so keep
+        # the /v1 prefix for them (else we'd hit /chat/completions -> 404).
+        req_path = self.path
+        _is_local = upstream_base.startswith(("http://127.0.0.1", "http://localhost"))
+        if (not _is_local
+                and not upstream_base.rstrip("/").endswith("/v1")
+                and req_path.startswith("/v1/")):
+            req_path = req_path[3:]  # "/v1/chat/completions" -> "/chat/completions"
+        upstream_url = f"{upstream_base}{req_path}"
 
         # Forward all headers except Host
         headers = {}
@@ -261,15 +369,29 @@ class ProxyHandler(BaseHTTPRequestHandler):
         was_streaming = False
         try:
             req_json = json.loads(request_body)
+            dirty = False
+            # Sanitize null message content: OpenAI allows content:null on
+            # tool-call-only assistant turns, but the swift/Qwen3-VL chat template
+            # iterates content and raises "'NoneType' object is not iterable" (400).
+            # Replayed planting history (esp. shallow states like d0) carries such
+            # turns, so coerce null content -> "".
+            msgs = req_json.get("messages")
+            if isinstance(msgs, list):
+                for m in msgs:
+                    if isinstance(m, dict) and m.get("content") is None:
+                        m["content"] = ""
+                        dirty = True
             if req_json.get("stream"):
                 was_streaming = True
                 req_json["stream"] = False
                 req_json.pop("stream_options", None)
-                request_body = json.dumps(req_json).encode()
+                dirty = True
                 logger.info(
                     "Proxy destream: model=%s upstream=%s",
                     req_json.get("model"), upstream_base,
                 )
+            if dirty:
+                request_body = json.dumps(req_json).encode()
         except (json.JSONDecodeError, ValueError):
             pass
 
@@ -292,10 +414,13 @@ class ProxyHandler(BaseHTTPRequestHandler):
                     status, self.path, upstream_base, resp_body[:500],
                 )
 
-        # Decompress gzip if needed (OpenAI SDK sends Accept-Encoding: gzip)
-        if resp_headers.get("Content-Encoding", "").lower() == "gzip":
+        # Decompress gzip if needed (OpenAI SDK sends Accept-Encoding: gzip).
+        # Case-insensitive header lookup — Volcengine/Ark returns lowercase
+        # `content-encoding: gzip`, which a case-sensitive .get() would miss.
+        _enc_key = next((k for k in resp_headers if k.lower() == "content-encoding"), None)
+        if _enc_key and resp_headers.get(_enc_key, "").lower() == "gzip":
             resp_body = gzip.decompress(resp_body)
-            del resp_headers["Content-Encoding"]
+            del resp_headers[_enc_key]
 
         # Normalize header lookup (vllm returns lowercase, shubiaobiao mixed case)
         content_type = ""
@@ -314,6 +439,7 @@ class ProxyHandler(BaseHTTPRequestHandler):
             try:
                 data = json.loads(resp_body)
                 data = _strip_misleading_usage(data)
+                data = _normalize_native_tool_calls(data)  # Doubao/GLM native tool tokens → structured tool_calls
                 usage = data.get("usage")
 
                 resp_body = _json_to_sse(data)

@@ -1,6 +1,6 @@
 {
   "bank_id": "study_v1_n100",
-  "generated_from": "configs/study/pilot_set.json",
+  "generated_from": "/Users/wenxiao/PycharmProjects/AgentDepth/GroundingBench/configs/study/pilot_set.json",
   "seed": 42,
   "families": {
     "target_present": 60,

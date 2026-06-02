@@ -18,7 +18,7 @@ Phase 2: near_comp_base_95k → generic prewrite → compaction → postcomp
   - Save as pilot_v3_100k_prewrite_generic / postcomp_100k
 
 Usage:
-    cd MIRAGE
+    cd GroundingBench
     python -m harness.build_generic_prewrite_checkpoint --phase 1   # build near-comp base
     python -m harness.build_generic_prewrite_checkpoint --phase 2   # build postcomp
     python -m harness.build_generic_prewrite_checkpoint              # both phases
@@ -121,8 +121,13 @@ def _check_compaction_fired(client, session_id, initial_cc, branch_state_dir):
     return False, cc
 
 
-async def _start_branch_with_proxy(manifest, branch_id, proxy_port, cw_override=None):
-    """Restore checkpoint, patch config, start gateway. Returns branch."""
+async def _start_branch_with_proxy(manifest, branch_id, proxy_port, cw_override=None,
+                                   compaction_model=None, agent_model=None):
+    """Restore checkpoint, patch config, start gateway. Returns branch.
+
+    compaction_model: when set, overrides agents.defaults.compaction.model on the
+    branch — the knob for the compaction-summarizer ablation (A1a).
+    """
     branch = await restore_checkpoint(
         manifest, branch_id=branch_id,
         port_start=19700, start_gateway=False,
@@ -134,8 +139,45 @@ async def _start_branch_with_proxy(manifest, branch_id, proxy_port, cw_override=
         cfg = json.load(f)
     patch_openclaw_config(
         cfg, proxy_port=proxy_port,
-        context_window_override=target_cw, compaction_model=None,
+        context_window_override=target_cw, compaction_model=compaction_model,
     )
+    # A1a robustness arm (degradation extreme): override compaction mode and/or
+    # disable the pre-compaction memoryFlush via env, holding everything else fixed.
+    # OPENCLAW_ABLATION_COMPACTION_MODE: "default" | "safeguard"
+    # OPENCLAW_ABLATION_MEMORYFLUSH: "off" disables the pre-compaction flush.
+    abl_mode = os.environ.get("OPENCLAW_ABLATION_COMPACTION_MODE")
+    abl_flush = os.environ.get("OPENCLAW_ABLATION_MEMORYFLUSH")
+    # Provenance-preservation sweep: vary the compaction identifierPolicy
+    # (off | strict | custom). custom uses OPENCLAW_ABLATION_IDENTIFIER_INSTRUCTIONS.
+    abl_idpol = os.environ.get("OPENCLAW_ABLATION_IDENTIFIER_POLICY")
+    abl_idinstr = os.environ.get("OPENCLAW_ABLATION_IDENTIFIER_INSTRUCTIONS")
+    if abl_mode or abl_flush or abl_idpol:
+        comp = (cfg.setdefault("agents", {})
+                   .setdefault("defaults", {})
+                   .setdefault("compaction", {}))
+        if abl_mode:
+            comp["mode"] = abl_mode
+            logger.info("Config patch (ablation): compaction.mode → %s", abl_mode)
+        if abl_flush and abl_flush.lower() in ("off", "false", "0", "disabled"):
+            comp.setdefault("memoryFlush", {})["enabled"] = False
+            logger.info("Config patch (ablation): memoryFlush → disabled")
+        if abl_idpol:
+            comp["identifierPolicy"] = abl_idpol
+            logger.info("Config patch (ablation): identifierPolicy → %s", abl_idpol)
+            if abl_idpol == "custom" and abl_idinstr:
+                comp["identifierInstructions"] = abl_idinstr
+                logger.info("Config patch (ablation): identifierInstructions set (%d chars)",
+                            len(abl_idinstr))
+
+    # Patch the AGENT model (used for the prewrite turn + any top-up filler) so the
+    # build works when only the new provider's API is available (e.g. Doubao-only).
+    if agent_model:
+        agents = cfg.setdefault("agents", {})
+        agents.setdefault("defaults", {}).setdefault("model", {})["primary"] = agent_model
+        for entry in agents.get("list", []):
+            if isinstance(entry, dict) and "model" in entry:
+                entry["model"] = agent_model
+        logger.info("Config patch: agent model → %s", agent_model)
     with cfg_path.open("w") as f:
         json.dump(cfg, f, indent=2)
     logger.info("Config patched: proxy=%s, cw=%d", proxy_port, target_cw)
@@ -143,22 +185,38 @@ async def _start_branch_with_proxy(manifest, branch_id, proxy_port, cw_override=
     env = {**os.environ, "OPENCLAW_STATE_DIR": str(branch.branch_state_dir)}
     (branch.branch_state_dir / "logs").mkdir(parents=True, exist_ok=True)
     gw = subprocess.Popen(
-        ["openclaw", "gateway", "run", "--port", str(branch.gateway_port), "--force"],
+        # --auth none --allow-unconfigured: restored branch configs lack
+        # gateway.mode=local, so the gateway refuses to start without these.
+        # Matches harness.checkpoint._start_branch.
+        ["openclaw", "gateway", "run", "--port", str(branch.gateway_port),
+         "--force", "--auth", "none", "--allow-unconfigured"],
         stdout=(branch.branch_state_dir / "logs" / "gateway.log").open("a"),
         stderr=(branch.branch_state_dir / "logs" / "gateway.err.log").open("a"),
         env=env,
     )
     branch.gateway_proc = gw
+    # Readiness via HTTP probe of the loopback dashboard, NOT `openclaw gateway
+    # status` (which relies on systemd and fails on HPC compute nodes:
+    # "Service: systemd (disabled)"). Mirrors checkpoint._start_branch / run_one.
+    from urllib.request import urlopen
+    from urllib.error import URLError
     deadline = time.monotonic() + 60.0
+    ready = False
     while time.monotonic() < deadline:
         try:
-            r = subprocess.run(["openclaw", "gateway", "status"],
-                               capture_output=True, timeout=15, env=env)
-            if r.returncode == 0:
-                break
-        except subprocess.TimeoutExpired:
+            urlopen(f"http://127.0.0.1:{branch.gateway_port}/", timeout=2)
+            ready = True
+            break
+        except (URLError, OSError, ConnectionRefusedError):
             pass
+        if gw.poll() is not None:
+            raise RuntimeError(
+                f"Branch gateway exited early (code={gw.returncode}). "
+                f"Check {branch.branch_state_dir / 'logs' / 'gateway.err.log'}"
+            )
         await asyncio.sleep(0.5)
+    if not ready:
+        raise RuntimeError(f"Branch gateway not ready after 60s (port={branch.gateway_port})")
     logger.info("Gateway ready (port=%d)", branch.gateway_port)
     return branch
 
@@ -279,14 +337,23 @@ async def phase1(proxy_port):
         branch.cleanup()
 
 
-async def phase2(proxy_port):
-    """Phase 2: near_comp_base → generic prewrite → compaction → postcomp."""
-    logger.info("=== PHASE 2: Generic prewrite → compaction → postcomp ===")
+async def phase2(proxy_port, target_episode=PHASE2_TARGET_EPISODE, compaction_model=None,
+                 agent_model=None):
+    """Phase 2: near_comp_base → generic prewrite → compaction → postcomp.
+
+    target_episode / compaction_model parametrize the A1a compaction-summarizer
+    ablation: same near_comp_base_95k context, different summarizer → distinct
+    postcomp episode for QA comparison.
+    """
+    logger.info("=== PHASE 2: Generic prewrite → compaction → postcomp (episode=%s, compaction_model=%s) ===",
+                target_episode, compaction_model)
 
     manifest = load_checkpoint(PHASE2_SOURCE_EPISODE, PHASE2_SOURCE_CHECKPOINT)
     logger.info("Source: %s (eit=%s)", manifest.checkpoint_id, manifest.effective_input_tokens)
 
-    branch = await _start_branch_with_proxy(manifest, "build_postcomp_generic", proxy_port)
+    branch = await _start_branch_with_proxy(manifest, "build_postcomp_generic", proxy_port,
+                                            compaction_model=compaction_model,
+                                            agent_model=agent_model)
     workspace = branch.branch_state_dir / f"workspace-{branch.agent_id}"
 
     try:
@@ -295,10 +362,16 @@ async def phase2(proxy_port):
         ) as client:
             sid = branch.session_id
 
-            # Step 1: Send generic prewrite
-            logger.info("Sending PREWRITE_PROMPT_GENERIC...")
-            await _send_with_timeout(client, PREWRITE_PROMPT_GENERIC, sid, timeout=300)
-            await asyncio.sleep(5.0)
+            # Step 1: Send generic prewrite (skippable for the bare-compactor arm)
+            if os.environ.get("OPENCLAW_ABLATION_SKIP_PREWRITE", "").lower() in ("1", "true", "on"):
+                logger.info("ABLATION: skipping PREWRITE_PROMPT_GENERIC (bare-compactor arm)")
+            else:
+                logger.info("Sending PREWRITE_PROMPT_GENERIC...")
+                # 900s: with tool-call parsing enabled the prewrite becomes an agentic
+                # multi-step interaction (model calls a tool → result → continues), and
+                # each Doubao turn is slow (~30-60s), so a single round can exceed 300s.
+                await _send_with_timeout(client, PREWRITE_PROMPT_GENERIC, sid, timeout=900)
+                await asyncio.sleep(5.0)
 
             # Step 2: Verify after prewrite
             # _verify_artifact_persistence checks BOTH MEMORY.md and memory/*.md.
@@ -320,8 +393,13 @@ async def phase2(proxy_port):
                         mem_md.stat().st_size if mem_md.exists() else 0, len(mem_dir_files))
 
             if n_ok == 0:
-                logger.error("Zero artifacts persisted after generic prewrite. Aborting.")
-                return None
+                # Models that don't spontaneously call file-edit tools during the
+                # prewrite turn (e.g. Doubao under the non-mandatory generic prompt)
+                # persist nothing here — but OpenClaw's pre-compaction memoryFlush
+                # still persists evidence during the compaction step below. Proceed
+                # rather than abort; the post-compaction verify (Step 4) is authoritative.
+                logger.warning("Prewrite persisted 0 artifacts; relying on pre-compaction "
+                               "memoryFlush during compaction (post-comp verify is authoritative).")
 
             # Step 3: Filler until compaction
             # INVARIANT: once compactionCount increases, STOP immediately.
@@ -385,8 +463,21 @@ async def phase2(proxy_port):
                     all_ok = False
                 logger.info("  %s: %s", aid, "PERSISTED" if ok else "NOT FOUND")
 
+            bare_arm = os.environ.get("OPENCLAW_ABLATION_SKIP_PREWRITE", "").lower() in ("1", "true", "on")
+            # allow_unverified: save the checkpoint even when evidence persistence
+            # is incomplete. Used for the identifierPolicy=off arm, where dropped
+            # provenance (0/6) is the intended ablation outcome but we still need a
+            # probeable S2 to measure how the agent answers on the sparse summary.
+            allow_unverified = os.environ.get("OPENCLAW_ABLATION_ALLOW_UNVERIFIED", "").lower() in ("1", "true", "on")
             manual_flush_used = False
-            if not all_ok:
+            if not all_ok and bare_arm:
+                # Bare-compactor arm: do NOT re-persist evidence post-compaction —
+                # that would reintroduce the memory scaffolding we are ablating away.
+                missing = [a for a, kw in ARTIFACT_KEYWORDS.items()
+                           if not _verify_artifact_persistence(workspace, a, kw)]
+                logger.warning("ABLATION (bare arm): missing %s — NOT sending manual_flush_fallback "
+                               "(this is the intended degradation extreme)", missing)
+            elif not all_ok:
                 missing = [a for a, kw in ARTIFACT_KEYWORDS.items()
                            if not _verify_artifact_persistence(workspace, a, kw)]
                 logger.warning("Missing after compaction: %s — sending manual_flush_fallback", missing)
@@ -421,13 +512,16 @@ async def phase2(proxy_port):
 
             m = save_postcomp_checkpoint(
                 state_dir=branch.branch_state_dir,
-                episode_id=PHASE2_TARGET_EPISODE,
+                episode_id=target_episode,
                 agent_id=branch.agent_id,
                 session_id=sid,
                 compaction_threshold=COMPACTION_THRESHOLD,
                 native_compaction_count=cc,
                 boundary_input_tokens=eit,
-                compaction_verified=all_ok,
+                # Bare arm: compaction genuinely fired (cc>0); we intentionally captured
+                # the evidence-sparse state, so mark verified to allow the checkpoint to
+                # save. (all_ok reflects evidence persistence, which we are ablating.)
+                compaction_verified=(all_ok or bare_arm or allow_unverified),
                 checkpoints_root=CHECKPOINTS_ROOT,
             )
 
@@ -468,7 +562,10 @@ async def main(args):
                 return
 
         if args.phase in (None, 2):
-            await phase2(proxy_port)
+            await phase2(proxy_port,
+                         target_episode=args.target_episode or PHASE2_TARGET_EPISODE,
+                         compaction_model=args.compaction_model,
+                         agent_model=args.agent_model)
     finally:
         if proxy_ctx:
             proxy_ctx.__exit__(None, None, None)
@@ -479,4 +576,10 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser()
     p.add_argument("--phase", type=int, choices=[1, 2], default=None,
                    help="Run only phase 1 or 2 (default: both)")
+    p.add_argument("--compaction-model", type=str, default=None,
+                   help="A1a ablation: override compaction summarizer model (e.g. volcengine/doubao-seed-1-6-250615)")
+    p.add_argument("--target-episode", type=str, default=None,
+                   help="A1a ablation: episode id to save the postcomp checkpoint under (variant arm)")
+    p.add_argument("--agent-model", type=str, default=None,
+                   help="Override agent model for prewrite/top-up (needed when only the new provider API is available, e.g. volcengine/doubao-seed-1-6-vision-250815)")
     asyncio.run(main(p.parse_args()))

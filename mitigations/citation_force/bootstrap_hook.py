@@ -68,7 +68,7 @@ violation. You must use `artifact_recall` as your retrieval tool.
 """
 
 BOOTSTRAP_EXTRA_SECTION_HEADER = "## CitationForce Constraint"
-CONDITION_MARKER_FILE = ".mirage_citation_force_condition"
+CONDITION_MARKER_FILE = ".groundingbench_citation_force_condition"
 
 
 def inject_citation_force_into_bootstrap(
@@ -81,7 +81,7 @@ def inject_citation_force_into_bootstrap(
     OpenClaw's bootstrap-extra-files hook reads BOOTSTRAP.md and includes
     it in the system prompt.
 
-    Also writes a MIRAGE-local condition marker so the optional
+    Also writes a GroundingBench-local condition marker so the optional
     artifact_recall plugin can expose the tool only for C2/C3 workspaces
     without contaminating C0/C1 controls.
 
@@ -140,7 +140,7 @@ def check_citation_force_in_system_prompt(system_prompt: str) -> bool:
 
 
 def read_citation_force_condition_marker(workspace_dir: Path | None = None) -> str | None:
-    """Return the MIRAGE-local CitationForce condition marker if present."""
+    """Return the GroundingBench-local CitationForce condition marker if present."""
     ws = workspace_dir or WORKSPACE_DIR
     marker_path = ws / CONDITION_MARKER_FILE
     if not marker_path.exists():

@@ -2,7 +2,7 @@
 C0 vs C2 matched comparison — chart_image, 5 seeds each.
 
 Usage:
-    cd MIRAGE
+    cd GroundingBench
     python -m harness.run_c0_vs_c2
 """
 

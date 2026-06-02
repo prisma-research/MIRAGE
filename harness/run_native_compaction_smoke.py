@@ -13,7 +13,7 @@ Tests that the native compaction pipeline works end-to-end:
   9. Send query, verify R_path classification
 
 Usage:
-    cd MIRAGE
+    cd GroundingBench
     python -m harness.run_native_compaction_smoke
     python -m harness.run_native_compaction_smoke --model shubiaobiao/gpt-5
 """

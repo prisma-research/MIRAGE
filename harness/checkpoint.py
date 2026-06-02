@@ -358,6 +358,42 @@ def _remove_stale_locks(state_dir: Path) -> int:
     return removed
 
 
+def _normalize_device_platform(state_dir: Path) -> int:
+    """Rewrite paired-device platform pins to the host platform.
+
+    Checkpoints authored on macOS pin devices as platform="darwin" in
+    devices/paired.json. When restored on a linux node, the connecting
+    client claims platform="linux", so the gateway flags a
+    metadata-upgrade mismatch and demands pairing ("pairing required").
+    Headless pairing can't auto-approve a metadata-upgrade, so the client
+    falls back to embedded mode and concurrent filler turns deadlock on
+    the session .jsonl.lock — compaction never fires. Aligning the pinned
+    platform with the host platform removes the mismatch entirely.
+
+    Returns the number of device records updated.
+    """
+    import sys
+
+    host_platform = sys.platform  # 'linux' / 'darwin' / 'win32' — matches node's process.platform
+    updated = 0
+    for paired_path in state_dir.rglob("devices/paired.json"):
+        try:
+            data = json.loads(paired_path.read_text())
+        except (json.JSONDecodeError, OSError):
+            continue
+        if not isinstance(data, dict):
+            continue
+        changed = False
+        for rec in data.values():
+            if isinstance(rec, dict) and rec.get("platform") not in (None, host_platform):
+                rec["platform"] = host_platform
+                changed = True
+                updated += 1
+        if changed:
+            paired_path.write_text(json.dumps(data, indent=2))
+    return updated
+
+
 def _rewrite_branch_paths(
     branch_state_dir: Path,
     original_state_dir: str,
@@ -543,6 +579,13 @@ async def restore_checkpoint(
     if n_locks:
         logger.info("Removed %d stale lock files", n_locks)
 
+    # Align paired-device platform pins with the host (macOS-authored
+    # checkpoints pin darwin → metadata-upgrade mismatch → pairing required
+    # → embedded fallback → session-lock deadlock → compaction never fires).
+    n_dev = _normalize_device_platform(branch_state_dir)
+    if n_dev:
+        logger.info("Normalized %d paired-device platform pin(s) to host", n_dev)
+
     # Start gateway
     gateway_proc = None
     if start_gateway:
@@ -551,7 +594,12 @@ async def restore_checkpoint(
         log_out = (branch_state_dir / "logs" / "gateway.log").open("a")
         log_err = (branch_state_dir / "logs" / "gateway.err.log").open("a")
         gateway_proc = subprocess.Popen(
-            ["openclaw", "gateway", "run", "--port", str(port), "--force"],
+            # --auth none --allow-unconfigured: without these the branch gateway
+            # demands pairing, the CLI falls back to embedded mode, and concurrent
+            # embedded filler calls deadlock on the session .jsonl.lock so
+            # compaction never fires. Matches the persistent gateway bring-up.
+            ["openclaw", "gateway", "run", "--port", str(port),
+             "--force", "--auth", "none", "--allow-unconfigured"],
             stdout=log_out,
             stderr=log_err,
             env=env,
@@ -622,6 +670,7 @@ async def continue_same_session(
     async with OpenClawClient(
         agent_id=branch.agent_id,
         state_dir=branch.branch_state_dir,
+        ws_url=f"ws://127.0.0.1:{branch.gateway_port}",  # not the default :18789
     ) as client:
         logger.info(
             "Same-session continuation: session=%s, agent=%s, branch=%s",
@@ -733,6 +782,7 @@ async def create_fresh_session(
     async with OpenClawClient(
         agent_id=branch.agent_id,
         state_dir=branch.branch_state_dir,
+        ws_url=f"ws://127.0.0.1:{branch.gateway_port}",  # not the default :18789
     ) as client:
         logger.info(
             "Fresh-session continuation: agent=%s, branch=%s",
@@ -777,7 +827,11 @@ _S1_DEPTH_LABELS = {0, 16_000, 32_000, 40_000, 50_000, 80_000}
 # interleaved work tasks adds another ~6-8k. The d0 checkpoint captures the
 # state right after artifact planting but before any depth-pushing filler.
 # 28k accommodates the realistic base context with comfortable margin.
-_S1_D0_EIT_CEILING = 28_000
+# Env-overridable: the combined 12-object modality trunk (original 6 + 6 new) plants
+# twice the artifacts before d0, so its d0 sits higher (~30-38k) yet is still shallow
+# relative to d50k/d80k. Set S1_D0_EIT_CEILING for that build.
+import os as _os
+_S1_D0_EIT_CEILING = int(_os.environ.get("S1_D0_EIT_CEILING", "28000"))
 
 
 def save_s1_prequery_checkpoint(

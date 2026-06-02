@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# stop.sh — Kill everything related to a MIRAGE experiment run.
+# stop.sh — Kill everything related to a GroundingBench experiment run.
 # Usage: bash stop.sh
 
 set -euo pipefail
 
-echo "=== Stopping MIRAGE experiment ==="
+echo "=== Stopping GroundingBench experiment ==="
 
 # 1. Kill experiment runner
 if pids=$(pgrep -f "experiment_runner" 2>/dev/null); then

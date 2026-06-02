@@ -2,7 +2,7 @@
 数据集生成脚本：从真实数据集采样图片 + 对话 + manifest。
 
 用法:
-    cd MIRAGE
+    cd GroundingBench
     python -m pipeline.generate_dataset
 
 输出:
@@ -28,7 +28,7 @@ from pipeline.planters.datasets.screenspot_planter import ScreenSpotPlanter
 from pipeline.planters.datasets.chartqa_planter import ChartQAPlanter
 
 N = 500  # samples per dataset
-BENCH_ROOT = Path(__file__).resolve().parent.parent  # MIRAGE/
+BENCH_ROOT = Path(__file__).resolve().parent.parent  # GroundingBench/
 
 
 def main() -> int:

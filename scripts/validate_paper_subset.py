@@ -10,7 +10,7 @@ Checks:
   - Metadata coverage is not degenerate
 
 Usage:
-    cd MIRAGE
+    cd GroundingBench
     python scripts/validate_paper_subset.py \
         --subset configs/subsets/paper_main_50_50.json \
         --annotations configs/annotations/paper_main_50_50_annotations.csv

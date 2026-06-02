@@ -4,7 +4,7 @@ Resume from s1_prequery_d80k to build postcomp_100k with pre-compaction memory-w
 Resumes from existing checkpoint — does NOT rebuild the pre-d80k trunk.
 
 Usage:
-    cd MIRAGE
+    cd GroundingBench
     python -m harness.resume_postcomp_from_checkpoint
 """
 

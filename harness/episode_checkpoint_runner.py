@@ -10,7 +10,7 @@ This runner does NOT do evaluation. It only:
   5. Writes a run manifest summarizing all checkpoints
 
 Usage:
-    cd MIRAGE
+    cd GroundingBench
     python -m harness.episode_checkpoint_runner \\
         --episode configs/episodes/pilot_episode.json \\
         --model shubiaobiao/gpt-5
@@ -74,7 +74,10 @@ def _start_episode_gateway(
     with main_cfg_path.open() as f:
         cfg = json.load(f)
 
-    cfg["gateway"] = {**cfg.get("gateway", {}), "port": port}
+    # mode=local is required or the gateway refuses to start ("set gateway.mode=local
+    # or pass --allow-unconfigured"); the main ~/.openclaw config may not carry it
+    # (the persistent gateway is started with --allow-unconfigured), so set it here.
+    cfg["gateway"] = {**cfg.get("gateway", {}), "port": port, "mode": "local"}
     cfg.pop("web", None)
 
     # Agent defaults: compaction in safeguard mode
@@ -106,7 +109,7 @@ def _start_episode_gateway(
 
     env = {**os.environ, "OPENCLAW_STATE_DIR": str(state_dir)}
     proc = subprocess.Popen(
-        ["openclaw", "gateway", "run", "--port", str(port), "--force"],
+        ["openclaw", "gateway", "run", "--port", str(port), "--force", "--allow-unconfigured"],
         stdout=(state_dir / "logs" / "gateway.log").open("a"),
         stderr=(state_dir / "logs" / "gateway.err.log").open("a"),
         env=env,
@@ -238,12 +241,15 @@ async def run_episode(
     trunk_steps = episode["trunk"]
     artifact_defs = episode.get("artifacts", {})
 
-    # Resolve image paths relative to MIRAGE root
+    # Resolve image paths relative to GroundingBench root
     gb_root = Path(__file__).parent.parent
     for aid, adef in artifact_defs.items():
         raw = adef.get("image_path")
         if raw:
             adef["_resolved_image_path"] = str(gb_root / raw)
+        rawf = adef.get("file_path")
+        if rawf:
+            adef["_resolved_file_path"] = str(gb_root / rawf)
 
     # Compute initial contextWindow from the highest compaction threshold in the
     # episode config. This ensures the session can reach all S1 depth milestones
@@ -272,6 +278,11 @@ async def run_episode(
         logger.info("Usage proxy on port %d", proxy_port)
 
     port = _find_free_port()
+    # Point all OpenClawClient instances at THIS episode gateway's port. Without this
+    # the client defaults to ws://127.0.0.1:18789; on a login node that accidentally
+    # hits the persistent main gateway, but on a compute node (no :18789, no systemd)
+    # connect()'s HTTP probe fails and the systemd CLI fallback errors out.
+    os.environ["OPENCLAW_WS_URL"] = f"ws://127.0.0.1:{port}"
     state_dir = Path.home() / f".openclaw-episode-{ep_id}"
     if state_dir.exists():
         shutil.rmtree(state_dir)
@@ -325,6 +336,17 @@ async def run_episode(
                             logger.info("  Image copied to workspace: %s", dest_img.name)
                         else:
                             logger.warning("  Image not found: %s", src_img)
+
+                    # Handle non-image file (text/pdf artifact): copy into the
+                    # workspace under its name so the model can cite/read the file
+                    # (source = filename → artifact_id) and it persists post-compaction.
+                    if not step.get("image") and adef.get("_resolved_file_path"):
+                        src_f = Path(adef["_resolved_file_path"])
+                        if src_f.exists():
+                            shutil.copy2(src_f, workspace / src_f.name)
+                            logger.info("  File copied to workspace: %s", src_f.name)
+                        else:
+                            logger.warning("  File not found: %s", src_f)
 
                     await client.send_message(
                         prompt, session_id=session_id, image_path=image_path,

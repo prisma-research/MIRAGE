@@ -1,0 +1,442 @@
+[
+  {
+    "pred": "30 (seconds)",
+    "match": true,
+    "err": false,
+    "bqid": "code_01_a01",
+    "question": "What value is DEFAULT_TIMEOUT set to in the code?",
+    "gold": "30"
+  },
+  {
+    "pred": "5",
+    "match": true,
+    "err": false,
+    "bqid": "code_01_a02",
+    "question": "What value is MAX_RETRIES set to?",
+    "gold": "5"
+  },
+  {
+    "pred": "3600 (seconds)",
+    "match": true,
+    "err": false,
+    "bqid": "code_01_a03",
+    "question": "What is the value of CACHE_TTL?",
+    "gold": "3600"
+  },
+  {
+    "pred": "2.0",
+    "match": true,
+    "err": false,
+    "bqid": "code_01_a04",
+    "question": "What is the value of RETRY_BACKOFF?",
+    "gold": "2.0"
+  },
+  {
+    "pred": "https://api.example.com/v2",
+    "match": true,
+    "err": false,
+    "bqid": "code_01_a05",
+    "question": "What is the API_BASE_URL in the code?",
+    "gold": "https://api.example.com/v2"
+  },
+  {
+    "pred": "INFO",
+    "match": true,
+    "err": false,
+    "bqid": "code_01_a06",
+    "question": "What is LOG_LEVEL set to?",
+    "gold": "INFO"
+  },
+  {
+    "pred": "True",
+    "match": true,
+    "err": false,
+    "bqid": "code_01_a07",
+    "question": "Is ENABLE_CACHE True or False?",
+    "gold": "True"
+  },
+  {
+    "pred": "{}",
+    "match": true,
+    "err": false,
+    "bqid": "code_01_a08",
+    "question": "What does the function fetch_user return on failure?",
+    "gold": "{}"
+  },
+  {
+    "pred": "200",
+    "match": true,
+    "err": false,
+    "bqid": "code_01_a09",
+    "question": "What HTTP status code does fetch_user treat as success?",
+    "gold": "200"
+  },
+  {
+    "pred": "fetch_user",
+    "match": true,
+    "err": false,
+    "bqid": "code_01_a10",
+    "question": "What is the name of the function defined in the code?",
+    "gold": "fetch_user"
+  },
+  {
+    "pred": "Sarah Chen",
+    "match": true,
+    "err": false,
+    "bqid": "email_01_a01",
+    "question": "Who sent the email?",
+    "gold": "Sarah Chen"
+  },
+  {
+    "pred": "Lakeside Conference Center",
+    "match": true,
+    "err": false,
+    "bqid": "email_01_a02",
+    "question": "At what venue is the Q2 offsite booked?",
+    "gold": "Lakeside Conference Center"
+  },
+  {
+    "pred": "24",
+    "match": true,
+    "err": false,
+    "bqid": "email_01_a03",
+    "question": "How many attendees are there?",
+    "gold": "24"
+  },
+  {
+    "pred": "3200",
+    "match": true,
+    "err": false,
+    "bqid": "email_01_a04",
+    "question": "What is the venue deposit amount in dollars?",
+    "gold": "3200"
+  },
+  {
+    "pred": "May 30, 2024",
+    "match": true,
+    "err": false,
+    "bqid": "email_01_a05",
+    "question": "By what date is the deposit due?",
+    "gold": "May 30"
+  },
+  {
+    "pred": "Marco",
+    "match": true,
+    "err": false,
+    "bqid": "email_01_a06",
+    "question": "Who should dietary restrictions be sent to?",
+    "gold": "Marco"
+  },
+  {
+    "pred": "NW-Q2-OFFSITE",
+    "match": true,
+    "err": false,
+    "bqid": "email_01_a07",
+    "question": "What is the project code for booking flights?",
+    "gold": "NW-Q2-OFFSITE"
+  },
+  {
+    "pred": "LAKE2024",
+    "match": true,
+    "err": false,
+    "bqid": "email_01_a08",
+    "question": "What is the hotel block code?",
+    "gold": "LAKE2024"
+  },
+  {
+    "pred": "June",
+    "match": true,
+    "err": false,
+    "bqid": "email_01_a09",
+    "question": "In what month is the offsite held?",
+    "gold": "June"
+  },
+  {
+    "pred": "Social Media Platform Cheat Sheet",
+    "match": true,
+    "err": false,
+    "bqid": "mix_01_a01",
+    "question": "What is the title of the infographic?",
+    "gold": "Social Media Platform Cheat Sheet"
+  },
+  {
+    "pred": "Pinterest",
+    "match": true,
+    "err": false,
+    "bqid": "mix_01_a02",
+    "question": "Which platform is described as having a heavily female audience?",
+    "gold": "Pinterest"
+  },
+  {
+    "pred": "LinkedIn",
+    "match": true,
+    "err": false,
+    "bqid": "mix_01_a03",
+    "question": "Which platform is the profession-driven, B2B platform?",
+    "gold": "LinkedIn"
+  },
+  {
+    "pred": "Low",
+    "match": true,
+    "err": false,
+    "bqid": "mix_01_a04",
+    "question": "What resource and expertise level does Facebook need?",
+    "gold": "low"
+  },
+  {
+    "pred": "Medium",
+    "match": true,
+    "err": false,
+    "bqid": "mix_01_a05",
+    "question": "What resource and expertise level does LinkedIn need?",
+    "gold": "medium"
+  },
+  {
+    "pred": "5",
+    "match": true,
+    "err": false,
+    "bqid": "mix_01_a06",
+    "question": "How many social media platforms are covered in the cheat sheet?",
+    "gold": "5"
+  },
+  {
+    "pred": "Twitter",
+    "match": true,
+    "err": false,
+    "bqid": "mix_01_a07",
+    "question": "Which platform is described as fast-moving and real-time?",
+    "gold": "Twitter"
+  },
+  {
+    "pred": "Constant Contact",
+    "match": true,
+    "err": false,
+    "bqid": "mix_01_a08",
+    "question": "Which company produced this cheat sheet (shown in the footer)?",
+    "gold": "Constant Contact"
+  },
+  {
+    "pred": "Instagram",
+    "match": true,
+    "err": false,
+    "bqid": "mix_01_a09",
+    "question": "Which platform is listed as good for bakeries and coffee shops?",
+    "gold": "Instagram"
+  },
+  {
+    "pred": "INV-2024-0072",
+    "match": true,
+    "err": false,
+    "bqid": "pdf_01_a01",
+    "question": "What is the invoice number?",
+    "gold": "INV-2024-0072"
+  },
+  {
+    "pred": "Acme Analytics Ltd",
+    "match": true,
+    "err": false,
+    "bqid": "pdf_01_a02",
+    "question": "Who is the vendor on the invoice?",
+    "gold": "Acme Analytics Ltd"
+  },
+  {
+    "pred": "47000",
+    "match": true,
+    "err": false,
+    "bqid": "pdf_01_a03",
+    "question": "What is the total amount due in USD?",
+    "gold": "47000"
+  },
+  {
+    "pred": "42000",
+    "match": true,
+    "err": false,
+    "bqid": "pdf_01_a04",
+    "question": "What is the subtotal?",
+    "gold": "42000"
+  },
+  {
+    "pred": "5000 USD",
+    "match": true,
+    "err": false,
+    "bqid": "pdf_01_a05",
+    "question": "What is the tax amount?",
+    "gold": "5000"
+  },
+  {
+    "pred": "2024-04-08",
+    "match": true,
+    "err": false,
+    "bqid": "pdf_01_a06",
+    "question": "What is the invoice due date?",
+    "gold": "2024-04-08"
+  },
+  {
+    "pred": "PO-5519",
+    "match": true,
+    "err": false,
+    "bqid": "pdf_01_a07",
+    "question": "What is the PO number?",
+    "gold": "PO-5519"
+  },
+  {
+    "pred": "Net 30",
+    "match": true,
+    "err": false,
+    "bqid": "pdf_01_a08",
+    "question": "What are the payment terms?",
+    "gold": "Net 30"
+  },
+  {
+    "pred": "2024-03-09",
+    "match": true,
+    "err": false,
+    "bqid": "pdf_01_a09",
+    "question": "What is the invoice date?",
+    "gold": "2024-03-09"
+  },
+  {
+    "pred": "West",
+    "match": true,
+    "err": false,
+    "bqid": "pdf_02_a01",
+    "question": "Which region had the highest Q1 2024 revenue?",
+    "gold": "West"
+  },
+  {
+    "pred": "1530",
+    "match": true,
+    "err": false,
+    "bqid": "pdf_02_a02",
+    "question": "What was West region's Q1 2024 revenue (in thousands)?",
+    "gold": "1530"
+  },
+  {
+    "pred": "1240",
+    "match": true,
+    "err": false,
+    "bqid": "pdf_02_a03",
+    "question": "What was North region's Q1 2024 revenue, in thousands as shown in the table?",
+    "gold": "1240"
+  },
+  {
+    "pred": "4350",
+    "match": true,
+    "err": false,
+    "bqid": "pdf_02_a04",
+    "question": "What was the total Q1 2024 revenue in thousands?",
+    "gold": "4350"
+  },
+  {
+    "pred": "South",
+    "match": true,
+    "err": false,
+    "bqid": "pdf_02_a05",
+    "question": "Which region declined quarter-over-quarter?",
+    "gold": "South"
+  },
+  {
+    "pred": "2024-05-15",
+    "match": true,
+    "err": false,
+    "bqid": "pdf_02_a06",
+    "question": "What is the next review date?",
+    "gold": "2024-05-15"
+  },
+  {
+    "pred": "860",
+    "match": true,
+    "err": false,
+    "bqid": "pdf_02_a07",
+    "question": "What was South region's Q1 2024 revenue, in thousands as shown in the table?",
+    "gold": "860"
+  },
+  {
+    "pred": "720",
+    "match": true,
+    "err": false,
+    "bqid": "pdf_02_a08",
+    "question": "What was East region's Q1 2024 revenue, in thousands as shown in the table?",
+    "gold": "720"
+  },
+  {
+    "pred": "Q1 2024",
+    "match": true,
+    "err": false,
+    "bqid": "pdf_02_a09",
+    "question": "What quarter does the report cover?",
+    "gold": "Q1 2024"
+  },
+  {
+    "pred": "noodle soup",
+    "match": true,
+    "err": false,
+    "bqid": "pho_01_a01",
+    "question": "What type of dish is shown in the photo?",
+    "gold": "noodle soup"
+  },
+  {
+    "pred": "Shrimp",
+    "match": true,
+    "err": false,
+    "bqid": "pho_01_a02",
+    "question": "What seafood is visible in the bowl?",
+    "gold": "shrimp"
+  },
+  {
+    "pred": "Carrot",
+    "match": true,
+    "err": false,
+    "bqid": "pho_01_a03",
+    "question": "What orange vegetable is in the soup?",
+    "gold": "carrot"
+  },
+  {
+    "pred": "Chopsticks and a soup spoon.",
+    "match": true,
+    "err": false,
+    "bqid": "pho_01_a04",
+    "question": "What eating utensils are shown beside the bowl?",
+    "gold": "chopsticks"
+  },
+  {
+    "pred": "foodiebaker.com",
+    "match": true,
+    "err": false,
+    "bqid": "pho_01_a05",
+    "question": "What website is watermarked on the photo?",
+    "gold": "foodiebaker.com"
+  },
+  {
+    "pred": "Bamboo",
+    "match": true,
+    "err": false,
+    "bqid": "pho_01_a06",
+    "question": "What material is the mat under the bowl?",
+    "gold": "bamboo"
+  },
+  {
+    "pred": "Yes",
+    "match": true,
+    "err": false,
+    "bqid": "pho_01_a07",
+    "question": "Is there egg in the soup?",
+    "gold": "yes"
+  },
+  {
+    "pred": "Noodles",
+    "match": true,
+    "err": false,
+    "bqid": "pho_01_a08",
+    "question": "What is the main starch food in the bowl?",
+    "gold": "noodles"
+  },
+  {
+    "pred": "poached egg (egg white)",
+    "match": true,
+    "err": false,
+    "bqid": "pho_01_a09",
+    "question": "What is the white protein floating in the broth?",
+    "gold": "egg"
+  }
+]

@@ -1,5 +1,5 @@
 """
-Named experiment presets for MIRAGE paper runs.
+Named experiment presets for GroundingBench paper runs.
 
 Each preset defines a fixed experimental configuration (scenarios, reference styles,
 conditions, history depths, and artifact subset). CLI args override individual fields.
@@ -84,6 +84,6 @@ def resolve_subset_path(subset_file: str) -> Path:
     """Resolve a preset-relative subset_file path to an absolute Path."""
     p = Path(subset_file)
     if not p.is_absolute():
-        # Relative paths are resolved from the MIRAGE package root
+        # Relative paths are resolved from the GroundingBench package root
         p = Path(__file__).parent.parent / p
     return p

@@ -9,7 +9,7 @@ This runner does NOT do batch evaluation. It:
   5. Saves a ProbeResult with enough fields for later scoring
 
 Usage:
-    cd MIRAGE
+    cd GroundingBench
 
     # Single probe
     python -m harness.branch_probe_runner \\

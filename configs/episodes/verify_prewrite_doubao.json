@@ -1,0 +1,59 @@
+{
+  "episode_id": "verify_prewrite_doubao",
+  "description": "Fast gate: verify prewrite (memory_write) persists artifacts BEFORE compaction and they survive, with Doubao Seed 2.0 in OpenClaw. 2 artifacts, low 25k compaction threshold so it finishes in ~15-20 min. NOT a paper checkpoint.",
+  "model": "volcengine/doubao-seed-2-0-pro-260215",
+  "intervention": "memory_write_before_compaction",
+
+  "artifacts": {
+    "cqa_9f9df328": {
+      "plant_type": "chart_image",
+      "image_path": "data/generated_images/chart/cqa_9f9df328.png",
+      "ocr_keywords": ["gdp", "new", "jersey", "556", "dollars"]
+    },
+    "ss_324e28cd": {
+      "plant_type": "screenshot",
+      "image_path": "data/generated_images/screenshot/ss_324e28cd.png",
+      "ocr_keywords": ["week", "summary"]
+    }
+  },
+
+  "trunk": [
+    {
+      "type": "artifact",
+      "artifact_id": "cqa_9f9df328",
+      "prompt": "I pulled this chart from a state economics report. Take a look — I'll probably need to reference these GDP numbers later.",
+      "image": true
+    },
+    {
+      "type": "artifact",
+      "artifact_id": "ss_324e28cd",
+      "prompt": "I grabbed this screenshot from my phone. Note what's on the screen — I'll probably want to come back to this later.",
+      "image": true
+    },
+    {
+      "type": "checkpoint",
+      "checkpoint_kind": "s1_prequery",
+      "depth_label": 0
+    },
+    {
+      "type": "filler",
+      "target_eit": 15000,
+      "seed": 100
+    },
+    {
+      "type": "memory_write",
+      "prompt": "Before we continue, I want to make sure the visual materials I shared earlier are properly saved in your memory files. Please write a compact memory entry for EACH of the 2 items I showed you (1 chart and 1 screenshot). For each one, use your write/edit tools to create or update a memory file with:\n\n- A short identifier or title\n- The type (chart or screenshot)\n- The key data points, values, or visible elements\n- Any important numbers, years, names, or labels\n\nPlease write these now — I'll be referring back to them later and need them to be reliably saved."
+    },
+    {
+      "type": "compaction_wait",
+      "compaction_threshold": 25000,
+      "max_filler_turns": 40,
+      "seed": 300
+    },
+    {
+      "type": "checkpoint",
+      "checkpoint_kind": "postcomp",
+      "compaction_threshold": 25000
+    }
+  ]
+}

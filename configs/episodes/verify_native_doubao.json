@@ -1,0 +1,54 @@
+{
+  "episode_id": "verify_native_doubao",
+  "description": "Fast gate: paper-matched NATIVE compaction (NO prewrite/memory_write, summarizer = doubao's own model). 2 artifacts, 25k threshold. Confirms native path works end-to-end with Doubao and shows what native compaction retains. NOT a paper checkpoint.",
+  "model": "volcengine/doubao-seed-2-0-pro-260215",
+
+  "artifacts": {
+    "cqa_9f9df328": {
+      "plant_type": "chart_image",
+      "image_path": "data/generated_images/chart/cqa_9f9df328.png",
+      "ocr_keywords": ["gdp", "new", "jersey", "556", "dollars"]
+    },
+    "ss_324e28cd": {
+      "plant_type": "screenshot",
+      "image_path": "data/generated_images/screenshot/ss_324e28cd.png",
+      "ocr_keywords": ["week", "summary"]
+    }
+  },
+
+  "trunk": [
+    {
+      "type": "artifact",
+      "artifact_id": "cqa_9f9df328",
+      "prompt": "I pulled this chart from a state economics report. Take a look — I'll probably need to reference these GDP numbers later.",
+      "image": true
+    },
+    {
+      "type": "artifact",
+      "artifact_id": "ss_324e28cd",
+      "prompt": "I grabbed this screenshot from my phone. Note what's on the screen — I'll probably want to come back to this later.",
+      "image": true
+    },
+    {
+      "type": "checkpoint",
+      "checkpoint_kind": "s1_prequery",
+      "depth_label": 0
+    },
+    {
+      "type": "filler",
+      "target_eit": 15000,
+      "seed": 100
+    },
+    {
+      "type": "compaction_wait",
+      "compaction_threshold": 25000,
+      "max_filler_turns": 40,
+      "seed": 300
+    },
+    {
+      "type": "checkpoint",
+      "checkpoint_kind": "postcomp",
+      "compaction_threshold": 25000
+    }
+  ]
+}

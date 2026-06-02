@@ -19,7 +19,7 @@ Heuristics:
     - shortcut_risk: simple round numbers → high, precise decimals → low
 
 Usage:
-    cd MIRAGE
+    cd GroundingBench
     python scripts/auto_annotate.py \
         --subset configs/subsets/paper_main_50_50.json \
         --annotations configs/annotations/paper_main_50_50_annotations.csv

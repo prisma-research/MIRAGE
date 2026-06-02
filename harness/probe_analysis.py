@@ -13,7 +13,7 @@ Aggregation levels:
   6. Penalties:        paired comparisons between checkpoints
 
 Usage:
-    cd MIRAGE
+    cd GroundingBench
     python -m harness.probe_analysis --probes-dir logs/probes/pilot_v2
 """
 

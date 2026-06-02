@@ -1,5 +1,5 @@
 """
-Filler turn library for MIRAGE trials.
+Filler turn library for GroundingBench trials.
 
 Provides seeded, reproducible filler content grounded in a realistic user
 persona (Alex Chen, senior ML engineer). Two categories:

@@ -105,7 +105,7 @@ PROVIDER_VOLCENGINE = ProviderConfig(
     openclaw_id="volcengine",
     base_url="https://ark.cn-beijing.volces.com/api/v3",
     api_key_env="VOLCENGINE",
-    vlm_model=Volcengine.THINKING_VISION_PRO,
+    vlm_model=Volcengine.SEED_1_6_VISION,  # doubao-seed-1-6-vision-250815 — verified working 2026-05 (thinking-vision-pro/1.5-vision-pro 404)
     text_model="doubao-seed-2-0-pro-260215",  # best text model (not in VLM catalog)
 )
 
@@ -117,17 +117,9 @@ PROVIDER_SHUBIAOBIAO = ProviderConfig(
     text_model=Shubiaobiao.CLAUDE_SONNET_4_6,
 )
 
-PROVIDER_ANTHROPIC = ProviderConfig(
-    openclaw_id="anthropic",
-    base_url="https://api.anthropic.com",
-    api_key_env="ANTHROPIC_API_KEY",
-    vlm_model=Shubiaobiao.CLAUDE_HAIKU_4_5,  # claude-haiku-4-5-20251001
-    text_model=Shubiaobiao.CLAUDE_SONNET_4_6,
-)
-
 # ── Single switch point ───────────────────────────────────────────────────────
 # Change ACTIVE_PROVIDER to swap all model usage at once.
-ACTIVE_PROVIDER: ProviderConfig = PROVIDER_ANTHROPIC
+ACTIVE_PROVIDER: ProviderConfig = PROVIDER_VOLCENGINE
 
 # ── Derived constants (consumed by the rest of the codebase) ─────────────────
 
@@ -232,16 +224,6 @@ PAPER_OPTIONAL_MODELS = [
 # ---------------------------------------------------------------------------
 
 EXPERIMENT_MODEL_REGISTRY: dict[str, dict] = {
-    "anthropic": {
-        "baseUrl": "https://api.anthropic.com",
-        "needsUsageProxy": False,
-        "apiKeyEnvs": ["ANTHROPIC_API_KEY"],
-        "api": "anthropic-messages",
-        "models": [
-            {"id": "claude-haiku-4-5-20251001", "name": "Claude Haiku 4.5", "input": ["text", "image"], "maxTokens": 64000},
-            {"id": "claude-sonnet-4-6", "name": "Claude Sonnet 4.6", "input": ["text", "image"], "maxTokens": 64000},
-        ],
-    },
     "shubiaobiao": {
         "baseUrl": "https://api.shubiaobiao.cn/v1",
         # needsUsageProxy: shubiaobiao returns misleading input_tokens: 0 alongside
@@ -253,7 +235,6 @@ EXPERIMENT_MODEL_REGISTRY: dict[str, dict] = {
         "api": "openai-completions",
         "models": [
             {"id": "gpt-5", "name": "GPT-5", "input": ["text", "image"], "maxTokens": 16384},
-            {"id": "claude-haiku-4-5-20251001", "name": "Claude Haiku 4.5", "input": ["text", "image"], "maxTokens": 8192},
             {"id": "qwen3-vl-32b-instruct", "name": "Qwen3-VL-32B", "input": ["text", "image"], "maxTokens": 8192},
             {"id": "claude-sonnet-4-6", "name": "Claude Sonnet 4.6", "input": ["text", "image"], "maxTokens": 16384},
             {"id": "gemini-2.5-flash-nothinking", "name": "Gemini 2.5 Flash NT", "input": ["text", "image"], "maxTokens": 8192},
@@ -261,10 +242,23 @@ EXPERIMENT_MODEL_REGISTRY: dict[str, dict] = {
     },
     "volcengine": {
         "baseUrl": "https://ark.cn-beijing.volces.com/api/v3",
+        # Route through UsageProxy so we can normalize Doubao's native <|FunctionCall|>
+        # tool tokens into structured tool_calls (OpenClaw then parses them → R_tool).
+        "needsUsageProxy": True,
         "apiKeyEnvs": ["VOLCENGINE", "VOLCENGINE_API_KEY"],
         "api": "openai-completions",
         "models": [
-            {"id": "doubao-1.5-vision-pro-250328", "name": "Doubao 1.5 Vision Pro", "input": ["text", "image"], "maxTokens": 8192},
+            # 2026-05 verified working on Ark; 1.5-vision-pro/thinking-vision-pro return 404 (not activated)
+            # NOTE: doubao VLMs DO return structured tool_calls when called with structured OpenAI `tools`
+            # (API-verified, even w/ image input). Getting OpenClaw's generic openai-completions path to send
+            # `tools` is the open item — `supportsTools` is NOT a valid per-model config key (config rejects it).
+            {"id": "doubao-seed-1-6-vision-250815", "name": "Doubao Seed 1.6 Vision", "input": ["text", "image"], "contextWindow": 128000, "maxTokens": 8192},
+            {"id": "doubao-1-5-vision-pro-32k-250115", "name": "Doubao 1.5 Vision Pro 32K", "input": ["text", "image"], "contextWindow": 32000, "maxTokens": 8192},
+            {"id": "doubao-seed-2-0-pro-260215", "name": "Doubao Seed 2.0 Pro", "input": ["text", "image"], "contextWindow": 128000, "maxTokens": 8192},
+            {"id": "doubao-seed-1-6-250615", "name": "Doubao Seed 1.6 (text, alt compaction summarizer)", "input": ["text"], "contextWindow": 128000, "maxTokens": 8192},
+            {"id": "deepseek-v3-2-251201", "name": "DeepSeek V3.2 (text, tool-capable agent)", "input": ["text"], "contextWindow": 128000, "maxTokens": 8192},
+            {"id": "deepseek-v4-flash-260425", "name": "DeepSeek V4 Flash (text, clean structured tool_calls)", "input": ["text"], "contextWindow": 128000, "maxTokens": 8192},
+            {"id": "deepseek-v4-pro-260425", "name": "DeepSeek V4 Pro (text, clean structured tool_calls)", "input": ["text"], "contextWindow": 128000, "maxTokens": 8192},
         ],
     },
     "local_qwen30b": {

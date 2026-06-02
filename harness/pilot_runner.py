@@ -1,11 +1,11 @@
 """
-Pilot Run — end-to-end verification of the MIRAGE pipeline.
+Pilot Run — end-to-end verification of the GroundingBench pipeline.
 
 Run this before committing to the full 36,000-trial experiment.
 Artifacts are loaded from the pre-generated manifest (same as experiment_runner).
 
 Usage:
-    cd MIRAGE
+    cd GroundingBench
     python -m harness.pilot_runner
 
 Pilot trials:
@@ -54,7 +54,7 @@ def _load_manifest_entry(plant_type: str, artifact_idx: int = 0) -> dict:
     if not MANIFEST_PATH.exists():
         raise FileNotFoundError(
             f"Manifest not found at {MANIFEST_PATH}. "
-            "Run: cd MIRAGE && python -m data.generate_dataset"
+            "Run: cd GroundingBench && python -m data.generate_dataset"
         )
     with MANIFEST_PATH.open(encoding="utf-8") as f:
         entries = json.load(f)
