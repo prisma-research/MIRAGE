@@ -3,14 +3,14 @@
 **Multimodal Interaction Retrieval, Attribution, and Grounding Evaluation**
 
 [![arXiv](https://img.shields.io/badge/arXiv-XXXX.XXXXX-b31b1b.svg)](https://arxiv.org/abs/XXXX.XXXXX)
-[![Project Page](https://img.shields.io/badge/Project-Page-1f6feb.svg)](https://mirage.github.io)
+[![Project Page](https://img.shields.io/badge/Project-Page-1f6feb.svg)](https://mirage-mm.vercel.app)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-3776ab.svg)](https://www.python.org/downloads/)
 [![Code style: pytest](https://img.shields.io/badge/tests-pytest-0a9edc.svg)](#testing)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 MIRAGE is a controlled empirical study of historical evidence use across conversation states in multimodal personal agents. It measures whether an agent can determine **answerability**, recover the **correct source**, and **answer from that source** rather than from a plausible guess — even after context compaction.
 
-> 📄 **Paper:** [arXiv:XXXX.XXXXX](https://arxiv.org/abs/XXXX.XXXXX) &nbsp;•&nbsp; 🌐 **Project page:** [mirage.github.io](https://mirage.github.io)
+> 📄 **Paper:** [arXiv:XXXX.XXXXX](https://arxiv.org/abs/XXXX.XXXXX) &nbsp;•&nbsp; 🌐 **Project page:** [mirage-mm.vercel.app](https://mirage-mm.vercel.app)
 >
 > *(The arXiv identifier above is a placeholder — replace `XXXX.XXXXX` with the real ID once the preprint is live.)*
 
