@@ -5,7 +5,7 @@ Runs full/locate/verify/extract_in_state probes across 5 states,
 using the split checkpoint family.
 
 Usage:
-    cd GroundingBench
+    cd MIRAGE
     python -m harness.run_state_conditioned_pilot --max-probes 10   # smoke test
     python -m harness.run_state_conditioned_pilot --max-bq 6        # small validation
     python -m harness.run_state_conditioned_pilot                    # full run

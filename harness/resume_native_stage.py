@@ -8,7 +8,7 @@ This is the resumable unit for building a checkpoint family stage-by-stage:
 each stage restores the previous saved checkpoint, so a crashed/timed-out job is
 resumed simply by re-running the stages whose target checkpoint does not yet exist.
 
-Robustness (hard-won, see memory groundingbench-doubao-runtime-setup):
+Robustness (hard-won, see memory mirage-doubao-runtime-setup):
   - per-turn timeout 600s (Doubao at ~95k EIT exceeds 180s → orphaned session lock)
   - lock-cooldown sleep after a failed turn
   - restored branch configs lack gateway.mode → set gateway.mode=local + --allow-unconfigured

@@ -1,5 +1,5 @@
 """
-Experiment Runner — manifest-driven batch for MM-2 GroundingBench.
+Experiment Runner — manifest-driven batch for MM-2 MIRAGE.
 
 Each trial set shares one Session A planting event and produces up to three
 GroundingTrial records (S1, S2 if compaction triggered, S3).
@@ -15,7 +15,7 @@ Named presets (defined in configs/presets.py):
     paper_s2s3_compaction   — 20+20 artifacts, S2/S3, definite, C0, thresholds 25k/50k/75k/100k
 
 Usage:
-    cd GroundingBench
+    cd MIRAGE
     python -m harness.experiment_runner --preset main_backbone --dry-run
     python -m harness.experiment_runner --preset main_backbone
     python -m harness.experiment_runner --preset s1_depth --model shubiaobiao/claude-sonnet-4-6
@@ -403,7 +403,7 @@ def _load_artifact_pool() -> dict[str, list[dict]]:
     if not MANIFEST_PATH.exists():
         raise FileNotFoundError(
             f"Manifest not found at {MANIFEST_PATH}. "
-            "Run: cd GroundingBench && python -m data.generate_dataset"
+            "Run: cd MIRAGE && python -m data.generate_dataset"
         )
     with MANIFEST_PATH.open(encoding="utf-8") as f:
         entries = json.load(f)
@@ -928,7 +928,7 @@ async def run_experiment(
 
 def _parse_args() -> argparse.Namespace:
     from configs.presets import PRESET_NAMES
-    parser = argparse.ArgumentParser(description="GroundingBench experiment runner")
+    parser = argparse.ArgumentParser(description="MIRAGE experiment runner")
     parser.add_argument("--dry-run", action="store_true", help="Print parameter matrix without executing")
     parser.add_argument("--plant-type", choices=PLANT_TYPES, default=None, help="Run only this plant type")
     parser.add_argument("--no-s2", action="store_true", help="Skip S2 compaction condition")

@@ -11,7 +11,7 @@ Post-compaction states (prewrite intervention):
   S3@100k  — pilot_v3_100k_prewrite / postcomp_100k (fresh-session)
 
 Usage:
-    cd GroundingBench
+    cd MIRAGE
     python -m harness.run_pilot --probes-only --max-questions 6   # 90-probe validation
     python -m harness.run_pilot --probes-only                     # full 1500 probes
     python -m harness.run_pilot --analysis-only                   # re-analyze

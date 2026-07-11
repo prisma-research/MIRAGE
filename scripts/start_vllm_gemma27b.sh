@@ -2,7 +2,7 @@
 set -euo pipefail
 
 source "$(conda info --base)/etc/profile.d/conda.sh"
-conda activate groundingbench
+conda activate mirage
 
 export HF_HOME="${HF_HOME:-$HOME/.cache/huggingface}"
 export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0,1,2,3}"

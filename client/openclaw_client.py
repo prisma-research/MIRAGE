@@ -1,5 +1,5 @@
 """
-OpenClaw Client for GroundingBench.
+OpenClaw Client for MIRAGE.
 
 Uses the `openclaw` CLI for session management and message sending,
 which has full operator.admin scope via device pairing.

@@ -30,7 +30,7 @@ cd "$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
 export PATH="$HOME/.nvm/versions/node/v22.22.2/bin:$HOME/.local/bin:$PATH"
 source "$(conda info --base)/etc/profile.d/conda.sh" 2>/dev/null || \
   source "$(conda info --base 2>/dev/null)/etc/profile.d/conda.sh"
-conda activate groundingbench
+conda activate mirage
 export OPENCLAW_TOKEN=none
 
 PY=python

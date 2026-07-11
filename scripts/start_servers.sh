@@ -1,5 +1,5 @@
 #!/bin/bash
-# Start Qwen3-VL-30B server via ms-swift (vllm backend) for GroundingBench QA.
+# Start Qwen3-VL-30B server via ms-swift (vllm backend) for MIRAGE QA.
 # Uses all 4 H100 NVL GPUs (TP=4) for maximum throughput.
 # max_model_len=131072 covers long-context checkpoints (d80k ≈ 81k tokens).
 #

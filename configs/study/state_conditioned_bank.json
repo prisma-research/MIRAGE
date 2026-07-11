@@ -1,7 +1,7 @@
 {
   "bank_id": "state_conditioned_v1",
   "description": "State-conditioned probe bank derived from constrained_100k. 300 base questions \u2192 1300 probes. No hidden-target scoring. Tasks: full, locate, verify, extract_in_state.",
-  "derived_from": "/Users/wenxiao/PycharmProjects/AgentDepth/GroundingBench/configs/study/question_bank_constrained_100k.json",
+  "derived_from": "/Users/wenxiao/PycharmProjects/AgentDepth/MIRAGE/configs/study/question_bank_constrained_100k.json",
   "base_questions": [
     {
       "base_question_id": "bq_001",

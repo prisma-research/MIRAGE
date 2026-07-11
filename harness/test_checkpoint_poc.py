@@ -9,7 +9,7 @@ Validates:
      save a real postcomp checkpoint, restore, prove continuation works
 
 Usage:
-    cd GroundingBench
+    cd MIRAGE
     python -m harness.test_checkpoint_poc [--state-dir PATH] [--episode-id ID]
     python -m harness.test_checkpoint_poc --skip-integration   # skip real compaction test
 """

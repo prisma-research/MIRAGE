@@ -10,7 +10,7 @@ This runner does NOT do evaluation. It only:
   5. Writes a run manifest summarizing all checkpoints
 
 Usage:
-    cd GroundingBench
+    cd MIRAGE
     python -m harness.episode_checkpoint_runner \\
         --episode configs/episodes/pilot_episode.json \\
         --model shubiaobiao/gpt-5
@@ -241,7 +241,7 @@ async def run_episode(
     trunk_steps = episode["trunk"]
     artifact_defs = episode.get("artifacts", {})
 
-    # Resolve image paths relative to GroundingBench root
+    # Resolve image paths relative to MIRAGE root
     gb_root = Path(__file__).parent.parent
     for aid, adef in artifact_defs.items():
         raw = adef.get("image_path")

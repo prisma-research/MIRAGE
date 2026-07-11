@@ -28,7 +28,7 @@ cd "$PROJ"
 export PATH="$HOME/.nvm/versions/node/v22.22.2/bin:$HOME/.local/bin:$PATH"
 source "$(conda info --base)/etc/profile.d/conda.sh" 2>/dev/null || \
   source "$(conda info --base 2>/dev/null)/etc/profile.d/conda.sh" 2>/dev/null || true
-conda activate groundingbench 2>/dev/null || true
+conda activate mirage 2>/dev/null || true
 export OPENCLAW_TOKEN=none
 export HF_HOME=${HF_HOME:-$HOME/.cache/huggingface}
 export PYTHONNOUSERSITE=1

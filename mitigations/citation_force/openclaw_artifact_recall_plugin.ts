@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const BOOTSTRAP_HEADER = "## CitationForce Constraint";
-const CONDITION_MARKER_FILE = ".groundingbench_citation_force_condition";
+const CONDITION_MARKER_FILE = ".mirage_citation_force_condition";
 const TOOL_CONDITIONS = new Set(["C2", "C3", "Cm"]);
 
 function readConditionMarker(workspaceDir: string): string | null {
@@ -127,8 +127,8 @@ function createArtifactRecallTool(workspaceDir: string) {
 }
 
 const plugin = {
-  id: "groundingbench-artifact-recall",
-  name: "GroundingBench Artifact Recall",
+  id: "mirage-artifact-recall",
+  name: "MIRAGE Artifact Recall",
   description: "Condition-gated artifact_recall tool for CitationForce C2/C3/Cm trials.",
   register(api: any) {
     api.registerTool(

@@ -13,7 +13,7 @@ Provides:
 The study question bank is curated at: configs/study/question_bank_curated.json
 
 Usage:
-    cd GroundingBench
+    cd MIRAGE
     python -m pipeline.study_catalog build-catalog
     python -m pipeline.study_catalog select-pilot
     python -m pipeline.study_catalog validate-bank

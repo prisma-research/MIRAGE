@@ -5,7 +5,7 @@ Reads the manifest and a paper subset JSON, emits a CSV with prefilled metadata
 and blank columns for manual annotation (difficulty, query_type, shortcut_risk).
 
 Usage:
-    cd GroundingBench
+    cd MIRAGE
     python scripts/export_annotation_template.py \
         --subset configs/subsets/paper_main_50_50.json \
         --output configs/annotations/paper_main_50_50_annotations.csv

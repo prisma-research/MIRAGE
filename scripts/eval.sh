@@ -6,7 +6,7 @@
 #   bash scripts/eval.sh --watch   # watch mode: re-summarise every 50 new trials
 #
 # Output saved to results/summary_N.json and results/summary_N.md
-# Must be run from the GroundingBench/ directory.
+# Must be run from the MIRAGE/ directory.
 
 set -euo pipefail
 

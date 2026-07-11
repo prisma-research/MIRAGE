@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# start.sh — Start a GroundingBench experiment run.
+# start.sh — Start a MIRAGE experiment run.
 #
 # Usage:
 #   bash scripts/start.sh                        # all 2160 cells, 20 workers
@@ -9,7 +9,7 @@
 #   bash scripts/start.sh --dry-run              # preview cells without running
 #
 # All extra args are forwarded to experiment_runner.
-# Must be run from the GroundingBench/ directory.
+# Must be run from the MIRAGE/ directory.
 
 set -euo pipefail
 

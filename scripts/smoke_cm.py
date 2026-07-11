@@ -9,7 +9,7 @@ Runs a single S3 trial with citation_force_condition="Cm" and checks:
   5. Trial completes without error
 
 Usage:
-    cd GroundingBench
+    cd MIRAGE
     python -m scripts.smoke_cm
 """
 

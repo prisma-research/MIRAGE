@@ -15,7 +15,7 @@ primary agent model as summarizer). This matches the paper GPT-5 config produced
 episode_checkpoint_runner on pilot_episode_100k.json.
 
 Usage:
-    cd GroundingBench
+    cd MIRAGE
     OPENCLAW_TOKEN=none python -m harness.resume_native_postcomp \\
         --source-episode pilot_v3_100k_doubao \\
         --target-episode pilot_v3_100k_doubao \\

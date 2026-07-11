@@ -1,6 +1,6 @@
 {
-  "id": "groundingbench-artifact-recall",
-  "name": "GroundingBench Artifact Recall",
+  "id": "mirage-artifact-recall",
+  "name": "MIRAGE Artifact Recall",
   "description": "Condition-gated artifact_recall tool for CitationForce C2/C3/Cm trials.",
   "configSchema": {
     "type": "object",

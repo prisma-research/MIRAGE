@@ -1,5 +1,5 @@
 """
-Local reverse proxy + openclaw.json config patcher for GroundingBench experiments.
+Local reverse proxy + openclaw.json config patcher for MIRAGE experiments.
 
 Handles two categories of problems when running experiments through non-standard
 OpenAI-compatible endpoints (e.g. shubiaobiao):

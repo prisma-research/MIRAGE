@@ -5,7 +5,7 @@ Single prompt protocol: ANSWERABLE/SOURCE/ANSWER.
 Runs the same 200 questions across 5 states, scores from one structured response.
 
 Usage:
-    cd GroundingBench
+    cd MIRAGE
     python -m harness.run_unified_pilot --max-bq 6        # smoke test
     python -m harness.run_unified_pilot --max-bq 20       # small validation
     python -m harness.run_unified_pilot                    # full run (200 × 5 = 1000)

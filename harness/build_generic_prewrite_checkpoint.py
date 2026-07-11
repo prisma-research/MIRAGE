@@ -18,7 +18,7 @@ Phase 2: near_comp_base_95k → generic prewrite → compaction → postcomp
   - Save as pilot_v3_100k_prewrite_generic / postcomp_100k
 
 Usage:
-    cd GroundingBench
+    cd MIRAGE
     python -m harness.build_generic_prewrite_checkpoint --phase 1   # build near-comp base
     python -m harness.build_generic_prewrite_checkpoint --phase 2   # build postcomp
     python -m harness.build_generic_prewrite_checkpoint              # both phases

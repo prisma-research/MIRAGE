@@ -1,8 +1,8 @@
 {
-  "name": "groundingbench-artifact-recall",
+  "name": "mirage-artifact-recall",
   "version": "0.1.0",
   "private": true,
-  "description": "Condition-gated artifact_recall tool for GroundingBench CitationForce C2/C3/Cm trials.",
+  "description": "Condition-gated artifact_recall tool for MIRAGE CitationForce C2/C3/Cm trials.",
   "type": "module",
   "peerDependencies": {
     "openclaw": ">=2026.3.7"
