@@ -6,7 +6,7 @@
 [![Project Page](https://img.shields.io/badge/Project-Page-1f6feb.svg)](https://mirage.github.io)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-3776ab.svg)](https://www.python.org/downloads/)
 [![Code style: pytest](https://img.shields.io/badge/tests-pytest-0a9edc.svg)](#testing)
-[![License](https://img.shields.io/badge/license-Research-lightgrey.svg)](#license)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 MIRAGE is a controlled empirical study of historical evidence use across conversation states in multimodal personal agents. It measures whether an agent can determine **answerability**, recover the **correct source**, and **answer from that source** rather than from a plausible guess — even after context compaction.
 
@@ -427,4 +427,4 @@ If you use MIRAGE in your research, please cite:
 
 ## License
 
-This project is part of ongoing research. See the repository for license details.
+Released under the [MIT License](LICENSE).
