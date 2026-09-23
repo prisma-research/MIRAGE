@@ -5,6 +5,7 @@
 <h1 align="center">MIRAGE: How Conversation State Shapes Historical Evidence Use in Multimodal Personal Agents</h1>
 
 <p align="center">
+  <a href="https://arxiv.org/abs/2609.19059"><img src="https://img.shields.io/badge/arXiv-2609.19059-b31b1b?style=flat-square&amp;logo=arxiv&amp;logoColor=white" alt="arXiv paper"></a>
   <a href="https://doi.org/10.1145/3767308.3835540"><img src="https://img.shields.io/badge/DOI-10.1145%2F3767308.3835540-2B96D1?style=flat-square&amp;logo=acm&amp;logoColor=white" alt="Paper DOI"></a>
   <a href="#citation"><img src="https://img.shields.io/badge/ACM_MM_2026-Accepted-7C5FD3?style=flat-square" alt="Accepted to ACM MM 2026"></a>
   <a href="https://mirage-mm.vercel.app"><img src="https://img.shields.io/badge/Page-18A999?style=flat-square&amp;logo=vercel&amp;logoColor=white" alt="Project page"></a>
@@ -14,12 +15,12 @@
 
 <p align="center"><b>Fix the evidence, the questions, and the scoring. Vary only the conversation state.</b></p>
 
-<p align="center"><a href="#overview">Overview</a> &middot; <a href="#evaluation-protocol">Protocol</a> &middot; <a href="#how-s2-compaction-is-produced">Compaction</a> &middot; <a href="#quickstart">Quick Start</a> &middot; <a href="#evaluation">Evaluation</a> &middot; <a href="#citation">Citation</a></p>
+<p align="center"><a href="#-news">News</a> &middot; <a href="#overview">Overview</a> &middot; <a href="#evaluation-protocol">Protocol</a> &middot; <a href="#how-s2-compaction-is-produced">Compaction</a> &middot; <a href="#quickstart">Quick Start</a> &middot; <a href="#evaluation">Evaluation</a> &middot; <a href="#citation">Citation</a></p>
 
-## News
+## 📢 News
 
-MIRAGE has been accepted to **ACM MM 2026**, the 34th ACM International Conference on Multimedia (Rio de Janeiro, Brazil).
-[Read the paper](https://doi.org/10.1145/3767308.3835540) or visit the [project page](https://mirage-mm.vercel.app).
+- **[2026-08-25]** 📄 The preprint is available on [arXiv](https://arxiv.org/abs/2609.19059).
+- **[2026-07]** 🎉 Our paper has been accepted by **ACM MM 2026**, the 34th ACM International Conference on Multimedia (Rio de Janeiro, Brazil)! Read the [paper](https://doi.org/10.1145/3767308.3835540) or visit the [project page](https://mirage-mm.vercel.app).
 
 ## Overview
 
