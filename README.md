@@ -1,53 +1,99 @@
-# MIRAGE
+<p align="center">
+  <img src="assets/mirage-logo.svg" alt="MIRAGE: a desert mirage badge and wordmark" width="420">
+</p>
 
-**Multimodal Interaction Retrieval, Attribution, and Grounding Evaluation**
+<h1 align="center">MIRAGE: How Conversation State Shapes Historical Evidence Use in Multimodal Personal Agents</h1>
 
-[![arXiv](https://img.shields.io/badge/arXiv-XXXX.XXXXX-b31b1b.svg)](https://arxiv.org/abs/XXXX.XXXXX)
-[![Project Page](https://img.shields.io/badge/Project-Page-1f6feb.svg)](https://mirage-mm.vercel.app)
-[![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-3776ab.svg)](https://www.python.org/downloads/)
-[![Code style: pytest](https://img.shields.io/badge/tests-pytest-0a9edc.svg)](#testing)
-[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+<p align="center">
+  <a href="https://doi.org/10.1145/3767308.3835540"><img src="https://img.shields.io/badge/DOI-10.1145%2F3767308.3835540-2B96D1?style=flat-square&amp;logo=acm&amp;logoColor=white" alt="Paper DOI"></a>
+  <a href="#citation"><img src="https://img.shields.io/badge/ACM_MM_2026-Accepted-7C5FD3?style=flat-square" alt="Accepted to ACM MM 2026"></a>
+  <a href="https://mirage-mm.vercel.app"><img src="https://img.shields.io/badge/Page-18A999?style=flat-square&amp;logo=vercel&amp;logoColor=white" alt="Project page"></a>
+  <a href="https://github.com/prisma-research/MIRAGE"><img src="https://img.shields.io/badge/Code-2D2A32?style=flat-square&amp;logo=github&amp;logoColor=white" alt="GitHub code"></a>
+  <a href="#citation"><img src="https://img.shields.io/badge/BibTeX-E85D9E?style=flat-square" alt="Citation"></a>
+</p>
 
-MIRAGE is a controlled empirical study of historical evidence use across conversation states in multimodal personal agents. It measures whether an agent can determine **answerability**, recover the **correct source**, and **answer from that source** rather than from a plausible guess — even after context compaction.
+<p align="center"><b>Fix the evidence, the questions, and the scoring. Vary only the conversation state.</b></p>
 
-> 📄 **Paper:** [arXiv:XXXX.XXXXX](https://arxiv.org/abs/XXXX.XXXXX) &nbsp;•&nbsp; 🌐 **Project page:** [mirage-mm.vercel.app](https://mirage-mm.vercel.app)
->
-> *(The arXiv identifier above is a placeholder — replace `XXXX.XXXXX` with the real ID once the preprint is live.)*
+<p align="center"><a href="#overview">Overview</a> &middot; <a href="#evaluation-protocol">Protocol</a> &middot; <a href="#how-s2-compaction-is-produced">Compaction</a> &middot; <a href="#quickstart">Quick Start</a> &middot; <a href="#evaluation">Evaluation</a> &middot; <a href="#citation">Citation</a></p>
 
----
+## News
+
+MIRAGE has been accepted to **ACM MM 2026**, the 34th ACM International Conference on Multimedia (Rio de Janeiro, Brazil).
+[Read the paper](https://doi.org/10.1145/3767308.3835540) or visit the [project page](https://mirage-mm.vercel.app).
 
 ## Overview
 
-Long-context AI agents often lose access to earlier artifacts when conversation history is compacted or summarized. MIRAGE keeps evidence objects, questions, and scoring fixed while varying only conversation state, isolating **state** as the sole experimental variable. The study follows a *what–why–how* progression:
+MIRAGE (**M**ultimodal **I**nteraction **R**etrieval, **A**ttribution, and **G**rounding **E**valuation) is a controlled protocol for historical evidence use in multimodal personal agents. As conversations grow or cross a compaction boundary, earlier evidence may no longer be directly visible, and an agent can still produce a plausible answer from residual context, summaries, or generic priors. Outcome-only evaluation scores such an answer the same as one that is grounded in the right evidence.
+
+MIRAGE keeps evidence objects, questions, and scoring fixed while varying only the conversation state. At every state the agent must decide **answerability**, recover the **correct source**, and **answer from that source**.
+
+<p align="center">
+  <a href="assets/mirage-teaser.png"><img src="assets/mirage-teaser.png" alt="Same query, same answer, different grounding after context compaction" width="62%"></a>
+</p>
+
+*Same query, same answer, different grounding. After context compaction, one reasoning path retrieves the source document through a memory tool, while the other guesses from residual context. Both produce the same final answer, so the grounding failure is invisible to outcome-only evaluation.*
+
+Across seven frontier and open-weight multimodal backbones, the paper finds that:
+
+1. Pre-compaction depth and post-compaction continuation are **distinct failure regimes** with non-monotonic degradation.
+2. Open-weight models rely heavily on **context continuity** and are reluctant to adopt tool-mediated retrieval even when provenance has failed.
+3. **Retrieval pressure** improves source attribution in deep pre-compaction states for tool-compliant models, but regresses after compaction.
+
+The study follows a *what, why, how* progression:
 
 - **RQ1:** What failure patterns emerge as conversation state changes?
 - **RQ2:** What retrieval mechanisms produce these patterns?
 - **RQ3:** When can retrieval pressure mitigate provenance failure across different states?
 
+## Evaluation Protocol
+
+<p align="center">
+  <a href="assets/mirage-pipeline.png"><img src="assets/mirage-pipeline.png" alt="MIRAGE evaluation pipeline: trunk conversation, state-conditioned probing, grounding-chain evaluation" width="100%"></a>
+</p>
+
+*MIRAGE pipeline from the manuscript. Left: a trunk conversation plants multimodal evidence objects, then filler turns deepen the context through the checkpoints. Center: the same probe question is issued at each state to a personal agent with tool access. Right: responses are scored along the grounding chain (answerability, source attribution, answer correctness).*
+
+The paper's main study plants 6 evidence objects (ChartQA charts and ScreenSpot screenshots) and asks 200 questions: 100 answerable questions and 100 domain- and format-matched unanswerable controls. Each model and condition is scored on 200 questions x 4 states = 800 probes, averaged over 3 runs.
+
 ### Conversation States
 
-MIRAGE evaluates across named states spanning qualitatively distinct regions of the context lifecycle:
+| State | Effective input tokens (EIT) | Compactions | Description |
+|---|---|---|---|
+| `S1-d0` | 23,184 | 0 | Shallow pre-compaction (near planted evidence) |
+| `S1-d50k` | 50,217 | 0 | Mid-range same-session depth |
+| `S1-d80k` | 80,436 | 0 | Near the context-window boundary |
+| `S2` | 100,081 | 1 | Post-compaction same-session continuation |
+| `S3` | n/a | 1 | Fresh-session continuation after compaction (optional; not part of the paper's main results) |
 
-| State | Description |
-|---|---|
-| `S1-d0` | Shallow pre-compaction (near planted evidence) |
-| `S1-d50k` | Mid-range same-session depth (~50k effective input tokens) |
-| `S1-d80k` | Near context-window boundary (~80k EIT) |
-| `S2` | Post-compaction same-session continuation (~100k EIT, 1 compaction) |
-| `S3` | Fresh-session continuation after compaction (optional; requires session restore) |
+EIT is the effective input token count reported by the backbone provider; compaction events are detected with the runtime's native `compactionCount`.
 
 ### Query Conditions
 
 | Condition | Description |
 |---|---|
-| `C0` | Natural query — model answers with whatever evidence-access behaviour it adopts by default |
-| `Cm` | Retrieval pressure — model is required to invoke the `artifact_recall` tool before answering |
+| `C0` | Natural query: the model answers with whatever evidence-access behaviour it adopts by default |
+| `Cm` | Retrieval pressure: the model is required to invoke the `artifact_recall` tool before answering |
 
-Additional CitationForce ladder conditions (`Cp`, `C2`, `C3`, …) are available for the mitigation experiments; see [`configs/presets.py`](configs/presets.py).
+Additional CitationForce ladder conditions (`Cp`, `C2`, `C3`, ...) are available for the mitigation experiments; see [`configs/presets.py`](configs/presets.py).
 
----
+## How S2 Compaction Is Produced
 
-## Directory Structure
+The post-compaction state is produced by the agent runtime, not by each backbone.
+
+- **Native runtime compaction.** All backbones run inside the same [OpenClaw](https://github.com/openclaw/openclaw)-based runtime, and `S2` uses its native auto-compaction; MIRAGE leaves the compaction policy unmodified.
+- **Trigger.** Compaction fires when the session exceeds `contextWindow - reserveTokensFloor`. The harness pins `reserveTokensFloor` to 20,000 ([`constants/exp_constants.py`](constants/exp_constants.py)) and overrides `contextWindow` on every registered model ([`client/usage_proxy.py`](client/usage_proxy.py)) so that the event lands at the benchmark threshold. The paper's post-compaction checkpoint (`postcomp_100k`) uses the 100k threshold.
+- **Summarizer.** The compaction summary is written by the model configured in `agents.defaults.compaction.model`, which is separate from the probed backbone. The default is `deepseek/deepseek-chat`; set `OPENCLAW_COMPACTION_MODEL` to route summarization elsewhere (for example a local Qwen3-VL-8B).
+- **Building the checkpoint.** [`harness/build_generic_prewrite_checkpoint.py`](harness/build_generic_prewrite_checkpoint.py) restores `S1-d80k`, adds filler up to about 95k EIT, sends a generic pre-write prompt that asks the agent to update its durable memory files (`MEMORY.md`, `memory/*.md`) without naming any answer, and then continues filler until compaction fires. Firing is detected either by `compactionCount` in `sessions.json` or by a `compaction` event in the session JSONL, and filler stops immediately.
+- **Shared across backbones.** Checkpoints are built once, with GPT-5 driving the trunk conversation, and shared by every backbone. Each probe restores an ephemeral branch copy and swaps in the probing model; the source checkpoint is never mutated. `S2` differences across backbones therefore reflect how each model uses the same post-compaction state, not how each model would summarize its own history.
+
+## Code
+
+The workflow has four stages:
+
+1. Generate the evidence artifacts (ChartQA charts and ScreenSpot screenshots) and their manifest.
+2. Build the trunk conversation and materialize the pre- and post-compaction checkpoints.
+3. Probe every question at every state, each on a freshly restored checkpoint copy, under `C0` or `Cm`.
+4. Score the structured responses deterministically and aggregate cross-state diagnostics.
 
 ```
 MIRAGE/
@@ -84,6 +130,7 @@ MIRAGE/
 ├── scripts/                        # Serving, run wrappers, and analysis scripts
 ├── tests/                          # Unit tests (pytest)
 ├── baseline_snapshot/              # Agent bootstrap files (MEMORY, SOUL, etc.)
+├── assets/                         # Logo and figures used in this README
 ├── data/generated_images/          # manifest.json + regenerated images (gitignored)
 ├── pyproject.toml
 ├── environment.yml
@@ -92,8 +139,6 @@ MIRAGE/
 ```
 
 > `logs/` and `results/` are generated by runs and are **gitignored** — they do not exist in a fresh checkout.
-
----
 
 ## Installation
 
@@ -133,11 +178,9 @@ cp .env.example .env
 ### Prerequisites
 
 - **Python ≥ 3.11, < 3.13**
-- The **`openclaw` CLI** on your `PATH` — the agent runtime (gateway) that runs each trial. See [OpenClaw](https://github.com/anthropics/openclaw).
+- The **`openclaw` CLI** on your `PATH` — the agent runtime (gateway) that runs each trial. See [OpenClaw](https://github.com/openclaw/openclaw).
 - API key(s) for at least one VLM provider (Volcengine, Shubiaobiao, and/or Anthropic), **or** a local vLLM endpoint.
 - For local serving: NVIDIA GPU(s) with CUDA (paper open-weight runs used 4× H100).
-
----
 
 ## Configuration
 
@@ -175,9 +218,19 @@ ACTIVE_PROVIDER = PROVIDER_VOLCENGINE   # or PROVIDER_SHUBIAOBIAO / a local prov
 
 Models are named `provider/model-id` on the command line, e.g. `--model shubiaobiao/gpt-5` or `--model local_qwen30b/qwen3-vl-30b-instruct`.
 
-**Paper backbones** (`PAPER_CORE_MODELS`): `shubiaobiao/gpt-5`, `shubiaobiao/qwen3-vl-32b-instruct`, `shubiaobiao/claude-sonnet-4-6`, `shubiaobiao/gemini-2.5-flash-nothinking`, `volcengine/doubao-1.5-vision-pro-250328`.
+**Paper backbones.** The ACM MM '26 paper evaluates seven backbones. Their command-line IDs are:
 
----
+| Backbone | `--model` | Serving |
+|---|---|---|
+| GPT-5 | `shubiaobiao/gpt-5` | API |
+| Claude-4.5-Haiku | `shubiaobiao/claude-haiku-4-5-20251001` | API |
+| Qwen3-VL-4B | `local_qwen4b/qwen3-vl-4b-instruct` | local vLLM |
+| Qwen3-VL-8B | `local_qwen8b/qwen3-vl-8b-instruct` | local vLLM |
+| Qwen3-VL-30B | `local_qwen30b/qwen3-vl-30b-instruct` | local vLLM |
+| InternVL3.5-20B | `local_internvl20b/internvl3_5-20b-a4b` | local vLLM |
+| Gemma-3-27B | `local_gemma27b/gemma-3-27b-it` | local vLLM |
+
+Retrieval pressure (`Cm`) is reported only for the open-weight group. `PAPER_CORE_MODELS` in `constants/model_constants.py` is an earlier development list and does not match the paper's backbone set.
 
 ## Quickstart
 
@@ -191,8 +244,6 @@ python -m harness.pilot_runner
 # 3. Run a small state-conditioned probe sweep
 python -m harness.run_unified_pilot --model shubiaobiao/gpt-5 --max-bq 5 --run-id smoke
 ```
-
----
 
 ## Data Generation
 
@@ -214,8 +265,6 @@ Samples **500 per dataset** (seed 42) and writes:
 | `chart_image` | ChartQA | `ahmed-masry/ChartQA` | `query` field |
 
 > Images are gitignored — regenerate them with the command above. The manifest is the source of truth for all downstream runs.
-
----
 
 ## Running Experiments
 
@@ -273,8 +322,6 @@ bash scripts/progress.sh       # count completed trials by scenario
 bash scripts/stop.sh           # kill runner + gateway processes
 ```
 
----
-
 ## Local VLM Serving (open-weight backbones)
 
 Serve OpenAI-compatible endpoints with vLLM / ms-swift, then point `--model local_*` at them:
@@ -291,8 +338,6 @@ The runners auto-start a **UsageProxy** (`client/usage_proxy.py`) when a provide
 python -m client.usage_proxy --port <PORT>
 ```
 
----
-
 ## HPC / SLURM
 
 Batch scripts live in `scripts/*.sbatch` and are **resumable** (a fixed `--run-id` skips completed probes). Examples:
@@ -303,8 +348,6 @@ sbatch scripts/slurm_modext_openvlm_sweep.sbatch     # modality extension on ope
 sbatch scripts/build_modality_family.sbatch          # build native checkpoint family
 sbatch scripts/probe_modext_doubao.sbatch            # Doubao probe over the modality family
 ```
-
----
 
 ## Results & Paper Tables
 
@@ -334,9 +377,9 @@ Complementary table generators:
 | `scripts/gen_fig3_rpath_stacked_bar.py` | Figure 3: R_path composition stacked bar |
 | `scripts/analyze_modality_ext.py` | Per-modality × per-state analysis with Wilson CIs |
 
----
+## Evaluation
 
-## Probe Protocol
+### Probe Protocol
 
 Each probe is issued on a **freshly restored copy** of a checkpoint, guaranteeing per-probe independence. The model returns a single structured response capturing the full grounding chain:
 
@@ -346,15 +389,11 @@ SOURCE=<artifact_id or NONE>
 ANSWER=<short value or NONE>
 ```
 
-This reveals whether the model judges the question answerable, identifies the correct source, and extracts the right content — without requiring separate probing stages.
-
----
-
-## Evaluation
+This reveals whether the model judges the question answerable, identifies the correct source, and extracts the right content, without requiring separate probing stages.
 
 ### Deterministic Scoring
 
-Core metrics are **deterministic** — no LLM judge is required. For each probe, the model returns `(z_hat, src_hat, y_hat)`, compared against gold annotations:
+Core metrics are **deterministic**; no LLM judge is required. For each probe, the model returns `(z_hat, src_hat, y_hat)`, compared against gold annotations:
 
 | Metric | Name | Definition | Computed Over |
 |---|---|---|---|
@@ -362,31 +401,28 @@ Core metrics are **deterministic** — no LLM judge is required. For each probe,
 | **SC** | Source Correctness | Canonicalized source matches gold artifact | Answerable probes |
 | **VC** | Value Correctness | Normalized answer matches gold value | Answerable probes |
 | **GC** | Grounded Correctness | SC = 1 AND VC = 1 | Answerable probes |
-| **HR** | Hallucination Rate | Claims answerable / answers on unanswerable probes | Unanswerable probes |
-| **WS** | Wrong Source | Cites a non-NONE artifact that is not the gold source | Answerable probes |
-| **PF** | Parse Failure | Output does not satisfy the structured protocol | All probes |
+| **HR** | Hallucination Rate | Claims answerable, or gives an answer, on an unanswerable probe | Unanswerable probes |
+| **WS** | Wrong-or-missing Source | Canonicalized source differs from the gold artifact, including `NONE` (the complement of SC) | Answerable probes |
+| **PF** | Parse Failure | Output does not satisfy the structured protocol | All probes (tracked separately) |
 
-Source identifiers are canonicalized to collapse artifact paths, derived files, and memory notes onto the underlying evidence identifier. Numeric and short-string answers are normalized with fixed rules. (Value Correctness may optionally use an LLM judge configured via `LLM_*` / `ANTHROPIC_API_KEY`.)
+Source identifiers are canonicalized to collapse artifact paths, derived files, screenshot summaries, and dated memory notes onto the underlying evidence identifier. Numeric and short-string answers are normalized with fixed rules. (Value Correctness may optionally use an LLM judge configured via `LLM_*` / `ANTHROPIC_API_KEY`.)
 
 ### Retrieval-Path Diagnostics
 
 Beyond outcome scores, MIRAGE records the retrieval path for each probe:
 
-- **R_context** — evidence accessed through same-session context continuity
-- **R_tool** — evidence accessed through explicit tool-mediated retrieval (e.g., `artifact_recall`)
+- **R_context**: evidence accessed through same-session context continuity
+- **R_tool**: evidence accessed through explicit tool-mediated retrieval (e.g., `artifact_recall`)
 
 ### Cross-State Diagnostic Indicators
 
 | Indicator | Description |
 |---|---|
-| **DS** | Depth Sensitivity — GC drop from `S1-d0` to `S1-d80k` |
-| **CI** | Compaction Impact — net GC change from `S1-d80k` to `S2` |
-| **Ret** | Retention — fraction of `S1-d0`-correct probes still correct at `S1-d80k` |
-| **FGR** | False Grounding Rate at `S1-d80k` |
-| **OG** | Overestimation Gap — VC minus GC per state |
-| **MI** | Mirage Index — gap between claimed answerability and actual grounded correctness |
-
----
+| **MI** | Mirage Index: fraction of recorded answerable calls where the model claims `YES` without grounded correctness (parse failures count as 0) |
+| **OG** | Overestimation Gap: VC minus GC per state, i.e. how much outcome-only evaluation overstates grounded use |
+| **DS** | Depth Sensitivity: relative GC drop from `S1-d0` to `S1-d80k` |
+| **Δcomp** | Compaction impact: net GC change from `S1-d80k` to `S2` (the sign matters: `S2` is deeper than `S1-d80k`, so a recovery shows that compaction is not simply more depth) |
+| **Ret** | Retention: fraction of `S1-d0`-correct probes still correct at `S1-d80k` |
 
 ## Testing
 
@@ -394,8 +430,6 @@ Beyond outcome scores, MIRAGE records the retrieval path for each probe:
 pytest                 # runs tests/ (async mode auto, configured in pyproject.toml)
 pytest --cov           # with coverage
 ```
-
----
 
 ## Key Constants
 
@@ -407,23 +441,25 @@ pytest --cov           # with coverage
 | Memory file | `~/.openclaw/workspace/MEMORY.md` |
 | Per-worker gateway state | `~/.openclaw-run-<run_id>-<n>` (created & cleaned per run) |
 
----
+## Scope
+
+MIRAGE evaluates context depth, native compaction, and tool-mediated retrieval in a controlled planted-evidence setting. Its results characterize state-conditioned behavior rather than provide a coverage-complete estimate of multimodal personal-agent workloads. Because the state coordinates are runtime-defined rather than backbone-normalized, the post-compaction results apply to the model-runtime stack and do not isolate the contributions of memory-surface design, tool orchestration, provider EIT definitions, or compaction summary quality.
 
 ## Citation
 
 If you use MIRAGE in your research, please cite:
 
 ```bibtex
-@article{mirage2026,
-  title   = {MIRAGE: Multimodal Interaction Retrieval, Attribution, and Grounding Evaluation},
-  author  = {Zhang, Wenxiao and others},
-  journal = {arXiv preprint arXiv:XXXX.XXXXX},
-  year    = {2026},
-  url     = {https://arxiv.org/abs/XXXX.XXXXX}
+@inproceedings{liu2026mirage,
+  title     = {{MIRAGE}: How Conversation State Shapes Historical Evidence Use in Multimodal Personal Agents},
+  author    = {Liu, Yu and Zhang, Wenxiao and Hu, Cheng and Cao, Cong and Yuan, Fangfang and Wang, Xinyu and Hong, Jin B. and Liu, Yanbing},
+  booktitle = {Proceedings of the 34th ACM International Conference on Multimedia (ACM MM '26)},
+  year      = {2026},
+  address   = {Rio de Janeiro, Brazil},
+  doi       = {10.1145/3767308.3835540},
+  url       = {https://doi.org/10.1145/3767308.3835540}
 }
 ```
-
----
 
 ## License
 

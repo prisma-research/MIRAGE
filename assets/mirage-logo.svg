@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="180" viewBox="0 0 720 180" role="img" aria-labelledby="title desc">
+  <title id="title">MIRAGE</title>
+  <desc id="desc">A desert mirage badge (sun, dune, palm, and its shimmering reflection) next to the MIRAGE wordmark.</desc>
+  <rect width="720" height="180" rx="8" fill="#ffffff"/>
+  <g transform="translate(34 22) scale(1.1333)">
+    <circle cx="60" cy="60" r="56" fill="#BFE3F5" stroke="#2D2A32" stroke-width="5"/>
+    <clipPath id="mirage-badge-clip"><circle cx="60" cy="60" r="53.5"/></clipPath>
+    <g clip-path="url(#mirage-badge-clip)">
+      <circle cx="84" cy="30" r="13" fill="#F49D37" stroke="#2D2A32" stroke-width="3.5"/>
+      <path d="M-5 64 Q 25 50 55 62 T 125 60 V 78 H -5 Z" fill="#F7D794" stroke="#2D2A32" stroke-width="3.5"/>
+      <path d="M46 62 Q 44 46 50 36" fill="none" stroke="#2D2A32" stroke-width="5.5" stroke-linecap="round"/>
+      <g fill="#18A999" stroke="#2D2A32" stroke-width="3" stroke-linejoin="round">
+        <path d="M50 36 Q 60 28 72 32 Q 61 36 52 38 Z"/>
+        <path d="M50 36 Q 40 26 28 30 Q 39 35 48 38 Z"/>
+        <path d="M50 36 Q 54 24 64 20 Q 55 30 51 37 Z"/>
+        <path d="M50 36 Q 44 25 34 21 Q 43 30 49 37 Z"/>
+      </g>
+      <rect x="0" y="76" width="120" height="4.5" fill="#E8A64A"/>
+      <g fill="#E85D9E">
+        <ellipse cx="49" cy="87" rx="18" ry="3.8" opacity="0.85"/>
+        <ellipse cx="53" cy="95" rx="13" ry="3" opacity="0.55"/>
+        <ellipse cx="47" cy="102" rx="8.5" ry="2.4" opacity="0.35"/>
+        <ellipse cx="85" cy="88" rx="7.5" ry="2.6" opacity="0.5"/>
+        <ellipse cx="83" cy="95" rx="5" ry="2" opacity="0.3"/>
+      </g>
+    </g>
+  </g>
+  <text x="200" y="119" fill="#2D2A32" font-family="Arial, Helvetica, sans-serif" font-size="100" font-weight="800" letter-spacing="0">MIRAGE</text>
+  <g fill="#E85D9E">
+    <rect x="204" y="136" width="170" height="6" rx="3" opacity="0.8"/>
+    <rect x="392" y="136" width="96" height="6" rx="3" opacity="0.5"/>
+    <rect x="506" y="136" width="46" height="6" rx="3" opacity="0.3"/>
+  </g>
+</svg>
