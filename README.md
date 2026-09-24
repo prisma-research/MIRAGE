@@ -192,7 +192,7 @@ cp .env.example .env
 >
 > The harness was built against the 2026.3 runtime (see `client/openclaw_client.py`). It detects compaction through the per-session `compactionCount` in `sessions.json` and the `compaction` entry in the session JSONL, and it writes `agents.defaults.compaction.{mode, reserveTokensFloor, memoryFlush, model}` into `openclaw.json`.
 >
-> - `2026.3.7`, the minimum declared in `mitigations/citation_force/package.json`, does not accept `compaction.model` (its compaction config schema is strict and has no such key). The default UsageProxy path and the compactor ablations set this key, so use `2026.3.8`, the first release that accepts it.
+> - `2026.3.7` does not accept `compaction.model` (its compaction config schema is strict and has no such key). The default UsageProxy path and the compactor ablations set this key, so `2026.3.8` is the first usable release. The `artifact_recall` plugin declares the same range in `mitigations/citation_force/package.json` (`"openclaw": ">=2026.3.8 <2026.4.0"`).
 > - From `2026.5.28` on, compaction runs on OpenClaw's own agent core instead of the upstream `pi-coding-agent` package that the 2026.3 line uses.
 > - Current releases (for example `2026.9.x`) store session transcripts in SQLite and have retired `compaction.reserveTokensFloor`. The harness and the saved checkpoints are not compatible with them, so the paper's conversation states cannot be reproduced on these versions.
 

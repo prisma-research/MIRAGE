@@ -5,7 +5,7 @@
   "description": "Condition-gated artifact_recall tool for MIRAGE CitationForce C2/C3/Cm trials.",
   "type": "module",
   "peerDependencies": {
-    "openclaw": ">=2026.3.7"
+    "openclaw": ">=2026.3.8 <2026.4.0"
   },
   "peerDependenciesMeta": {
     "openclaw": {
