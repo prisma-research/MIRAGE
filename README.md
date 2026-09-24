@@ -451,18 +451,11 @@ MIRAGE evaluates context depth, native compaction, and tool-mediated retrieval i
 If you use MIRAGE in your research, please cite:
 
 ```bibtex
-@inproceedings{liu2026mirage,
-  title     = {{MIRAGE}: How Conversation State Shapes Historical Evidence Use in Multimodal Personal Agents},
-  author    = {Liu, Yu and Zhang, Wenxiao and Hu, Cheng and Cao, Cong and Yuan, Fangfang and Wang, Xinyu and Hong, Jin B. and Liu, Yanbing},
-  booktitle = {Proceedings of the 34th ACM International Conference on Multimedia},
-  series    = {MM '26},
-  year      = {2026},
-  location  = {Rio de Janeiro, Brazil},
-  publisher = {Association for Computing Machinery},
-  address   = {New York, NY, USA},
-  isbn      = {979-8-4007-2213-4},
-  doi       = {10.1145/3767308.3835540},
-  url       = {https://doi.org/10.1145/3767308.3835540}
+@article{liu2026mirage,
+  title   = {MIRAGE: How Conversation State Shapes Historical Evidence Use in Multimodal Personal Agents},
+  author  = {Liu, Yu and Zhang, Wenxiao and Hu, Cheng and Cao, Cong and Yuan, Fangfang and Wang, Xinyu and Hong, Jin B. and Liu, Yanbing},
+  journal = {arXiv preprint arXiv:2609.19059},
+  year    = {2026}
 }
 ```
 
