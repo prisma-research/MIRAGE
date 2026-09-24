@@ -81,7 +81,7 @@ Additional CitationForce ladder conditions (`Cp`, `C2`, `C3`, ...) are available
 
 The post-compaction state is produced by the agent runtime, not by each backbone.
 
-- **Native runtime compaction.** All backbones run inside the same [OpenClaw](https://github.com/openclaw/openclaw)-based runtime, and `S2` uses its native auto-compaction; MIRAGE leaves the compaction policy unmodified.
+- **Native runtime compaction.** All backbones run inside the same [OpenClaw](https://github.com/openclaw/openclaw)-based runtime, and `S2` uses its native auto-compaction; MIRAGE leaves the compaction policy unmodified. The mechanism described here is that of the OpenClaw 2026.3 line; see [Prerequisites](#prerequisites) for the version pin.
 - **Trigger.** Compaction fires when the session exceeds `contextWindow - reserveTokensFloor`. The harness pins `reserveTokensFloor` to 20,000 ([`constants/exp_constants.py`](constants/exp_constants.py)) and overrides `contextWindow` on every registered model ([`client/usage_proxy.py`](client/usage_proxy.py)) so that the event lands at the benchmark threshold. The paper's post-compaction checkpoint (`postcomp_100k`) uses the 100k threshold.
 - **Summarizer.** In the paper, the `S2` compaction summary is written by GPT-5 (the "verbatim" default in the compaction-strategy ablation, arXiv Appendix A.2), independently of the probed backbone. In code, the summarizer is set through `agents.defaults.compaction.model`: export `OPENCLAW_COMPACTION_MODEL` to choose it; if unset, the harness falls back to `deepseek/deepseek-chat`.
 - **Building the checkpoint.** Filler turns are sampled with a fixed seed from a library of 20 persona-consistent software-engineering and machine-learning tasks that are topic-disjoint from the planted evidence. [`harness/build_generic_prewrite_checkpoint.py`](harness/build_generic_prewrite_checkpoint.py) restores `S1-d80k`, adds filler up to about 95k EIT, sends a generic pre-write prompt that asks the agent to update its durable memory files (`MEMORY.md`, `memory/*.md`) without naming any answer, and then continues filler until compaction fires. Firing is detected either by `compactionCount` in `sessions.json` or by a `compaction` event in the session JSONL, and filler stops immediately.
@@ -182,6 +182,19 @@ cp .env.example .env
 - The **`openclaw` CLI** on your `PATH` — the agent runtime (gateway) that runs each trial. See [OpenClaw](https://github.com/openclaw/openclaw).
 - API key(s) for at least one VLM provider (Volcengine, Shubiaobiao, and/or Anthropic), **or** a local vLLM endpoint.
 - For local serving: NVIDIA GPU(s) with CUDA (paper open-weight runs used 4× H100).
+
+> [!IMPORTANT]
+> **Pin OpenClaw to the 2026.3 line, version `2026.3.8` or later within 2026.3.x:**
+>
+> ```bash
+> npm install -g openclaw@2026.3.8
+> ```
+>
+> The harness was built against the 2026.3 runtime (see `client/openclaw_client.py`). It detects compaction through the per-session `compactionCount` in `sessions.json` and the `compaction` entry in the session JSONL, and it writes `agents.defaults.compaction.{mode, reserveTokensFloor, memoryFlush, model}` into `openclaw.json`.
+>
+> - `2026.3.7`, the minimum declared in `mitigations/citation_force/package.json`, does not accept `compaction.model` (its compaction config schema is strict and has no such key). The default UsageProxy path and the compactor ablations set this key, so use `2026.3.8`, the first release that accepts it.
+> - From `2026.5.28` on, compaction runs on OpenClaw's own agent core instead of the upstream `pi-coding-agent` package that the 2026.3 line uses.
+> - Current releases (for example `2026.9.x`) store session transcripts in SQLite and have retired `compaction.reserveTokensFloor`. The harness and the saved checkpoints are not compatible with them, so the paper's conversation states cannot be reproduced on these versions.
 
 ## Configuration
 
